@@ -1,0 +1,16 @@
+{
+  "name": "Agency - Transform Your Digital Presence",
+  "short_name": "Agency",
+  "description": "Award-winning digital agency specializing in web development, UI/UX design, and digital marketing.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
