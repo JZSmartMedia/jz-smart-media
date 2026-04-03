@@ -17,7 +17,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-/* ─── Moving comet border — section pill badges ─────────────────────────── */
+/* ─── Moving comet border — section pill badges─────────────────────────── */
 function CometBadge({ children, isDark }) {
   return (
     <div className="relative inline-flex mb-6" style={{ padding: '2px', borderRadius: '9999px', overflow: 'hidden' }}>
@@ -293,10 +293,10 @@ export default function JZSmartMediaLanding() {
   ];
 
   const stats = [
-    { number: '50+',  label: 'Active Client Accounts', color: 'from-[#667eea] to-[#764ba2]' },
-    { number: '8×',   label: 'Average Lead ROI',        color: 'from-[#f093fb] to-[#f5576c]' },
-    { number: '$2M+', label: 'Ad Spend Managed',        color: 'from-[#fda085] to-[#43e97b]' },
-    { number: '98%',  label: '12-Month Retention',      color: 'from-[#43e97b] to-[#667eea]' },
+    { number: '50+', label: 'Active Client Accounts', color: 'from-[#667eea] to-[#764ba2]' },
+    { number: '8×', label: 'Average Lead ROI', color: 'from-[#f093fb] to-[#f5576c]' },
+    { number: '$2M+', label: 'Ad Spend Managed', color: 'from-[#fda085] to-[#43e97b]' },
+    { number: '98%', label: '12-Month Retention', color: 'from-[#43e97b] to-[#667eea]' },
   ];
 
   const navItems = ['Services', 'Process', 'Results', 'Clients'];
@@ -334,13 +334,12 @@ export default function JZSmartMediaLanding() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
             ? isDark
               ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-gray-800/50'
               : 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50'
             : 'bg-transparent'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
@@ -614,10 +613,10 @@ export default function JZSmartMediaLanding() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
                 <div className="absolute inset-x-0 bottom-0 p-6 grid grid-cols-2 gap-3">
                   {[
-                    { num: '340%', label: 'Lead Increase',    sub: 'First 90 days' },
-                    { num: '62%',  label: 'Lower CPL',        sub: 'vs. benchmarks' },
-                    { num: '5.0★', label: 'Avg GBP Rating',   sub: 'Managed profiles' },
-                    { num: '9+',   label: 'Service Lines',    sub: 'Full-stack digital' },
+                    { num: '340%', label: 'Lead Increase', sub: 'First 90 days' },
+                    { num: '62%', label: 'Lower CPL', sub: 'vs. benchmarks' },
+                    { num: '5.0★', label: 'Avg GBP Rating', sub: 'Managed profiles' },
+                    { num: '9+', label: 'Service Lines', sub: 'Full-stack digital' },
                   ].map((item, i) => (
                     <div key={i} className="p-4 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 text-center">
                       <div className="text-2xl font-bold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent mb-0.5">{item.num}</div>
@@ -802,9 +801,9 @@ export default function JZSmartMediaLanding() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
             {[
               { num: '340%', label: 'Average Lead Increase', sub: 'Within first 90 days' },
-              { num: '62%',  label: 'Lower Cost Per Lead',   sub: 'vs. industry benchmarks' },
-              { num: '5.0★', label: 'Avg. GBP Rating',       sub: 'Across managed profiles' },
-              { num: '98%',  label: 'Client Retention Rate', sub: '12-month rolling average' },
+              { num: '62%', label: 'Lower Cost Per Lead', sub: 'vs. industry benchmarks' },
+              { num: '5.0★', label: 'Avg. GBP Rating', sub: 'Across managed profiles' },
+              { num: '98%', label: 'Client Retention Rate', sub: '12-month rolling average' },
             ].map((item, i) => (
               <CometCard
                 key={i}
@@ -1082,8 +1081,8 @@ export default function JZSmartMediaLanding() {
 
           <div className="grid md:grid-cols-2 gap-8 mt-16">
             {[
-              { icon: Mail,    label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
-              { icon: MapPin,  label: 'Service Area',   value: 'Home Service Businesses Nationwide' },
+              { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
+              { icon: MapPin, label: 'Service Area', value: 'Home Service Businesses Nationwide' },
             ].map((item, index) => (
               <motion.div
                 key={index}
