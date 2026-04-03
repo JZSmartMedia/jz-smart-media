@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState, Fragment } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  Menu, X, Sun, Moon, ArrowRight, Sparkles, Zap, Target,
-  Award, Code, Palette, Rocket, CheckCircle, Star, Quote,
-  Mail, MapPin, ChevronLeft, ChevronRight, Globe, BarChart2,
-  Settings, Brain, FileText, PieChart, Users
+  Menu, X, Sun, Moon, ArrowRight, Sparkles, Target,
+  Code, Rocket, CheckCircle, Star,
+  Mail, MapPin, ChevronLeft, ChevronRight, Globe,
+  Settings, Brain, FileText, PieChart,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
@@ -17,6 +17,57 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+/* ─── Moving comet border — section pill badges ─────────────────────────── */
+function CometBadge({ children, isDark }) {
+  return (
+    <div className="relative inline-flex mb-6" style={{ padding: '2px', borderRadius: '9999px', overflow: 'hidden' }}>
+      <div
+        style={{
+          position: 'absolute',
+          width: '200%',
+          height: '200%',
+          top: '-50%',
+          left: '-50%',
+          background:
+            'conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(102,126,234,1) 72%, rgba(240,147,251,1) 84%, transparent 94%)',
+          animation: 'comet-spin 3s linear infinite',
+        }}
+      />
+      <div className={`relative z-10 px-4 py-2 rounded-full ${isDark ? 'bg-[#0f0f0f]' : 'bg-white'}`}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Moving comet border — content cards ───────────────────────────────── */
+function CometCard({ children, className = '', duration = '4s', delay = '0s', hoverY = -5, innerBg = '' }) {
+  return (
+    <motion.div
+      whileHover={hoverY !== 0 ? { y: hoverY } : undefined}
+      className="relative h-full"
+      style={{ padding: '2px', borderRadius: '1.5rem', overflow: 'hidden' }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          width: '200%',
+          height: '200%',
+          top: '-50%',
+          left: '-50%',
+          background:
+            'conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(102,126,234,1) 72%, rgba(240,147,251,1) 84%, transparent 94%)',
+          animation: `comet-spin ${duration} linear ${delay} infinite`,
+        }}
+      />
+      <div className={`relative z-10 h-full w-full rounded-[calc(1.5rem-2px)] ${innerBg} ${className}`}>
+        {children}
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── Main Page Component ────────────────────────────────────────────────── */
 export default function JZSmartMediaLanding() {
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,45 +75,52 @@ export default function JZSmartMediaLanding() {
   const [cursorVariant, setCursorVariant] = useState('default');
   const [serviceIndex, setServiceIndex] = useState(0);
   const [projectIndex, setProjectIndex] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
   const heroRef = useRef(null);
   const testimonialsRef = useRef(null);
   const contactRef = useRef(null);
 
+  // Transparent → glass nav on scroll
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Custom cursor
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
+    const handleMouseMove = (e) => setCursorPos({ x: e.clientX, y: e.clientY });
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Lenis smooth scroll
+  // Lenis smooth scroll — drive via GSAP ticker so ScrollTrigger gets correct values
   useEffect(() => {
     let lenis;
+    let tickerFn;
     const initLenis = async () => {
       const Lenis = (await import('@studio-freight/lenis')).default;
-      lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-      });
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+      lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      tickerFn = (time) => lenis.raf(time * 1000);
+      gsap.ticker.add(tickerFn);
+      gsap.ticker.lagSmoothing(0);
     };
     initLenis();
-    return () => { if (lenis) lenis.destroy(); };
+    return () => {
+      if (lenis) lenis.destroy();
+      if (tickerFn) gsap.ticker.remove(tickerFn);
+    };
   }, []);
+
+  // Mount flag — separate from GSAP to avoid hydration mismatch
+  useEffect(() => { setMounted(true); }, []);
 
   // GSAP animations
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    setMounted(true);
 
     const ctx = gsap.context(() => {
       const heroTl = gsap.timeline({ delay: 0.2 });
@@ -92,6 +150,7 @@ export default function JZSmartMediaLanding() {
         });
       });
 
+
       document.querySelectorAll('.magnetic-btn').forEach((btn) => {
         btn.addEventListener('mouseenter', () => setCursorVariant('button'));
         btn.addEventListener('mouseleave', () => setCursorVariant('default'));
@@ -110,104 +169,81 @@ export default function JZSmartMediaLanding() {
     return () => ctx.revert();
   }, []);
 
+  /* ── Data ────────────────────────────────────────────────────────────── */
   const services = [
     {
-      number: '01',
-      icon: <Globe className="w-8 h-8" />,
-      title: 'Local SEO & GBP',
+      number: '01', icon: <Globe className="w-8 h-8" />, title: 'Local SEO & GBP',
       description: 'Own the Map Pack. We optimize your GBP, build citation authority, and create content that converts search into booked jobs.',
       features: ['GBP Optimization', 'Citation Building', 'City & Service Pages', 'Review Generation'],
       gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
     },
     {
-      number: '02',
-      icon: <Target className="w-8 h-8" />,
-      title: 'Google Ads & LSA',
+      number: '02', icon: <Target className="w-8 h-8" />, title: 'Google Ads & LSA',
       description: 'High-intent search campaigns targeting homeowners ready to buy. Budget-disciplined, weekly-optimized, conversion-tracked.',
       features: ['Search Campaigns', 'LSA & Google Guarantee', 'CallRail Tracking', 'Weekly Optimization'],
       gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
     },
     {
-      number: '03',
-      icon: <Star className="w-8 h-8" />,
-      title: 'Yelp Ads & Reviews',
+      number: '03', icon: <Star className="w-8 h-8" />, title: 'Yelp Ads & Reviews',
       description: 'Capture decision-stage buyers on Yelp. We manage ads, optimize your profile, and build review volume that converts.',
       features: ['Yelp Ads Management', 'Profile Optimization', 'Review Strategy', 'Monthly Reports'],
       gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
     },
     {
-      number: '04',
-      icon: <Settings className="w-8 h-8" />,
-      title: 'CRM & Automation',
+      number: '04', icon: <Settings className="w-8 h-8" />, title: 'CRM & Automation',
       description: 'Customized CRM and automation solutions to capture, track, and convert every lead. Automated follow-ups, booking, and SMS.',
       features: ['Customized Solutions', 'Automated Follow-Up', 'Appointment Booking', 'SMS Campaigns'],
       gradient: 'from-[#43e97b] via-[#38f9d7] to-[#667eea]',
     },
     {
-      number: '05',
-      icon: <Code className="w-8 h-8" />,
-      title: 'Web Development',
+      number: '05', icon: <Code className="w-8 h-8" />, title: 'Web Development',
       description: 'Custom websites built for speed, SEO, and conversions. Every site designed to generate leads from day one.',
       features: ['Custom Website Development', 'Landing Pages & Funnels', 'SEO-Optimized Structure', 'CRM Integration'],
-      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
-      badge: 'New',
+      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]', badge: 'New',
     },
     {
-      number: '06',
-      icon: <Brain className="w-8 h-8" />,
-      title: 'AI Solutions',
+      number: '06', icon: <Brain className="w-8 h-8" />, title: 'AI Solutions',
       description: 'AI chatbots that qualify leads 24/7, automated dashboards, voice AI for missed calls, and workflow automation.',
       features: ['AI Chatbots & Lead Qualification', 'Voice AI for Missed Calls', 'Workflow Automation', 'Predictive Lead Scoring'],
-      gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
-      badge: 'New',
+      gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]', badge: 'New',
     },
     {
-      number: '07',
-      icon: <FileText className="w-8 h-8" />,
-      title: 'SEO Content',
+      number: '07', icon: <FileText className="w-8 h-8" />, title: 'SEO Content',
       description: 'Strategic, data-driven content built to increase authority, capture high-intent traffic, and convert visitors into qualified leads.',
       features: ['Service & Location Pages', 'Conversion-Focused Strategy', 'Authority & Topical Clusters', 'Advanced Schema & Structured Data'],
       gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
     },
     {
-      number: '08',
-      icon: <PieChart className="w-8 h-8" />,
-      title: 'Analytics & Reports',
+      number: '08', icon: <PieChart className="w-8 h-8" />, title: 'Analytics & Reports',
       description: 'GA4, CallRail, GBP Insights, and custom dashboards — always know which channels are producing revenue.',
       features: ['GA4 Setup', 'CallRail Tracking', 'Custom Dashboards', 'Monthly Reviews'],
       gradient: 'from-[#43e97b] via-[#38f9d7] to-[#667eea]',
     },
     {
-      number: '09',
-      icon: <Rocket className="w-8 h-8" />,
-      title: 'Full Growth Retainer',
+      number: '09', icon: <Rocket className="w-8 h-8" />, title: 'Full Growth Retainer',
       description: 'All channels, one team, one strategy. Dedicated account manager, monthly executive sessions, priority execution.',
       features: ['All Channel Management', 'Dedicated Manager', 'Strategy Sessions', 'Priority Support'],
-      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
-      badge: 'Premium',
+      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]', badge: 'Premium',
     },
   ];
 
   const results = [
     {
-      title: 'OakTree Chimney Solutions',
-      category: 'Local SEO + Google Ads',
+      title: 'OakTree Chimney Solutions', category: 'Local SEO + Google Ads',
       description: 'Call volume more than tripled within 90 days. Full GBP overhaul, targeted search campaigns, and review generation strategy.',
       gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
       tags: ['Local SEO', 'Google Ads', 'GBP', 'Reviews'],
       metrics: { leads: '+340%', cpl: '-62%', rating: '5.0★' },
     },
     {
-      title: 'CoStar Roofing Inc.',
-      category: 'Yelp Ads + Reviews',
+      title: 'CoStar Roofing Inc.', category: 'Yelp Ads + Reviews',
       description: 'Within 6 weeks of Yelp ads launch: consistent inbound leads every single day. Profile fully optimized, review cadence built.',
       gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
       tags: ['Yelp Ads', 'Profile Optimization', 'Review Strategy'],
       metrics: { leads: 'Daily', weeks: '6 Wks', retention: '98%' },
     },
     {
-      title: 'ASAP Water Damage Restoration',
-      category: 'CRM + AI Automation',
+      title: 'ASAP Water Damage Restoration', category: 'CRM + AI Automation',
       description: 'Automated follow-ups, review requests, and missed call recovery. Closing deals that would have been lost before.',
       gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
       tags: ['CRM', 'AI Automation', 'SMS', 'Voice AI'],
@@ -217,67 +253,50 @@ export default function JZSmartMediaLanding() {
 
   const processSteps = [
     {
-      number: '1',
-      step: 'STEP 01',
-      title: 'Discovery & Audit',
+      number: '1', step: 'STEP 01', title: 'Discovery & Audit',
       description: 'A complete audit of your digital presence — ads, GBP, website, competitors, missed opportunities. Real insights before we talk numbers.',
       gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
     },
     {
-      number: '2',
-      step: 'STEP 02',
-      title: 'Custom Strategy',
+      number: '2', step: 'STEP 02', title: 'Custom Strategy',
       description: 'A tailored 90-day growth plan built around your market, budget, and goals. We prioritize highest-impact channels first.',
       gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
     },
     {
-      number: '3',
-      step: 'STEP 03',
-      title: 'Precision Launch',
+      number: '3', step: 'STEP 03', title: 'Precision Launch',
       description: 'Full setup, tracking, go-live. Monitoring starts day one. Optimization starts week one. Results show up month one.',
       gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
     },
     {
-      number: '4',
-      step: 'STEP 04',
-      title: 'Scale & Report',
-      description: 'Monthly reporting with real KPIs. We scale what works, cut what doesn\'t, and compound results every month.',
+      number: '4', step: 'STEP 04', title: 'Scale & Report',
+      description: "Monthly reporting with real KPIs. We scale what works, cut what doesn't, and compound results every month.",
       gradient: 'from-[#43e97b] via-[#38f9d7] to-[#667eea]',
     },
   ];
 
   const testimonials = [
     {
-      name: 'Mike R.',
-      role: 'OakTree Chimney Solutions',
-      initial: 'M',
-      content: 'Since working with JZ. Smart Media our call volume has more than tripled. They know exactly how to target homeowners ready to book. Best investment we\'ve made in years.',
-      rating: 5,
-      gradient: 'from-[#667eea] to-[#764ba2]',
+      name: 'Mike R.', role: 'OakTree Chimney Solutions', initial: 'M',
+      content: "Since working with JZ. Smart Media our call volume has more than tripled. They know exactly how to target homeowners ready to book. Best investment we've made in years.",
+      rating: 5, gradient: 'from-[#667eea] to-[#764ba2]',
     },
     {
-      name: 'Steve C.',
-      role: 'CoStar Roofing Inc.',
-      initial: 'S',
+      name: 'Steve C.', role: 'CoStar Roofing Inc.', initial: 'S',
       content: 'The Yelp ads changed our business. JZ handled everything — setup, reviews, optimization — and within 6 weeks we had consistent inbound leads every single day.',
-      rating: 5,
-      gradient: 'from-[#f093fb] to-[#f5576c]',
+      rating: 5, gradient: 'from-[#f093fb] to-[#f5576c]',
     },
     {
-      name: 'David K.',
-      role: 'ASAP Water Damage Restoration',
-      initial: 'D',
+      name: 'David K.', role: 'ASAP Water Damage Restoration', initial: 'D',
       content: 'Their CRM and AI setup changed how we operate. Automated follow-ups, review requests, missed call recovery — we close deals we would have lost before.',
-      rating: 5,
-      gradient: 'from-[#43e97b] to-[#38f9d7]',
+      rating: 5, gradient: 'from-[#43e97b] to-[#38f9d7]',
     },
   ];
 
   const stats = [
-    { number: '50+', label: 'Active Client Accounts', color: 'from-[#667eea] to-[#764ba2]' },
-    { number: '8×', label: 'Average Lead ROI', color: 'from-[#f093fb] to-[#f5576c]' },
-    { number: '$2M+', label: 'Ad Spend Managed', color: 'from-[#fda085] to-[#43e97b]' },
-    { number: '98%', label: '12-Month Retention', color: 'from-[#43e97b] to-[#667eea]' },
+    { number: '50+',  label: 'Active Client Accounts', color: 'from-[#667eea] to-[#764ba2]' },
+    { number: '8×',   label: 'Average Lead ROI',        color: 'from-[#f093fb] to-[#f5576c]' },
+    { number: '$2M+', label: 'Ad Spend Managed',        color: 'from-[#fda085] to-[#43e97b]' },
+    { number: '98%',  label: '12-Month Retention',      color: 'from-[#43e97b] to-[#667eea]' },
   ];
 
   const navItems = ['Services', 'Process', 'Results', 'Clients'];
@@ -289,18 +308,12 @@ export default function JZSmartMediaLanding() {
   const prevProject = () => setProjectIndex((i) => (i === 0 ? results.length - 1 : i - 1));
   const nextProject = () => setProjectIndex((i) => (i === results.length - 1 ? 0 : i + 1));
 
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
-      </div>
-    );
-  }
-
-  const isDark = resolvedTheme === 'dark';
+  // Default to dark during SSR; once mounted, use resolvedTheme
+  const isDark = mounted ? resolvedTheme === 'dark' : true;
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-[#0a0a0a] text-white' : 'bg-white text-gray-900'} transition-colors duration-500 overflow-x-hidden`}>
+    <div className={`min-h-screen ${isDark ? 'bg-[#0a0a0a] text-white' : 'bg-white text-gray-900'} transition-colors duration-500`}>
+
       {/* Custom Cursor */}
       <motion.div
         className="fixed w-6 h-6 pointer-events-none z-[9999] mix-blend-difference hidden lg:block"
@@ -317,31 +330,66 @@ export default function JZSmartMediaLanding() {
         <div className="parallax-bg absolute bottom-0 left-1/3 w-[750px] h-[750px] bg-gradient-to-r from-[#43e97b] via-[#38f9d7] to-[#667eea] rounded-full blur-[150px]" data-speed="0.2" />
       </div>
 
-      {/* Navigation */}
+      {/* ── Navigation — transparent → glass on scroll, pill menu with comet border ── */}
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 ${isDark ? 'bg-[#0a0a0a]/80 border-gray-800/50' : 'bg-white/80 border-gray-200/50'} backdrop-blur-xl border-b transition-colors duration-300`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? isDark
+              ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-gray-800/50'
+              : 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50'
+            : 'bg-transparent'
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
-            <motion.div whileHover={{ scale: 1.05 }} className="text-xl font-bold bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
+
+            {/* Logo */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="text-xl font-bold bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent"
+            >
               JZ. Smart Media
             </motion.div>
 
-            <div className="hidden md:flex items-center gap-8">
-              {navItems.map((item) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  whileHover={{ y: -2 }}
-                  className={`text-sm font-medium ${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'} transition-colors`}
-                >
-                  {item}
-                </motion.a>
-              ))}
+            {/* Desktop nav — comet border pill */}
+            <div className="hidden md:flex items-center">
+              <div className="relative" style={{ padding: '1.5px', borderRadius: '9999px', overflow: 'hidden' }}>
+                {/* Rotating comet layer */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    width: '200%',
+                    height: '200%',
+                    top: '-50%',
+                    left: '-50%',
+                    background:
+                      'conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(102,126,234,1) 72%, rgba(240,147,251,1) 84%, transparent 94%)',
+                    animation: 'comet-spin 3s linear infinite',
+                  }}
+                />
+                {/* Inner pill */}
+                <div className={`relative z-10 flex items-center rounded-full px-2 py-1 ${isDark ? 'bg-[#0f0f0f]' : 'bg-white'}`}>
+                  {navItems.map((item, i) => (
+                    <Fragment key={item}>
+                      <motion.a
+                        href={`#${item.toLowerCase()}`}
+                        whileHover={{ y: -1 }}
+                        className={`px-4 py-2 text-sm font-medium ${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors`}
+                      >
+                        {item}
+                      </motion.a>
+                      {i < navItems.length - 1 && (
+                        <div className={`w-px h-4 ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                      )}
+                    </Fragment>
+                  ))}
+                </div>
+              </div>
             </div>
 
+            {/* Right actions */}
             <div className="flex items-center gap-3">
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -367,6 +415,7 @@ export default function JZSmartMediaLanding() {
             </div>
           </div>
 
+          {/* Mobile menu */}
           <AnimatePresence>
             {menuOpen && (
               <motion.div
@@ -391,33 +440,57 @@ export default function JZSmartMediaLanding() {
         </div>
       </motion.nav>
 
-      {/* Hero Section */}
-      <section id="home" ref={heroRef} className="min-h-screen flex items-center justify-center px-6 pt-20 relative">
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="hero-float hero-badge mb-8">
-            <div className={`inline-flex items-center gap-2 px-5 py-2.5 ${isDark ? 'bg-[#667eea]/10 border-[#667eea]/20' : 'bg-[#667eea]/10 border-[#667eea]/30'} backdrop-blur-sm rounded-full border`}>
-              <Sparkles className="w-4 h-4 text-[#667eea]" />
-              <span className="text-sm font-medium bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-                Digital Growth Agency
+      {/* ── Hero Section ─────────────────────────────────────────────────────── */}
+      <section id="home" ref={heroRef} className="min-h-screen flex items-center justify-center px-6 pt-36 pb-20 relative overflow-x-hidden">
+        <div className="w-full max-w-6xl mx-auto text-center relative z-10">
+
+          {/* Badge — comet border */}
+          <div className="hero-float hero-badge">
+            <CometBadge isDark={isDark}>
+              <span className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#667eea]" />
+                <span className="text-sm font-medium bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
+                  Digital Growth Agency
+                </span>
               </span>
-            </div>
+            </CometBadge>
           </div>
 
-          <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-bold mb-6 leading-[0.88] tracking-tight">
-            {['WE', 'MAKE', 'LOCAL'].map((word, i) => (
-              <div key={i} className="overflow-hidden mb-2">
-                <div className="hero-line bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-                  {word}
-                </div>
+          {/* H1 — 3 lines, moving gradient */}
+          <h1 className="font-black mb-8 leading-[0.88] tracking-tighter">
+            <div className="overflow-hidden mb-1">
+              <div
+                className="hero-line text-6xl md:text-8xl lg:text-9xl"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#fda085,#667eea)',
+                  backgroundSize: '200% auto',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                  animation: 'gradient-shift 5s linear infinite',
+                }}
+              >
+                WE MAKE LOCAL
               </div>
-            ))}
-            <div className="overflow-hidden mb-2">
-              <div className={`hero-line text-4xl md:text-5xl lg:text-6xl font-semibold ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                Businesses
+            </div>
+            <div className="overflow-hidden mb-1">
+              <div className={`hero-line text-4xl md:text-5xl lg:text-6xl font-semibold tracking-wide ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                BUSINESSES
               </div>
             </div>
             <div className="overflow-hidden">
-              <div className="hero-line bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
+              <div
+                className="hero-line text-6xl md:text-8xl lg:text-9xl"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg,#f093fb,#667eea,#764ba2,#f5576c,#43e97b,#f093fb)',
+                  backgroundSize: '200% auto',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                  animation: 'gradient-shift 5s linear infinite',
+                  animationDelay: '-2.5s',
+                }}
+              >
                 DOMINATE
               </div>
             </div>
@@ -454,21 +527,24 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* ── Stats Section — comet border cards ───────────────────────────────── */}
       <section className="py-20 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
             {stats.map((stat, index) => (
-              <motion.div
+              <CometCard
                 key={index}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className={`text-center p-8 ${isDark ? 'bg-gray-900/50 border-gray-800/50' : 'bg-gray-50 border-gray-200/50'} backdrop-blur-sm rounded-3xl border`}
+                duration={`${3 + index * 0.4}s`}
+                delay={`${index * 0.3}s`}
+                innerBg={isDark ? 'bg-[#111111]' : 'bg-gray-50'}
               >
-                <div className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                  {stat.number}
+                <div className="text-center p-8">
+                  <div className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
+                    {stat.number}
+                  </div>
+                  <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm font-medium`}>{stat.label}</div>
                 </div>
-                <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm font-medium`}>{stat.label}</div>
-              </motion.div>
+              </CometCard>
             ))}
           </div>
 
@@ -483,16 +559,16 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* About / Built For Home Services */}
+      {/* ── About Section ────────────────────────────────────────────────────── */}
       <section id="about" className="py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="reveal">
-              <div className="inline-block px-4 py-2 bg-gradient-to-r from-[#667eea]/10 to-[#f093fb]/10 rounded-full mb-6">
+              <CometBadge isDark={isDark}>
                 <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
                   JZ. — BUILT FOR HOME SERVICES
                 </span>
-              </div>
+              </CometBadge>
               <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">We Know</span>
                 <br />
@@ -538,10 +614,10 @@ export default function JZSmartMediaLanding() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
                 <div className="absolute inset-x-0 bottom-0 p-6 grid grid-cols-2 gap-3">
                   {[
-                    { num: '340%', label: 'Lead Increase', sub: 'First 90 days' },
-                    { num: '62%', label: 'Lower CPL', sub: 'vs. benchmarks' },
-                    { num: '5.0★', label: 'Avg GBP Rating', sub: 'Managed profiles' },
-                    { num: '9+', label: 'Service Lines', sub: 'Full-stack digital' },
+                    { num: '340%', label: 'Lead Increase',    sub: 'First 90 days' },
+                    { num: '62%',  label: 'Lower CPL',        sub: 'vs. benchmarks' },
+                    { num: '5.0★', label: 'Avg GBP Rating',   sub: 'Managed profiles' },
+                    { num: '9+',   label: 'Service Lines',    sub: 'Full-stack digital' },
                   ].map((item, i) => (
                     <div key={i} className="p-4 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 text-center">
                       <div className="text-2xl font-bold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent mb-0.5">{item.num}</div>
@@ -556,15 +632,15 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* Services Slider */}
+      {/* ── Services Slider ───────────────────────────────────────────────────── */}
       <section id="services" className="py-32 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-gradient-to-r from-[#667eea]/10 to-[#f093fb]/10 rounded-full mb-6">
+            <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
                 OUR SERVICES
               </span>
-            </div>
+            </CometBadge>
             <h2 className="text-5xl md:text-6xl font-bold mb-4">
               <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">What We Do</span>
             </h2>
@@ -629,7 +705,6 @@ export default function JZSmartMediaLanding() {
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-
               <div className="flex gap-2">
                 {Array.from({ length: servicePages }).map((_, i) => (
                   <button
@@ -639,7 +714,6 @@ export default function JZSmartMediaLanding() {
                   />
                 ))}
               </div>
-
               <button
                 onClick={nextService}
                 className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
@@ -655,37 +729,95 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* Results / Projects Slider */}
+      {/* ── Marquee / Ticker ──────────────────────────────────────────────────── */}
+      <div
+        className={`relative z-10 py-10 ${isDark ? 'border-y border-gray-800/60 bg-[#0a0a0a]' : 'border-y border-gray-200 bg-white'}`}
+        style={{ overflowX: 'clip' }}
+      >
+        {/* Top row — scrolls left */}
+        <div style={{ display: 'flex', width: 'max-content', animation: 'marquee-left 28s linear infinite', marginBottom: '12px' }}>
+          {[...Array(2)].flatMap((_, loopIndex) =>
+            ['GROW', 'CONVERT', 'SCALE', 'RANK', 'DOMINATE', 'RESULTS', 'REVENUE', 'LEADS'].map((word, i) => (
+              <span
+                key={`top-${loopIndex}-${i}-${word}`}
+                className="flex items-center gap-6 mr-6 text-5xl md:text-7xl font-black tracking-tighter select-none whitespace-nowrap"
+              >
+                <span
+                  style={{
+                    color: 'transparent',
+                    WebkitTextStroke: `1.5px ${isDark ? 'rgba(102,126,234,0.45)' : 'rgba(102,126,234,0.3)'}`,
+                    letterSpacing: '-0.04em',
+                  }}
+                >
+                  {word}
+                </span>
+                <span style={{ color: isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.2)', fontSize: '0.5em', verticalAlign: 'middle' }}>✦</span>
+              </span>
+            ))
+          )}
+        </div>
+
+        {/* Bottom row — scrolls right (reverse) */}
+        <div style={{ display: 'flex', width: 'max-content', animation: 'marquee-left 22s linear infinite reverse' }}>
+          {[...Array(2)].flatMap((_, loopIndex) =>
+            ['LOCAL SEO', 'GOOGLE ADS', 'CRM SETUP', 'AUTOMATION', 'AI AGENTS', 'YELP ADS', 'WEB DEV', 'GBP MAPS'].map((word, i) => (
+              <span
+                key={`bot-${loopIndex}-${i}-${word}`}
+                className="flex items-center gap-6 mr-6 text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase select-none whitespace-nowrap"
+              >
+                <span
+                  style={{
+                    backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#fda085,#667eea)',
+                    backgroundSize: '300% auto',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                    animation: `gradient-shift ${8 + i}s linear infinite`,
+                  }}
+                >
+                  {word}
+                </span>
+                <span style={{ color: isDark ? 'rgba(240,147,251,0.3)' : 'rgba(240,147,251,0.4)', fontSize: '0.6em' }}>◆</span>
+              </span>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* ── Results / Projects Slider ─────────────────────────────────────────── */}
       <section id="results" className={`py-32 px-6 relative z-10 ${isDark ? 'bg-gray-900/30' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-gradient-to-r from-[#667eea]/10 to-[#f093fb]/10 rounded-full mb-6">
+            <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
                 REAL RESULTS
               </span>
-            </div>
+            </CometBadge>
             <h2 className="text-5xl md:text-6xl font-bold mb-4">
               <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">By The Numbers</span>
             </h2>
           </div>
 
-          {/* Results stats row */}
+          {/* "By The Numbers" stat boxes — comet border */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
             {[
               { num: '340%', label: 'Average Lead Increase', sub: 'Within first 90 days' },
-              { num: '62%', label: 'Lower Cost Per Lead', sub: 'vs. industry benchmarks' },
-              { num: '5.0★', label: 'Avg. GBP Rating', sub: 'Across managed profiles' },
-              { num: '98%', label: 'Client Retention Rate', sub: '12-month rolling average' },
+              { num: '62%',  label: 'Lower Cost Per Lead',   sub: 'vs. industry benchmarks' },
+              { num: '5.0★', label: 'Avg. GBP Rating',       sub: 'Across managed profiles' },
+              { num: '98%',  label: 'Client Retention Rate', sub: '12-month rolling average' },
             ].map((item, i) => (
-              <motion.div
+              <CometCard
                 key={i}
-                whileHover={{ y: -5 }}
-                className={`text-center p-8 rounded-3xl border ${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white border-gray-200'} shadow-xl`}
+                duration={`${3.5 + i * 0.4}s`}
+                delay={`${i * 0.25}s`}
+                innerBg={isDark ? 'bg-[#111111]' : 'bg-white'}
               >
-                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent mb-2">{item.num}</div>
-                <div className={`font-semibold text-sm mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.label}</div>
-                <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>{item.sub}</div>
-              </motion.div>
+                <div className="text-center p-8 shadow-xl rounded-3xl">
+                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent mb-2">{item.num}</div>
+                  <div className={`font-semibold text-sm mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.label}</div>
+                  <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>{item.sub}</div>
+                </div>
+              </CometCard>
             ))}
           </div>
 
@@ -709,13 +841,10 @@ export default function JZSmartMediaLanding() {
                     </div>
                     <div className="flex gap-2 flex-wrap">
                       {results[projectIndex].tags.map((tag, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-xs">
-                          {tag}
-                        </span>
+                        <span key={idx} className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-xs">{tag}</span>
                       ))}
                     </div>
                   </div>
-
                   <div className="p-10 md:p-12 flex flex-col justify-center">
                     <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {results[projectIndex].title}
@@ -763,15 +892,20 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* Process — Stacking Cards */}
-      <section id="process" className="py-32 px-6 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-20">
-            <div className="inline-block px-4 py-2 bg-gradient-to-r from-[#667eea]/10 to-[#f093fb]/10 rounded-full mb-6">
+      {/* ── Process — CSS Sticky Stacking Cards ──────────────────────────────── */}
+      {/*
+        overflow-x:clip (NOT hidden) — clip does NOT create a scroll container so position:sticky works.
+        Each wrapper is 700px tall. Cards stack using CSS sticky + increasing zIndex.
+      */}
+      <section id="process" className="relative z-10" style={{ overflowX: 'clip' }}>
+        {/* Header — outside sticky area so it scrolls away normally */}
+        <div className="py-24 px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
                 THE PROCESS
               </span>
-            </div>
+            </CometBadge>
             <h2 className="text-5xl md:text-6xl font-bold mb-4">
               <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">How We Work</span>
             </h2>
@@ -779,44 +913,94 @@ export default function JZSmartMediaLanding() {
               A proven four-step methodology delivering real pipeline growth every time.
             </p>
           </div>
+        </div>
 
-          {/* Stacking cards — sticky, each card offsets down */}
-          <div className="space-y-6">
+        {/* Stacking card wrappers */}
+        <div className="px-6 pb-32">
+          <div className="max-w-4xl mx-auto">
             {processSteps.map((step, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: index * 0.12 }}
-                style={{ position: 'sticky', top: `${80 + index * 24}px`, zIndex: 10 + index }}
-                className={`rounded-3xl overflow-hidden shadow-2xl border-4 ${isDark ? 'border-gray-900' : 'border-white'}`}
+                style={{
+                  height: index < processSteps.length - 1 ? '700px' : 'auto',
+                  position: 'relative',
+                }}
               >
-                <div className={`relative bg-gradient-to-br ${step.gradient} min-h-[280px] p-10 md:p-14 flex flex-col justify-between`}>
-                  <div className="text-[7rem] font-bold text-white/10 absolute top-0 right-8 leading-none select-none">
-                    {step.number}
-                  </div>
-                  <span className="text-white/60 text-sm font-semibold tracking-widest uppercase">{step.step}</span>
-                  <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">{step.title}</h3>
-                    <p className="text-white/85 text-lg max-w-2xl leading-relaxed">{step.description}</p>
+                <div
+                  style={{
+                    position: 'sticky',
+                    top: `${90 + index * 14}px`,
+                    zIndex: 10 + index,
+                  }}
+                >
+                  {/* Card */}
+                  <div
+                    className="rounded-3xl overflow-hidden shadow-2xl"
+                    style={{ boxShadow: `0 30px 80px rgba(0,0,0,0.4)` }}
+                  >
+                    <div className={`relative bg-gradient-to-br ${step.gradient}`}>
+                      {/* Large watermark number */}
+                      <div
+                        className="absolute right-6 top-1/2 -translate-y-1/2 font-black text-white/8 select-none leading-none pointer-events-none"
+                        style={{ fontSize: 'clamp(8rem, 20vw, 14rem)' }}
+                      >
+                        {String(index + 1).padStart(2, '0')}
+                      </div>
+
+                      <div className="relative z-10 p-10 md:p-14">
+                        {/* Top row */}
+                        <div className="flex items-center justify-between mb-8">
+                          <span className="text-white/50 text-xs font-bold tracking-[0.3em] uppercase">{step.step}</span>
+                          {/* Step dots */}
+                          <div className="flex gap-2">
+                            {processSteps.map((_, j) => (
+                              <div
+                                key={j}
+                                className="rounded-full transition-all"
+                                style={{
+                                  width: j === index ? '28px' : '8px',
+                                  height: '8px',
+                                  background: j <= index ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.25)',
+                                }}
+                              />
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="grid md:grid-cols-[1fr,auto] gap-8 items-end">
+                          <div>
+                            <h3 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
+                              {step.title}
+                            </h3>
+                            <p className="text-white/75 text-lg leading-relaxed max-w-xl">
+                              {step.description}
+                            </p>
+                          </div>
+                          {/* Step circle */}
+                          <div className="hidden md:flex w-20 h-20 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 items-center justify-center flex-shrink-0">
+                            <span className="text-2xl font-black text-white">{index + 1}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* ── Testimonials ─────────────────────────────────────────────────────── */}
       <section id="clients" ref={testimonialsRef} className={`py-32 px-6 relative z-10 ${isDark ? 'bg-gray-900/30' : 'bg-gray-50'}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-gradient-to-r from-[#667eea]/10 to-[#f093fb]/10 rounded-full mb-6">
+            <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
                 WHAT THEY SAY
               </span>
-            </div>
+            </CometBadge>
             <h2 className="text-5xl md:text-6xl font-bold mb-4">
               <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">Client Voices</span>
             </h2>
@@ -836,7 +1020,7 @@ export default function JZSmartMediaLanding() {
                   ))}
                 </div>
                 <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'} mb-8 leading-relaxed`}>
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </p>
                 <div className="flex items-center gap-4">
                   <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-lg`}>
@@ -853,17 +1037,24 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* Contact CTA */}
+      {/* ── Contact CTA — comet border on main container ─────────────────────── */}
       <section id="contact" ref={contactRef} className="py-32 px-6 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <div className={`relative p-16 rounded-3xl border text-center overflow-hidden ${isDark ? 'bg-gradient-to-br from-[#667eea]/10 via-[#764ba2]/10 to-[#f093fb]/10 border-[#667eea]/20' : 'bg-gradient-to-br from-[#667eea]/5 via-[#764ba2]/5 to-[#f093fb]/5 border-[#667eea]/30'} backdrop-blur-sm`}>
+
+          {/* CometCard wrapper around the "READY TO DOMINATE" container */}
+          <CometCard
+            hoverY={0}
+            duration="6s"
+            innerBg={isDark ? 'bg-[#0a0a0a]' : 'bg-white'}
+            className="p-16 text-center overflow-hidden relative"
+          >
             <div className="absolute inset-0 bg-gradient-to-br from-[#667eea]/5 to-[#f093fb]/5 animate-pulse" />
             <div className="relative z-10">
-              <div className="mb-6">
+              <CometBadge isDark={isDark}>
                 <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent uppercase tracking-widest">
-                  Let's Work Together
+                  Let&apos;s Work Together
                 </span>
-              </div>
+              </CometBadge>
               <h2 className="text-4xl md:text-6xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
                   READY TO
@@ -876,7 +1067,7 @@ export default function JZSmartMediaLanding() {
                 </span>
               </h2>
               <p className={`text-xl ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-10 max-w-2xl mx-auto`}>
-                Book a free 30-minute audit. We'll show you what's holding you back and what we'd do to fix it — no pitch, no pressure.
+                Book a free 30-minute audit. We&apos;ll show you what&apos;s holding you back and what we&apos;d do to fix it — no pitch, no pressure.
               </p>
               <motion.a
                 href="mailto:yarden@jzsmartmedia.com"
@@ -887,12 +1078,12 @@ export default function JZSmartMediaLanding() {
                 Book Free Audit <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </motion.a>
             </div>
-          </div>
+          </CometCard>
 
           <div className="grid md:grid-cols-2 gap-8 mt-16">
             {[
-              { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
-              { icon: MapPin, label: 'Service Area', value: 'Home Service Businesses Nationwide' },
+              { icon: Mail,    label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
+              { icon: MapPin,  label: 'Service Area',   value: 'Home Service Businesses Nationwide' },
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -916,14 +1107,13 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ── Footer ───────────────────────────────────────────────────────────── */}
       <footer className={`py-12 px-6 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'} relative z-10`}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-xl font-bold bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
               JZ. Smart Media
             </div>
-
             <div className="flex gap-6">
               {navItems.concat(['Contact']).map((item) => (
                 <a
@@ -935,7 +1125,6 @@ export default function JZSmartMediaLanding() {
                 </a>
               ))}
             </div>
-
             <div className={`text-center ${isDark ? 'text-gray-500' : 'text-gray-500'} text-sm`}>
               © 2026 JZ. Smart Media. All Rights Reserved.
             </div>
