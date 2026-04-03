@@ -17,7 +17,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-/* ─── Moving comet border — section pill badges─────────────────────────── */
+/* ─── Moving comet border — section pill badges ─────────────────────────── */
 function CometBadge({ children, isDark }) {
   return (
     <div className="relative inline-flex mb-6" style={{ padding: '2px', borderRadius: '9999px', overflow: 'hidden' }}>
@@ -335,10 +335,10 @@ export default function JZSmartMediaLanding() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-            ? isDark
-              ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-gray-800/50'
-              : 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50'
-            : 'bg-transparent'
+          ? isDark
+            ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-gray-800/50'
+            : 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50'
+          : 'bg-transparent'
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 py-5">
