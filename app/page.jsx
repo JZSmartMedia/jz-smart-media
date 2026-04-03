@@ -81,6 +81,16 @@ export default function JZSmartMediaLanding() {
   const heroRef = useRef(null);
   const testimonialsRef = useRef(null);
   const contactRef = useRef(null);
+  const processRef = useRef(null);
+
+  // Scroll-linked MotionValues for stacking process cards
+  // scrollYProgress: 0 when processRef top hits viewport top, 1 when bottom hits viewport bottom
+  const { scrollYProgress: processSP } = useScroll({ target: processRef, offset: ['start start', 'end end'] });
+  const easeOut3 = (t) => 1 - Math.pow(1 - t, 3);
+  const card1Y = useTransform(processSP, [0.20, 0.32], ['110vh', '0vh'], { ease: easeOut3 });
+  const card2Y = useTransform(processSP, [0.42, 0.54], ['110vh', '0vh'], { ease: easeOut3 });
+  const card3Y = useTransform(processSP, [0.62, 0.74], ['110vh', '0vh'], { ease: easeOut3 });
+  const cardYs  = [0, card1Y, card2Y, card3Y];
 
   // Transparent → glass nav on scroll
   useEffect(() => {
@@ -914,79 +924,82 @@ export default function JZSmartMediaLanding() {
           </div>
         </div>
 
-        {/* Stacking card wrappers */}
-        <div className="px-6 pb-32">
-          <div className="max-w-4xl mx-auto">
-            {processSteps.map((step, index) => (
-              <div
-                key={index}
-                style={{
-                  height: index < processSteps.length - 1 ? '700px' : 'auto',
-                  position: 'relative',
-                }}
-              >
-                <div
+        {/*
+          400vh outer div → provides scroll distance for 4 cards.
+          Inner sticky container stays pinned; each card slides up via Framer Motion
+          MotionValue tied to scrollYProgress (no re-renders, GPU-composited).
+          PEEK = 10px per card — each prior card peeks above the one on top.
+        */}
+        <div ref={processRef} style={{ height: '400vh', position: 'relative' }}>
+          <div
+            style={{
+              position: 'sticky',
+              top: '80px',
+              height: 'calc(100vh - 90px)',
+              overflow: 'visible',
+            }}
+          >
+            <div className="relative h-full max-w-4xl mx-auto px-6">
+              {processSteps.map((step, index) => (
+                <motion.div
+                  key={index}
                   style={{
-                    position: 'sticky',
-                    top: `${90 + index * 14}px`,
-                    zIndex: 10 + index,
+                    position: 'absolute',
+                    left: '1.5rem',
+                    right: '1.5rem',
+                    top: `${index * 10}px`,
+                    zIndex: index + 1,
+                    y: cardYs[index],
+                    borderRadius: '1.5rem',
+                    overflow: 'hidden',
+                    boxShadow: `0 ${24 + index * 8}px ${60 + index * 16}px rgba(0,0,0,0.45)`,
+                    willChange: 'transform',
                   }}
                 >
-                  {/* Card */}
-                  <div
-                    className="rounded-3xl overflow-hidden shadow-2xl"
-                    style={{ boxShadow: `0 30px 80px rgba(0,0,0,0.4)` }}
-                  >
-                    <div className={`relative bg-gradient-to-br ${step.gradient}`}>
-                      {/* Large watermark number */}
-                      <div
-                        className="absolute right-6 top-1/2 -translate-y-1/2 font-black text-white/8 select-none leading-none pointer-events-none"
-                        style={{ fontSize: 'clamp(8rem, 20vw, 14rem)' }}
-                      >
-                        {String(index + 1).padStart(2, '0')}
+                  <div className={`relative bg-gradient-to-br ${step.gradient}`}>
+                    {/* Watermark number */}
+                    <div
+                      className="absolute right-6 top-1/2 -translate-y-1/2 font-black select-none leading-none pointer-events-none"
+                      style={{ fontSize: 'clamp(8rem, 20vw, 14rem)', color: 'rgba(255,255,255,0.07)' }}
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </div>
+
+                    <div className="relative z-10 p-10 md:p-14">
+                      {/* Top row: step label + progress dots */}
+                      <div className="flex items-center justify-between mb-8">
+                        <span className="text-white/50 text-xs font-bold tracking-[0.3em] uppercase">{step.step}</span>
+                        <div className="flex gap-2">
+                          {processSteps.map((_, j) => (
+                            <div
+                              key={j}
+                              className="rounded-full"
+                              style={{
+                                width: j === index ? '28px' : '8px',
+                                height: '8px',
+                                background: j <= index ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.25)',
+                                transition: 'width 0.3s',
+                              }}
+                            />
+                          ))}
+                        </div>
                       </div>
 
-                      <div className="relative z-10 p-10 md:p-14">
-                        {/* Top row */}
-                        <div className="flex items-center justify-between mb-8">
-                          <span className="text-white/50 text-xs font-bold tracking-[0.3em] uppercase">{step.step}</span>
-                          {/* Step dots */}
-                          <div className="flex gap-2">
-                            {processSteps.map((_, j) => (
-                              <div
-                                key={j}
-                                className="rounded-full transition-all"
-                                style={{
-                                  width: j === index ? '28px' : '8px',
-                                  height: '8px',
-                                  background: j <= index ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.25)',
-                                }}
-                              />
-                            ))}
-                          </div>
+                      {/* Content + step circle */}
+                      <div className="grid md:grid-cols-[1fr,auto] gap-8 items-end">
+                        <div>
+                          <h3 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">{step.title}</h3>
+                          <p className="text-white/75 text-lg leading-relaxed max-w-xl">{step.description}</p>
                         </div>
-
-                        {/* Content */}
-                        <div className="grid md:grid-cols-[1fr,auto] gap-8 items-end">
-                          <div>
-                            <h3 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
-                              {step.title}
-                            </h3>
-                            <p className="text-white/75 text-lg leading-relaxed max-w-xl">
-                              {step.description}
-                            </p>
-                          </div>
-                          {/* Step circle */}
-                          <div className="hidden md:flex w-20 h-20 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 items-center justify-center flex-shrink-0">
-                            <span className="text-2xl font-black text-white">{index + 1}</span>
-                          </div>
+                        <div className="hidden md:flex w-20 h-20 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 items-center justify-center flex-shrink-0">
+                          <span className="text-2xl font-black text-white">{index + 1}</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
