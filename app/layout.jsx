@@ -1,5 +1,19 @@
 import { ThemeProvider } from 'next-themes';
+import { Fraunces, DM_Sans } from 'next/font/google';
 import './globals.css';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  axes: ['opsz', 'SOFT', 'WONK'],
+  variable: '--font-fraunces',
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+});
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
@@ -58,7 +72,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${fraunces.variable} ${dmSans.variable}`}>
       <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"

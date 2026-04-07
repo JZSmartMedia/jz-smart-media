@@ -76,21 +76,30 @@ export default function JZSmartMediaLanding() {
   const [serviceIndex, setServiceIndex] = useState(0);
   const [projectIndex, setProjectIndex] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [formData, setFormData] = useState({ name: '', business: '', phone: '', email: '', industry: '' });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', industry: '' });
+  const [contactSubmitted, setContactSubmitted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setFormSubmitted(true);
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    setContactSubmitted(true);
+  };
+
+  const setField = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
+  const setContactField = (field) => (e) => setContactForm(prev => ({ ...prev, [field]: e.target.value }));
 
   const heroRef = useRef(null);
   const testimonialsRef = useRef(null);
   const contactRef = useRef(null);
   const processRef = useRef(null);
 
-  // Scroll-linked MotionValues for stacking process cards
-  // scrollYProgress: 0 when processRef top hits viewport top, 1 when bottom hits viewport bottom
-  const { scrollYProgress: processSP } = useScroll({ target: processRef, offset: ['start start', 'end end'] });
-  const easeOut3 = (t) => 1 - Math.pow(1 - t, 3);
-  const card1Y = useTransform(processSP, [0.20, 0.32], ['110vh', '0vh'], { ease: easeOut3 });
-  const card2Y = useTransform(processSP, [0.42, 0.54], ['110vh', '0vh'], { ease: easeOut3 });
-  const card3Y = useTransform(processSP, [0.62, 0.74], ['110vh', '0vh'], { ease: easeOut3 });
-  const cardYs  = [0, card1Y, card2Y, card3Y];
 
   // Transparent → glass nav on scroll
   useEffect(() => {
@@ -182,58 +191,46 @@ export default function JZSmartMediaLanding() {
   /* ── Data ────────────────────────────────────────────────────────────── */
   const services = [
     {
-      number: '01', icon: <Globe className="w-8 h-8" />, title: 'Local SEO & GBP',
-      description: 'Own the Map Pack. We optimize your GBP, build citation authority, and create content that converts search into booked jobs.',
-      features: ['GBP Optimization', 'Citation Building', 'City & Service Pages', 'Review Generation'],
+      number: '01', icon: <Globe className="w-8 h-8" />, title: 'Local SEO & Google Business',
+      description: 'Own the Map Pack. We optimize your GBP, build citation authority, and create content that converts search intent into booked jobs.',
+      features: ['GBP Optimization & Management', 'Citation Building & Cleanup', 'City & Service Pages', 'Review Generation System'],
       gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
+      image: 'https://images.unsplash.com/photo-1572021335469-31706a17aaef?w=600&q=80',
     },
     {
-      number: '02', icon: <Target className="w-8 h-8" />, title: 'Google Ads & LSA',
-      description: 'High-intent search campaigns targeting homeowners ready to buy. Budget-disciplined, weekly-optimized, conversion-tracked.',
-      features: ['Search Campaigns', 'LSA & Google Guarantee', 'CallRail Tracking', 'Weekly Optimization'],
+      number: '02', icon: <Target className="w-8 h-8" />, title: 'Google Ads & Local Service Ads',
+      description: 'High-intent search campaigns targeting homeowners ready to buy. Budget-disciplined, conversion-tracked, weekly-optimized.',
+      features: ['Search & Performance Max', 'LSA & Google Guarantee', 'CallRail Integration', 'Weekly Bid Optimization'],
       gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
+      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&q=80',
     },
     {
-      number: '03', icon: <Star className="w-8 h-8" />, title: 'Yelp Ads & Reviews',
-      description: 'Capture decision-stage buyers on Yelp. We manage ads, optimize your profile, and build review volume that converts.',
-      features: ['Yelp Ads Management', 'Profile Optimization', 'Review Strategy', 'Monthly Reports'],
+      number: '03', icon: <Star className="w-8 h-8" />, title: 'Yelp Ads & Review Management',
+      description: 'Capture decision-stage buyers on Yelp. We manage your ads, optimize your profile, and build the review volume that converts.',
+      features: ['Yelp Ads Management', 'Profile Optimization', 'Review Response Strategy', 'Monthly ROI Reporting'],
       gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
     },
     {
-      number: '04', icon: <Settings className="w-8 h-8" />, title: 'CRM & Automation',
-      description: 'Customized CRM and automation solutions to capture, track, and convert every lead. Automated follow-ups, booking, and SMS.',
-      features: ['Customized Solutions', 'Automated Follow-Up', 'Appointment Booking', 'SMS Campaigns'],
+      number: '04', icon: <Settings className="w-8 h-8" />, title: 'CRM & Marketing Automation',
+      description: 'GoHighLevel pipelines, automated follow-up, booking, review requests and SMS campaigns. Zero leads fall through the cracks.',
+      features: ['GoHighLevel Setup', 'Automated Follow-Up Flows', 'Appointment Booking', 'SMS & Email Campaigns'],
       gradient: 'from-[#43e97b] via-[#38f9d7] to-[#667eea]',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
     },
     {
       number: '05', icon: <Code className="w-8 h-8" />, title: 'Web Development',
-      description: 'Custom websites built for speed, SEO, and conversions. Every site designed to generate leads from day one.',
-      features: ['Custom Website Development', 'Landing Pages & Funnels', 'SEO-Optimized Structure', 'CRM Integration'],
-      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]', badge: 'New',
+      description: 'Custom websites engineered for speed, SEO, and conversion. Every site built to produce calls from day one.',
+      features: ['Custom WordPress Builds', 'Landing Pages & Funnels', 'SEO Architecture', 'Core Web Vitals & Speed', 'City Location Pages', 'GHL Integration & Hosting'],
+      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80',
     },
     {
-      number: '06', icon: <Brain className="w-8 h-8" />, title: 'AI Solutions',
-      description: 'AI chatbots that qualify leads 24/7, automated dashboards, voice AI for missed calls, and workflow automation.',
-      features: ['AI Chatbots & Lead Qualification', 'Voice AI for Missed Calls', 'Workflow Automation', 'Predictive Lead Scoring'],
+      number: '06', icon: <Brain className="w-8 h-8" />, title: 'AI Solutions & Business Intelligence',
+      description: 'Enterprise-grade AI in your home service business. Chatbots that qualify leads 24/7, voice AI for missed calls, automated dashboards.',
+      features: ['AI Chatbots & Lead Qualification', 'Voice AI for Missed Calls', 'Automated KPI Dashboards', 'Workflow Automation', 'Predictive Lead Scoring', 'Competitor Intelligence'],
       gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]', badge: 'New',
-    },
-    {
-      number: '07', icon: <FileText className="w-8 h-8" />, title: 'SEO Content',
-      description: 'Strategic, data-driven content built to increase authority, capture high-intent traffic, and convert visitors into qualified leads.',
-      features: ['Service & Location Pages', 'Conversion-Focused Strategy', 'Authority & Topical Clusters', 'Advanced Schema & Structured Data'],
-      gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
-    },
-    {
-      number: '08', icon: <PieChart className="w-8 h-8" />, title: 'Analytics & Reports',
-      description: 'GA4, CallRail, GBP Insights, and custom dashboards — always know which channels are producing revenue.',
-      features: ['GA4 Setup', 'CallRail Tracking', 'Custom Dashboards', 'Monthly Reviews'],
-      gradient: 'from-[#43e97b] via-[#38f9d7] to-[#667eea]',
-    },
-    {
-      number: '09', icon: <Rocket className="w-8 h-8" />, title: 'Full Growth Retainer',
-      description: 'All channels, one team, one strategy. Dedicated account manager, monthly executive sessions, priority execution.',
-      features: ['All Channel Management', 'Dedicated Manager', 'Strategy Sessions', 'Priority Support'],
-      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]', badge: 'Premium',
+      image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
     },
   ];
 
@@ -242,45 +239,44 @@ export default function JZSmartMediaLanding() {
       title: 'OakTree Chimney Solutions', category: 'Local SEO + Google Ads',
       description: 'Call volume more than tripled within 90 days. Full GBP overhaul, targeted search campaigns, and review generation strategy.',
       gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
+      image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80',
       tags: ['Local SEO', 'Google Ads', 'GBP', 'Reviews'],
-      metrics: { leads: '+340%', cpl: '-62%', rating: '5.0★' },
+      metrics: [{ value: '+340%', label: 'Lead Increase' }, { value: '-62%', label: 'Cost Per Lead' }, { value: '5.0★', label: 'GBP Rating' }],
     },
     {
       title: 'CoStar Roofing Inc.', category: 'Yelp Ads + Reviews',
       description: 'Within 6 weeks of Yelp ads launch: consistent inbound leads every single day. Profile fully optimized, review cadence built.',
       gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80',
       tags: ['Yelp Ads', 'Profile Optimization', 'Review Strategy'],
-      metrics: { leads: 'Daily', weeks: '6 Wks', retention: '98%' },
+      metrics: [{ value: 'Daily', label: 'Inbound Leads' }, { value: '6 Wks', label: 'Time to Results' }, { value: '98%', label: 'Retention Rate' }],
     },
     {
       title: 'ASAP Water Damage Restoration', category: 'CRM + AI Automation',
       description: 'Automated follow-ups, review requests, and missed call recovery. Closing deals that would have been lost before.',
       gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
+      image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=900&q=80',
       tags: ['CRM', 'AI Automation', 'SMS', 'Voice AI'],
-      metrics: { recovery: 'Calls', followup: 'Auto', close: '+↑ Rate' },
+      metrics: [{ value: '100%', label: 'Calls Recovered' }, { value: 'Auto', label: 'Follow-Ups' }, { value: '+↑', label: 'Close Rate' }],
     },
   ];
 
   const processSteps = [
     {
-      number: '1', step: 'STEP 01', title: 'Discovery & Audit',
-      description: 'A complete audit of your digital presence — ads, GBP, website, competitors, missed opportunities. Real insights before we talk numbers.',
-      gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
+      step: 'Step 01', title: 'Free Discovery Audit',
+      description: 'We audit your GBP, ads, website, and competitors. You get a full picture of what\'s leaking revenue — no commitment required.',
     },
     {
-      number: '2', step: 'STEP 02', title: 'Custom Strategy',
-      description: 'A tailored 90-day growth plan built around your market, budget, and goals. We prioritize highest-impact channels first.',
-      gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
+      step: 'Step 02', title: 'Bespoke Strategy',
+      description: 'A tailored 90-day growth plan built around your market, budget, and goals. We prioritize the highest-impact channels first.',
     },
     {
-      number: '3', step: 'STEP 03', title: 'Precision Launch',
-      description: 'Full setup, tracking, go-live. Monitoring starts day one. Optimization starts week one. Results show up month one.',
-      gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
+      step: 'Step 03', title: 'Precision Launch',
+      description: 'Full setup, tracking, and go-live. Monitoring starts day one. Optimization starts week one. Results show up month one.',
     },
     {
-      number: '4', step: 'STEP 04', title: 'Scale & Report',
-      description: "Monthly reporting with real KPIs. We scale what works, cut what doesn't, and compound results every month.",
-      gradient: 'from-[#43e97b] via-[#38f9d7] to-[#667eea]',
+      step: 'Step 04', title: 'Scale & Report',
+      description: 'Monthly reporting with real KPIs. We scale what works, cut what doesn\'t, and compound your results every month.',
     },
   ];
 
@@ -303,10 +299,10 @@ export default function JZSmartMediaLanding() {
   ];
 
   const stats = [
-    { number: '50+', label: 'Active Client Accounts', color: 'from-[#667eea] to-[#764ba2]' },
-    { number: '8×', label: 'Average Lead ROI', color: 'from-[#f093fb] to-[#f5576c]' },
-    { number: '$2M+', label: 'Ad Spend Managed', color: 'from-[#fda085] to-[#43e97b]' },
-    { number: '98%', label: '12-Month Retention', color: 'from-[#43e97b] to-[#667eea]' },
+    { number: '340%', label: 'Average lead increase in 90 days', color: 'from-[#667eea] to-[#764ba2]' },
+    { number: '62%', label: 'Lower cost per lead vs. benchmarks', color: 'from-[#f093fb] to-[#f5576c]' },
+    { number: '5.0★', label: 'Average GBP rating across all clients', color: 'from-[#fda085] to-[#43e97b]' },
+    { number: '98%', label: '12-month client retention rate', color: 'from-[#43e97b] to-[#667eea]' },
   ];
 
   const navItems = ['Services', 'Process', 'Results', 'Clients'];
@@ -344,22 +340,38 @@ export default function JZSmartMediaLanding() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? isDark
-            ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-gray-800/50'
-            : 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50'
-          : 'bg-transparent'
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          menuOpen
+            ? isDark
+              ? 'bg-[#0d0d0d] border-b border-gray-800/60'
+              : 'bg-white border-b border-gray-200/60'
+            : scrolled
+              ? isDark
+                ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-gray-800/50'
+                : 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50'
+              : 'bg-transparent'
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-5">
+        <div className={`max-w-7xl mx-auto px-6 py-5 ${menuOpen ? (isDark ? 'bg-[#0d0d0d]' : 'bg-white') : ''} transition-colors duration-200`}>
           <div className="flex items-center justify-between">
 
             {/* Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-xl font-bold bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent"
+              className="flex items-baseline gap-1.5 select-none"
             >
-              JZ. Smart Media
+              <span
+                className="text-3xl font-black bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent leading-none"
+                style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}
+              >
+                JZ.
+              </span>
+              <span
+                className={`text-sm font-medium tracking-wide ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}
+              >
+                Smart Media
+              </span>
             </motion.div>
 
             {/* Desktop nav — comet border pill */}
@@ -433,15 +445,26 @@ export default function JZSmartMediaLanding() {
                 exit={{ opacity: 0, height: 0 }}
                 className="md:hidden overflow-hidden"
               >
-                <div className="py-4 space-y-4">
+                <div className={`py-6 space-y-1 border-t ${isDark ? 'border-gray-800' : 'border-gray-100'}`}>
                   {navItems.map((item) => (
-                    <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="block text-sm font-medium">
+                    <a
+                      key={item}
+                      href={`#${item.toLowerCase()}`}
+                      onClick={() => setMenuOpen(false)}
+                      className={`block px-2 py-3 text-base font-semibold rounded-xl transition-colors ${isDark ? 'text-gray-200 hover:text-white hover:bg-white/5' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}
+                    >
                       {item}
                     </a>
                   ))}
-                  <a href="#contact" onClick={() => setMenuOpen(false)} className="block text-sm font-semibold text-[#667eea]">
-                    Get Started →
-                  </a>
+                  <div className="pt-3">
+                    <a
+                      href="#contact"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-xl text-sm font-semibold"
+                    >
+                      Get Started <ArrowRight className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -450,96 +473,264 @@ export default function JZSmartMediaLanding() {
       </motion.nav>
 
       {/* ── Hero Section ─────────────────────────────────────────────────────── */}
-      <section id="home" ref={heroRef} className="min-h-screen flex items-center justify-center px-6 pt-36 pb-20 relative overflow-x-hidden">
-        <div className="w-full max-w-6xl mx-auto text-center relative z-10">
+      <section id="home" ref={heroRef} className="min-h-screen flex items-center px-6 pt-28 pb-16 relative overflow-x-hidden">
+        <div className="w-full max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-          {/* Badge — comet border */}
-          <div className="hero-float hero-badge">
-            <CometBadge isDark={isDark}>
-              <span className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#667eea]" />
-                <span className="text-sm font-medium bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-                  Digital Growth Agency
-                </span>
-              </span>
-            </CometBadge>
-          </div>
+            {/* ── Left: Content ── */}
+            <div>
+              {/* Badge */}
+              <div className="hero-float hero-badge mb-6">
+                <CometBadge isDark={isDark}>
+                  <span className="flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-[#667eea]" />
+                    <span className="text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
+                      Home Services Digital Agency
+                    </span>
+                  </span>
+                </CometBadge>
+              </div>
 
-          {/* H1 — 3 lines, moving gradient */}
-          <h1 className="font-black mb-8 leading-[0.88] tracking-tighter">
-            <div className="overflow-hidden mb-1">
+              {/* H1 */}
+              <h1 className="font-black mb-6 leading-[0.93] tracking-tight">
+                <div className="overflow-hidden mb-1">
+                  <div
+                    className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]"
+                    style={{ color: isDark ? '#ffffff' : '#0f0f0f' }}
+                  >
+                    We Don't Run Ads.
+                  </div>
+                </div>
+                <div className="overflow-hidden mb-1">
+                  <div className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]" style={{ color: isDark ? '#ffffff' : '#0f0f0f' }}>
+                    We Build{' '}
+                    <span
+                      style={{
+                        backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#667eea)',
+                        backgroundSize: '200% auto',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        color: 'transparent',
+                        animation: 'gradient-shift 5s linear infinite',
+                        fontStyle: 'italic',
+                      }}
+                    >
+                      Revenue
+                    </span>
+                  </div>
+                </div>
+                <div className="overflow-hidden">
+                  <div
+                    className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]"
+                    style={{
+                      color: 'transparent',
+                      WebkitTextStroke: `2px ${isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.8)'}`,
+                    }}
+                  >
+                    Pipelines.
+                  </div>
+                </div>
+              </h1>
+
+              {/* Subtext */}
+              <p className={`hero-subtitle text-base md:text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-lg leading-relaxed`}>
+                JZ. Smart Media delivers performance-driven digital marketing exclusively for home service businesses — roofing, HVAC, restoration, remodeling. More calls. More jobs. More revenue.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4 items-start mb-8">
+                <motion.a
+                  href="#contact"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="hero-cta-btn magnetic-btn group px-8 py-4 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold text-sm inline-flex items-center gap-2 shadow-2xl shadow-[#667eea]/30 self-start"
+                >
+                  Get Your Free Growth Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </motion.a>
+                <motion.a
+                  href="#services"
+                  whileHover={{ x: 3 }}
+                  className={`inline-flex items-center gap-1.5 font-semibold text-sm self-start sm:self-center ${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors`}
+                >
+                  See Our Services <ArrowRight className="w-4 h-4" />
+                </motion.a>
+              </div>
+
+              {/* Stars */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#fda085] text-[#fda085]" />
+                  ))}
+                </div>
+                <span className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>5.0 / 5 Stars</span>
+                <span className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>· Rated by 50+ home service businesses</span>
+              </div>
+            </div>
+
+            {/* ── Right: Lead Form ── */}
+            <div className="hero-float">
               <div
-                className="hero-line text-6xl md:text-8xl lg:text-9xl"
+                className="relative rounded-2xl overflow-hidden"
                 style={{
-                  backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#fda085,#667eea)',
-                  backgroundSize: '200% auto',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                  animation: 'gradient-shift 5s linear infinite',
+                  border: `1.5px solid ${isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.25)'}`,
+                  background: isDark ? '#111111' : '#ffffff',
+                  boxShadow: isDark
+                    ? '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(102,126,234,0.1)'
+                    : '0 32px 80px rgba(102,126,234,0.12), 0 0 0 1px rgba(102,126,234,0.08)',
                 }}
               >
-                WE MAKE LOCAL
-              </div>
-            </div>
-            <div className="overflow-hidden mb-1">
-              <div className={`hero-line text-4xl md:text-5xl lg:text-6xl font-semibold tracking-wide ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-                BUSINESSES
-              </div>
-            </div>
-            <div className="overflow-hidden">
-              <div
-                className="hero-line text-6xl md:text-8xl lg:text-9xl"
-                style={{
-                  backgroundImage: 'linear-gradient(90deg,#f093fb,#667eea,#764ba2,#f5576c,#43e97b,#f093fb)',
-                  backgroundSize: '200% auto',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                  animation: 'gradient-shift 5s linear infinite',
-                  animationDelay: '-2.5s',
-                }}
-              >
-                DOMINATE
-              </div>
-            </div>
-          </h1>
+                {/* Top gradient bar */}
+                <div style={{ height: '3px', background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', position: 'absolute', top: 0, left: 0, right: 0 }} />
 
-          <p className={`hero-subtitle text-lg md:text-xl ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-12 max-w-2xl mx-auto leading-relaxed`}>
-            JZ. Smart Media is a performance-driven digital agency for home service businesses — roofing, HVAC, restoration, remodeling. We fill your pipeline, not just your dashboard.
-          </p>
+                <div className="px-8 pt-10 pb-8">
+                  {formSubmitted ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="py-10 text-center"
+                    >
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#667eea] to-[#f093fb] flex items-center justify-center">
+                        <CheckCircle className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-black mb-2" style={{ color: isDark ? '#fff' : '#111', fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
+                        You're all set!
+                      </h3>
+                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                        We'll review your info and reach out within 30 minutes with your free audit.
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <>
+                      <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#667eea] mb-2">Free Growth Audit</p>
+                      <h2
+                        className="text-2xl font-black mb-6 leading-tight"
+                        style={{ color: isDark ? '#ffffff' : '#0f0f0f', fontFamily: 'var(--font-fraunces), Georgia, serif' }}
+                      >
+                        See exactly what's holding your business back
+                      </h2>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="hero-cta-btn magnetic-btn group px-10 py-5 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold flex items-center gap-3 shadow-2xl shadow-[#667eea]/30"
-            >
-              Start Growing <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </motion.a>
+                      <form onSubmit={handleFormSubmit} className="space-y-4">
+                        {/* Name */}
+                        <div>
+                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Name</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="Mike Johnson"
+                            value={formData.name}
+                            onChange={setField('name')}
+                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                          />
+                        </div>
+
+                        {/* Business Name */}
+                        <div>
+                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Business Name</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="Johnson Roofing LLC"
+                            value={formData.business}
+                            onChange={setField('business')}
+                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                          />
+                        </div>
+
+                        {/* Phone */}
+                        <div>
+                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Phone Number</label>
+                          <input
+                            type="tel"
+                            required
+                            placeholder="(555) 000-0000"
+                            value={formData.phone}
+                            onChange={setField('phone')}
+                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                          />
+                        </div>
+
+                        {/* Email */}
+                        <div>
+                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Email Address</label>
+                          <input
+                            type="email"
+                            required
+                            placeholder="mike@yourcompany.com"
+                            value={formData.email}
+                            onChange={setField('email')}
+                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                          />
+                        </div>
+
+                        {/* Industry */}
+                        <div>
+                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
+                          <select
+                            required
+                            value={formData.industry}
+                            onChange={setField('industry')}
+                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 appearance-none cursor-pointer ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#667eea]/60'} ${!formData.industry ? (isDark ? 'text-gray-600' : 'text-gray-400') : ''}`}
+                          >
+                            <option value="" disabled>Select your industry...</option>
+                            <option value="roofing">Roofing</option>
+                            <option value="hvac">HVAC</option>
+                            <option value="restoration">Restoration</option>
+                            <option value="remodeling">Remodeling</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="electrical">Electrical</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </div>
+
+                        {/* Submit */}
+                        <motion.button
+                          type="submit"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30"
+                          style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', backgroundSize: '200% auto' }}
+                        >
+                          Get My Free Audit <ArrowRight className="w-4 h-4" />
+                        </motion.button>
+
+                        <p className={`text-center text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                          🔒 No spam. No commitment. Results in 30 minutes.
+                        </p>
+                      </form>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
           </div>
-
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2"
-          >
-            <div className={`w-6 h-10 border-2 ${isDark ? 'border-gray-600' : 'border-gray-400'} rounded-full flex justify-center`}>
-              <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-1.5 h-1.5 bg-gradient-to-r from-[#667eea] to-[#f093fb] rounded-full mt-2"
-              />
-            </div>
-          </motion.div>
         </div>
       </section>
 
-      {/* ── Stats Section — comet border cards ───────────────────────────────── */}
+      {/* ── Stats + Platforms Section ─────────────────────────────────────────── */}
       <section className="py-20 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+
+          {/* Trusted platforms */}
+          <div className="text-center mb-10">
+            <p className={`text-xs font-bold tracking-[0.25em] uppercase mb-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+              Trusted platforms we manage
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {['Google Ads', 'Local SEO', 'Yelp Ads', 'GoHighLevel', 'AI Solutions', 'Web Dev'].map((platform) => (
+                <span
+                  key={platform}
+                  className={`px-5 py-2 rounded-full text-sm font-semibold border ${isDark ? 'border-gray-700 text-gray-300 bg-gray-900/60' : 'border-gray-200 text-gray-700 bg-gray-50'}`}
+                >
+                  {platform}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
               <CometCard
                 key={index}
@@ -551,92 +742,10 @@ export default function JZSmartMediaLanding() {
                   <div className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
                     {stat.number}
                   </div>
-                  <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm font-medium`}>{stat.label}</div>
+                  <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm font-medium leading-snug`}>{stat.label}</div>
                 </div>
               </CometCard>
             ))}
-          </div>
-
-          {/* Badges row */}
-          <div className="flex flex-wrap justify-center gap-3">
-            {['Google Ads Certified', 'LSA Specialist', 'GoHighLevel Partner', 'AI-Enabled Agency'].map((badge) => (
-              <span key={badge} className={`px-4 py-2 rounded-full text-sm font-medium border ${isDark ? 'border-[#667eea]/30 text-[#a78bfa] bg-[#667eea]/10' : 'border-[#667eea]/40 text-[#667eea] bg-[#667eea]/10'}`}>
-                {badge}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── About Section ────────────────────────────────────────────────────── */}
-      <section id="about" className="py-32 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="reveal">
-              <CometBadge isDark={isDark}>
-                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                  JZ. — BUILT FOR HOME SERVICES
-                </span>
-              </CometBadge>
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">We Know</span>
-                <br />
-                <span className={isDark ? 'text-white' : 'text-gray-900'}>Your Market</span>
-              </h2>
-              <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-6 leading-relaxed`}>
-                We work exclusively with roofers, restoration companies, HVAC techs, remodelers and chimney pros. We know your buyers, your search intent, your seasonality — and exactly how to fill your pipeline year-round.
-              </p>
-              <div className="space-y-4 mb-8">
-                {[
-                  'Performance Driven Google Ads',
-                  'Local SEO & Maps Domination',
-                  'Multi Channel Lead Generation',
-                  'Advanced CRM & Automation',
-                  'AI Powered Growth Strategies',
-                ].map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-3"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#43e97b] to-[#38f9d7] flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className={`${isDark ? 'text-gray-300' : 'text-gray-700'} font-medium text-sm uppercase tracking-wide`}>{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative reveal">
-              <div className="relative rounded-3xl overflow-hidden h-[500px]">
-                <Image
-                  src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80"
-                  alt="Roofing professionals at work"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
-                <div className="absolute inset-x-0 bottom-0 p-6 grid grid-cols-2 gap-3">
-                  {[
-                    { num: '340%', label: 'Lead Increase', sub: 'First 90 days' },
-                    { num: '62%', label: 'Lower CPL', sub: 'vs. benchmarks' },
-                    { num: '5.0★', label: 'Avg GBP Rating', sub: 'Managed profiles' },
-                    { num: '9+', label: 'Service Lines', sub: 'Full-stack digital' },
-                  ].map((item, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 text-center">
-                      <div className="text-2xl font-bold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent mb-0.5">{item.num}</div>
-                      <div className="text-white text-xs font-semibold mb-0.5">{item.label}</div>
-                      <div className="text-white/60 text-xs">{item.sub}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -647,14 +756,17 @@ export default function JZSmartMediaLanding() {
           <div className="text-center mb-16">
             <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                OUR SERVICES
+                What We Do
               </span>
             </CometBadge>
-            <h2 className="text-5xl md:text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">What We Do</span>
+            <h2 className="text-4xl md:text-5xl font-black mb-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+              Everything your business<br />needs to{' '}
+              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                dominate locally
+              </span>
             </h2>
             <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-xl mx-auto`}>
-              Every service engineered around one outcome: more calls, more jobs, more revenue.
+              Every service built around one outcome: qualified calls from homeowners ready to book.
             </p>
           </div>
 
@@ -675,16 +787,29 @@ export default function JZSmartMediaLanding() {
                     whileHover={{ y: -6 }}
                     className={`rounded-2xl border overflow-hidden flex flex-col ${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white border-gray-200'} shadow-xl transition-shadow hover:shadow-2xl`}
                   >
-                    {/* Icon container — TOP */}
-                    <div className={`relative h-44 bg-gradient-to-br ${service.gradient} flex items-center justify-center`}>
-                      <span className="absolute top-3 left-4 text-white/30 text-xs font-bold tracking-widest">{service.number}</span>
+                    {/* Image container — TOP */}
+                    <div className="relative h-44 overflow-hidden">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      {/* Dark bottom-to-top overlay so image is visible at top */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10" />
+                      {/* Subtle brand colour tint */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-30`} />
+                      <span className="absolute top-3 left-4 text-white/70 text-xs font-bold tracking-widest z-10">{service.number}</span>
                       {service.badge && (
-                        <span className="absolute top-3 right-4 px-2.5 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
+                        <span className="absolute top-3 right-4 px-2.5 py-1 bg-black/40 backdrop-blur-sm text-white text-xs font-semibold rounded-full z-10 border border-white/20">
                           {service.badge}
                         </span>
                       )}
-                      <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
-                        {service.icon}
+                      <div className="absolute inset-0 flex items-center justify-center z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-black/30 backdrop-blur-sm border border-white/25 flex items-center justify-center text-white shadow-lg">
+                          {service.icon}
+                        </div>
                       </div>
                     </div>
 
@@ -734,6 +859,69 @@ export default function JZSmartMediaLanding() {
             <p className={`text-center mt-4 text-sm ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
               Page {serviceIndex + 1} of {servicePages} · {services.length} Services
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Why JZ. Smart Media ───────────────────────────────────────────────── */}
+      <section id="about" className="py-32 px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="reveal mb-16">
+            <CometBadge isDark={isDark}>
+              <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                Why JZ. Smart Media
+              </span>
+            </CometBadge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mt-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+              Built differently.{' '}
+              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                Built for results.
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-16">
+            {[
+              { num: '1.', title: 'Home Services Only', body: 'We work exclusively in your vertical. We know the search intent, seasonality, and buying triggers for roofers, restoration companies, HVAC techs, and remodelers.' },
+              { num: '2.', title: 'Full-Stack, One Roof', body: 'SEO, paid ads, CRM, web, and AI — all coordinated by one team toward the same KPIs. No finger-pointing between vendors.' },
+              { num: '3.', title: 'Budget Accountability', body: "We treat your ad spend the way a CFO would. Every dollar is accountable. No wasted impressions or brand campaigns that don't convert." },
+              { num: '4.', title: 'Radical Transparency', body: 'Monthly reports with real KPIs — cost per lead, close rate, ROI by channel. No padded dashboards or vanity metrics.' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeOut' }}
+                className={`reveal p-8 rounded-2xl border ${isDark ? 'bg-gray-900/60 border-gray-800' : 'bg-white border-gray-200'} shadow-lg`}
+              >
+                <div className="text-4xl font-black mb-3 leading-none" style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                  {item.num}
+                </div>
+                <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.title}</h3>
+                <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className={`reveal rounded-2xl p-8 md:p-10 border ${isDark ? 'bg-gray-900/40 border-gray-800' : 'bg-gray-50 border-gray-200'}`}
+          >
+            <p className={`text-lg md:text-xl italic leading-relaxed mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              &ldquo;The agencies that win long-term treat your budget like it&apos;s their own and your pipeline like it&apos;s their KPI.&rdquo;
+            </p>
+            <p className="text-sm font-bold text-[#667eea]">— JZ. Smart Media Philosophy</p>
+          </motion.div>
+
+          <div className="flex flex-wrap gap-3 mt-8 justify-center">
+            {['Google Ads Certified', 'LSA Specialist', 'GHL Partner', 'Yelp Ads', 'AI-Enabled'].map((badge) => (
+              <span key={badge} className={`px-4 py-2 rounded-full text-xs font-semibold border ${isDark ? 'border-[#667eea]/30 text-[#a78bfa] bg-[#667eea]/10' : 'border-[#667eea]/40 text-[#667eea] bg-[#667eea]/10'}`}>
+                {badge}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -799,35 +987,15 @@ export default function JZSmartMediaLanding() {
           <div className="text-center mb-16">
             <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                REAL RESULTS
+                Client Results
               </span>
             </CometBadge>
-            <h2 className="text-5xl md:text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">By The Numbers</span>
+            <h2 className="text-4xl md:text-5xl font-black mb-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+              Real clients.{' '}
+              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                Real results.
+              </span>
             </h2>
-          </div>
-
-          {/* "By The Numbers" stat boxes — comet border */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-            {[
-              { num: '340%', label: 'Average Lead Increase', sub: 'Within first 90 days' },
-              { num: '62%', label: 'Lower Cost Per Lead', sub: 'vs. industry benchmarks' },
-              { num: '5.0★', label: 'Avg. GBP Rating', sub: 'Across managed profiles' },
-              { num: '98%', label: 'Client Retention Rate', sub: '12-month rolling average' },
-            ].map((item, i) => (
-              <CometCard
-                key={i}
-                duration={`${3.5 + i * 0.4}s`}
-                delay={`${i * 0.25}s`}
-                innerBg={isDark ? 'bg-[#111111]' : 'bg-white'}
-              >
-                <div className="text-center p-8 shadow-xl rounded-3xl">
-                  <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent mb-2">{item.num}</div>
-                  <div className={`font-semibold text-sm mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.label}</div>
-                  <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>{item.sub}</div>
-                </div>
-              </CometCard>
-            ))}
           </div>
 
           {/* Case studies slider */}
@@ -841,19 +1009,32 @@ export default function JZSmartMediaLanding() {
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
                 className={`rounded-3xl border ${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white border-gray-200'} shadow-2xl overflow-hidden`}
               >
-                <div className="grid md:grid-cols-2 min-h-[420px]">
-                  <div className={`relative bg-gradient-to-br ${results[projectIndex].gradient} p-12 flex flex-col justify-end`}>
-                    <div className="absolute top-6 right-6">
+                <div className="grid md:grid-cols-2 min-h-[460px]">
+                  {/* Image panel */}
+                  <div className="relative overflow-hidden min-h-[280px] md:min-h-0">
+                    <Image
+                      src={results[projectIndex].image}
+                      alt={results[projectIndex].title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/5" />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${results[projectIndex].gradient} opacity-25`} />
+                    {/* Category pill */}
+                    <div className="absolute top-6 right-6 z-10">
                       <span className="px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-medium">
                         {results[projectIndex].category}
                       </span>
                     </div>
-                    <div className="flex gap-2 flex-wrap">
+                    {/* Tags at bottom */}
+                    <div className="absolute bottom-6 left-6 z-10 flex gap-2 flex-wrap">
                       {results[projectIndex].tags.map((tag, idx) => (
                         <span key={idx} className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-xs">{tag}</span>
                       ))}
                     </div>
                   </div>
+                  {/* Content panel */}
                   <div className="p-10 md:p-12 flex flex-col justify-center">
                     <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {results[projectIndex].title}
@@ -862,10 +1043,10 @@ export default function JZSmartMediaLanding() {
                       {results[projectIndex].description}
                     </p>
                     <div className="grid grid-cols-3 gap-4">
-                      {Object.entries(results[projectIndex].metrics).map(([key, value], idx) => (
+                      {results[projectIndex].metrics.map((metric, idx) => (
                         <div key={idx} className="text-center">
-                          <div className={`text-2xl font-bold bg-gradient-to-r ${results[projectIndex].gradient} bg-clip-text text-transparent mb-1`}>{value}</div>
-                          <div className={`text-xs uppercase ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>{key}</div>
+                          <div className={`text-2xl font-bold bg-gradient-to-r ${results[projectIndex].gradient} bg-clip-text text-transparent mb-1`}>{metric.value}</div>
+                          <div className={`text-xs uppercase tracking-wide ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>{metric.label}</div>
                         </div>
                       ))}
                     </div>
@@ -901,105 +1082,51 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* ── Process — CSS Sticky Stacking Cards ──────────────────────────────── */}
-      {/*
-        overflow-x:clip (NOT hidden) — clip does NOT create a scroll container so position:sticky works.
-        Each wrapper is 700px tall. Cards stack using CSS sticky + increasing zIndex.
-      */}
-      <section id="process" className="relative z-10" style={{ overflowX: 'clip' }}>
-        {/* Header — outside sticky area so it scrolls away normally */}
-        <div className="py-24 px-6">
-          <div className="max-w-4xl mx-auto text-center">
+      {/* ── Process ──────────────────────────────────────────────────────────── */}
+      <section id="process" className="py-24 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+
+          {/* Header */}
+          <div className="mb-16 reveal">
             <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                THE PROCESS
+                How We Work
               </span>
             </CometBadge>
-            <h2 className="text-5xl md:text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">How We Work</span>
+            <h2 className="text-4xl md:text-5xl font-black mt-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+              From audit to{' '}
+              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', fontStyle: 'italic' }}>
+                results
+              </span>{' '}
+              in 30 days
             </h2>
-            <p className={`text-xl ${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-xl mx-auto`}>
-              A proven four-step methodology delivering real pipeline growth every time.
-            </p>
           </div>
-        </div>
 
-        {/*
-          400vh outer div → provides scroll distance for 4 cards.
-          Inner sticky container stays pinned; each card slides up via Framer Motion
-          MotionValue tied to scrollYProgress (no re-renders, GPU-composited).
-          PEEK = 10px per card — each prior card peeks above the one on top.
-        */}
-        <div ref={processRef} style={{ height: '400vh', position: 'relative' }}>
-          <div
-            style={{
-              position: 'sticky',
-              top: '80px',
-              height: 'calc(100vh - 90px)',
-              overflow: 'visible',
-            }}
-          >
-            <div className="relative h-full max-w-4xl mx-auto px-6">
-              {processSteps.map((step, index) => (
-                <motion.div
-                  key={index}
-                  style={{
-                    position: 'absolute',
-                    left: '1.5rem',
-                    right: '1.5rem',
-                    top: `${index * 10}px`,
-                    zIndex: index + 1,
-                    y: cardYs[index],
-                    borderRadius: '1.5rem',
-                    overflow: 'hidden',
-                    boxShadow: `0 ${24 + index * 8}px ${60 + index * 16}px rgba(0,0,0,0.45)`,
-                    willChange: 'transform',
-                  }}
-                >
-                  <div className={`relative bg-gradient-to-br ${step.gradient}`}>
-                    {/* Watermark number */}
-                    <div
-                      className="absolute right-6 top-1/2 -translate-y-1/2 font-black select-none leading-none pointer-events-none"
-                      style={{ fontSize: 'clamp(8rem, 20vw, 14rem)', color: 'rgba(255,255,255,0.07)' }}
-                    >
-                      {String(index + 1).padStart(2, '0')}
-                    </div>
-
-                    <div className="relative z-10 p-10 md:p-14">
-                      {/* Top row: step label + progress dots */}
-                      <div className="flex items-center justify-between mb-8">
-                        <span className="text-white/50 text-xs font-bold tracking-[0.3em] uppercase">{step.step}</span>
-                        <div className="flex gap-2">
-                          {processSteps.map((_, j) => (
-                            <div
-                              key={j}
-                              className="rounded-full"
-                              style={{
-                                width: j === index ? '28px' : '8px',
-                                height: '8px',
-                                background: j <= index ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.25)',
-                                transition: 'width 0.3s',
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Content + step circle */}
-                      <div className="grid md:grid-cols-[1fr,auto] gap-8 items-end">
-                        <div>
-                          <h3 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">{step.title}</h3>
-                          <p className="text-white/75 text-lg leading-relaxed max-w-xl">{step.description}</p>
-                        </div>
-                        <div className="hidden md:flex w-20 h-20 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 items-center justify-center flex-shrink-0">
-                          <span className="text-2xl font-black text-white">{index + 1}</span>
-                        </div>
-                      </div>
+          {/* 4-step — single row on desktop, stacked on mobile */}
+          <div className={`flex flex-col md:flex-row rounded-2xl overflow-hidden border ${isDark ? 'border-gray-800' : 'border-gray-200'}`}>
+            {processSteps.map((step, index) => (
+              <div key={index} className="flex md:flex-1 flex-col md:flex-row">
+                {/* Arrow connector between steps (desktop) */}
+                {index > 0 && (
+                  <div className={`hidden md:flex flex-shrink-0 w-0 items-start justify-center pt-8 relative z-10`} style={{ marginLeft: '-20px', marginRight: '-20px' }}>
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] flex items-center justify-center shadow-lg">
+                      <ArrowRight className="w-4 h-4 text-white" />
                     </div>
                   </div>
+                )}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.12, duration: 0.5, ease: 'easeOut' }}
+                  className={`flex-1 p-8 md:p-10 ${isDark ? 'bg-gray-900/60 hover:bg-gray-900/90' : 'bg-white hover:bg-gray-50'} transition-colors ${index < processSteps.length - 1 ? (isDark ? 'border-b md:border-b-0 md:border-r border-gray-800' : 'border-b md:border-b-0 md:border-r border-gray-200') : ''}`}
+                >
+                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#667eea] mb-4">{step.step}</p>
+                  <h3 className={`text-xl font-black mb-3 leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>{step.title}</h3>
+                  <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{step.description}</p>
                 </motion.div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1010,13 +1137,16 @@ export default function JZSmartMediaLanding() {
           <div className="text-center mb-16">
             <CometBadge isDark={isDark}>
               <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                WHAT THEY SAY
+                Client Results
               </span>
             </CometBadge>
-            <h2 className="text-5xl md:text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">Client Voices</span>
+            <h2 className="text-4xl md:text-5xl font-black mb-3 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+              Don't take our word for it
             </h2>
-            <div className={`text-lg font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>5.0 / 5 Stars</div>
+            <div className="flex items-center justify-center gap-1.5">
+              {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
+              <span className={`text-sm font-semibold ml-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>5.0 / 5 Stars</span>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -1049,82 +1179,186 @@ export default function JZSmartMediaLanding() {
         </div>
       </section>
 
-      {/* ── Contact CTA — comet border on main container ─────────────────────── */}
-      <section id="contact" ref={contactRef} className="py-32 px-6 relative z-10">
-        <div className="max-w-4xl mx-auto">
+      {/* ── Contact / Get Started ─────────────────────────────────────────────── */}
+      <section id="contact" ref={contactRef} className="py-24 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-          {/* CometCard wrapper around the "READY TO DOMINATE" container */}
-          <CometCard
-            hoverY={0}
-            duration="6s"
-            innerBg={isDark ? 'bg-[#0a0a0a]' : 'bg-white'}
-            className="p-16 text-center overflow-hidden relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#667eea]/5 to-[#f093fb]/5 animate-pulse" />
-            <div className="relative z-10">
+            {/* Left — headline + bullets + CTA */}
+            <div className="reveal">
               <CometBadge isDark={isDark}>
-                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent uppercase tracking-widest">
-                  Let&apos;s Work Together
+                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                  Get Started Today
                 </span>
               </CometBadge>
-              <h2 className="text-4xl md:text-6xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-                  READY TO
-                </span>
-                <br />
-                <span className={isDark ? 'text-white' : 'text-gray-900'}>DOMINATE</span>
-                <br />
-                <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-                  YOUR MARKET?
-                </span>
+              <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+                Ready to stop losing leads to your competitors?
               </h2>
-              <p className={`text-xl ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-10 max-w-2xl mx-auto`}>
-                Book a free 30-minute audit. We&apos;ll show you what&apos;s holding you back and what we&apos;d do to fix it — no pitch, no pressure.
+              <p className={`text-lg mb-8 leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                Book a free 30-minute audit call. We'll show you exactly what's holding you back and what we'd do to fix it — no pitch, no pressure, no obligation.
               </p>
+
+              <div className="space-y-3 mb-10">
+                {[
+                  'Free 30-minute strategy session',
+                  'Custom growth plan included',
+                  'No long-term contracts required',
+                  'Results in first 30 days or we\'ll fix it',
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-r from-[#43e97b] to-[#38f9d7] flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-3 h-3 text-white" />
+                    </div>
+                    <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{item}</span>
+                  </div>
+                ))}
+              </div>
+
               <motion.a
                 href="mailto:yarden@jzsmartmedia.com"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="magnetic-btn group px-12 py-6 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold text-lg inline-flex items-center gap-3 shadow-2xl shadow-[#667eea]/30"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                className="magnetic-btn group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold text-sm shadow-2xl shadow-[#667eea]/30"
               >
-                Book Free Audit <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Book Your Free Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.a>
-            </div>
-          </CometCard>
+              <p className={`mt-3 text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                Takes less than 2 minutes — spots are limited
+              </p>
 
-          <div className="grid md:grid-cols-2 gap-8 mt-16">
-            {[
-              { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
-              { icon: MapPin, label: 'Service Area', value: 'Home Service Businesses Nationwide' },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ y: -5 }}
-                className={`reveal flex flex-col items-center gap-3 p-6 ${isDark ? 'bg-gray-900/80 border-gray-800/50' : 'bg-gray-50 border-gray-200'} backdrop-blur-sm rounded-2xl border`}
+              <div className="flex flex-col gap-3 mt-10">
+                {[
+                  { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
+                  { icon: MapPin, label: 'Service Area', value: 'Home Service Businesses Nationwide' },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ x: 4 }}
+                    className={`flex items-center gap-3 p-4 ${isDark ? 'bg-gray-900/60 border-gray-800/50' : 'bg-gray-50 border-gray-200'} rounded-xl border`}
+                  >
+                    <div className="w-9 h-9 bg-gradient-to-r from-[#667eea] to-[#f093fb] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <item.icon className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <div className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{item.label}</div>
+                      {item.href
+                        ? <a href={item.href} className="text-sm font-medium text-[#667eea] hover:underline">{item.value}</a>
+                        : <div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.value}</div>
+                      }
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — contact form */}
+            <div>
+              <div
+                className="relative rounded-2xl overflow-hidden"
+                style={{
+                  border: `1.5px solid ${isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.25)'}`,
+                  background: isDark ? '#111111' : '#ffffff',
+                  boxShadow: isDark
+                    ? '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(102,126,234,0.1)'
+                    : '0 32px 80px rgba(102,126,234,0.12)',
+                }}
               >
-                <div className="w-12 h-12 bg-gradient-to-r from-[#667eea] to-[#f093fb] rounded-xl flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-center">
-                  <div className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-1`}>{item.label}</div>
-                  {item.href ? (
-                    <a href={item.href} className="text-[#667eea] hover:underline text-sm">{item.value}</a>
+                <div style={{ height: '3px', background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', position: 'absolute', top: 0, left: 0, right: 0 }} />
+                <div className="px-8 pt-10 pb-8">
+                  {contactSubmitted ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="py-10 text-center"
+                    >
+                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#667eea] to-[#f093fb] flex items-center justify-center">
+                        <CheckCircle className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-black mb-2" style={{ color: isDark ? '#fff' : '#111', fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
+                        Audit request received!
+                      </h3>
+                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                        We'll be in touch within 30 minutes with your free growth audit.
+                      </p>
+                    </motion.div>
                   ) : (
-                    <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm`}>{item.value}</div>
+                    <form onSubmit={handleContactSubmit} className="space-y-4">
+                      {[
+                        { label: 'Your Name', field: 'name', type: 'text', placeholder: 'Mike Johnson' },
+                        { label: 'Phone Number', field: 'phone', type: 'tel', placeholder: '(555) 000-0000' },
+                        { label: 'Email Address', field: 'email', type: 'email', placeholder: 'mike@yourcompany.com' },
+                      ].map(({ label, field, type, placeholder }) => (
+                        <div key={field}>
+                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{label}</label>
+                          <input
+                            type={type}
+                            required
+                            placeholder={placeholder}
+                            value={contactForm[field]}
+                            onChange={setContactField(field)}
+                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                          />
+                        </div>
+                      ))}
+                      <div>
+                        <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
+                        <select
+                          required
+                          value={contactForm.industry}
+                          onChange={setContactField('industry')}
+                          className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 appearance-none cursor-pointer ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#667eea]/60'} ${!contactForm.industry ? (isDark ? 'text-gray-600' : 'text-gray-400') : ''}`}
+                        >
+                          <option value="" disabled>Select your industry...</option>
+                          <option value="roofing">Roofing</option>
+                          <option value="hvac">HVAC</option>
+                          <option value="restoration">Restoration</option>
+                          <option value="remodeling">Remodeling</option>
+                          <option value="plumbing">Plumbing</option>
+                          <option value="electrical">Electrical</option>
+                          <option value="landscaping">Landscaping</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <motion.button
+                        type="submit"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30"
+                        style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)' }}
+                      >
+                        Claim My Free Audit <ArrowRight className="w-4 h-4" />
+                      </motion.button>
+                      <p className={`text-center text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                        🔒 Your info is private. No spam ever.
+                      </p>
+                    </form>
                   )}
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </div>
+
           </div>
         </div>
+
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────────── */}
       <footer className={`py-12 px-6 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'} relative z-10`}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="text-xl font-bold bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-              JZ. Smart Media
+            <div className="flex items-baseline gap-1.5 select-none">
+              <span
+                className="text-3xl font-black bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent leading-none"
+                style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}
+              >
+                JZ.
+              </span>
+              <span
+                className={`text-sm font-medium tracking-wide ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}
+              >
+                Smart Media
+              </span>
             </div>
             <div className="flex gap-6">
               {navItems.concat(['Contact']).map((item) => (
