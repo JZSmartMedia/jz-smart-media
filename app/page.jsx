@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Menu, X, Sun, Moon, ArrowRight, Sparkles, Target,
   Code, Rocket, CheckCircle, Star,
-  Mail, MapPin, ChevronLeft, ChevronRight, Globe,
+  Mail, MapPin, Phone, ChevronLeft, ChevronRight, Globe,
   Settings, Brain, FileText, PieChart,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
@@ -422,7 +422,7 @@ export default function JZSmartMediaLanding() {
               </motion.button>
 
               <motion.a
-                href="#contact"
+                href="/schedule"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full text-sm font-semibold"
@@ -458,7 +458,7 @@ export default function JZSmartMediaLanding() {
                   ))}
                   <div className="pt-3">
                     <a
-                      href="#contact"
+                      href="/schedule"
                       onClick={() => setMenuOpen(false)}
                       className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-xl text-sm font-semibold"
                     >
@@ -1108,10 +1108,8 @@ export default function JZSmartMediaLanding() {
               <div key={index} className="flex md:flex-1 flex-col md:flex-row">
                 {/* Arrow connector between steps (desktop) */}
                 {index > 0 && (
-                  <div className={`hidden md:flex flex-shrink-0 w-0 items-start justify-center pt-8 relative z-10`} style={{ marginLeft: '-20px', marginRight: '-20px' }}>
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#667eea] to-[#764ba2] flex items-center justify-center shadow-lg">
-                      <ArrowRight className="w-4 h-4 text-white" />
-                    </div>
+                  <div className="hidden md:flex flex-shrink-0 w-0 items-center justify-center relative z-10" style={{ marginLeft: '-14px', marginRight: '-14px' }}>
+                    <ArrowRight className="w-5 h-5 text-[#667eea] opacity-50" />
                   </div>
                 )}
                 <motion.div
@@ -1226,29 +1224,6 @@ export default function JZSmartMediaLanding() {
                 Takes less than 2 minutes — spots are limited
               </p>
 
-              <div className="flex flex-col gap-3 mt-10">
-                {[
-                  { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
-                  { icon: MapPin, label: 'Service Area', value: 'Home Service Businesses Nationwide' },
-                ].map((item, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ x: 4 }}
-                    className={`flex items-center gap-3 p-4 ${isDark ? 'bg-gray-900/60 border-gray-800/50' : 'bg-gray-50 border-gray-200'} rounded-xl border`}
-                  >
-                    <div className="w-9 h-9 bg-gradient-to-r from-[#667eea] to-[#f093fb] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <item.icon className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <div className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{item.label}</div>
-                      {item.href
-                        ? <a href={item.href} className="text-sm font-medium text-[#667eea] hover:underline">{item.value}</a>
-                        : <div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.value}</div>
-                      }
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
             </div>
 
             {/* Right — contact form */}
@@ -1340,6 +1315,34 @@ export default function JZSmartMediaLanding() {
           </div>
         </div>
 
+      </section>
+
+      {/* ── Contact Info Bar ─────────────────────────────────────────────────── */}
+      <section className={`px-6 py-14 border-t ${isDark ? 'border-gray-800/60' : 'border-gray-200'} relative z-10`}>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
+            { icon: Phone, label: 'Call Us', value: '(352) 321-8206', href: 'tel:+13523218206' },
+            { icon: MapPin, label: 'Based in Miami, FL', value: 'Home Service Businesses Nationwide' },
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ y: -4 }}
+              className={`flex items-center gap-5 p-6 rounded-2xl border ${isDark ? 'bg-gray-900/50 border-gray-800/60' : 'bg-gray-50 border-gray-200'}`}
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-[#667eea] to-[#f093fb] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#667eea]/20">
+                <item.icon className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <div className={`text-xs font-bold tracking-wide uppercase mb-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{item.label}</div>
+                {item.href
+                  ? <a href={item.href} className="text-base font-semibold text-[#667eea] hover:underline">{item.value}</a>
+                  : <div className={`text-base font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.value}</div>
+                }
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────────── */}
