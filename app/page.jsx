@@ -142,12 +142,6 @@ export default function JZSmartMediaLanding() {
     if (typeof window === 'undefined') return;
 
     const ctx = gsap.context(() => {
-      const heroTl = gsap.timeline({ delay: 0.2 });
-      heroTl
-        .from('.hero-badge', { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out(2)' })
-        .from('.hero-line', { y: 120, opacity: 0, duration: 1.2, ease: 'power4.out', stagger: 0.1 }, '-=0.3')
-        .from('.hero-subtitle', { opacity: 0, y: 40, duration: 0.8, ease: 'power3.out' }, '-=0.8')
-        .from('.hero-cta-btn', { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out(2)', stagger: 0.15 }, '-=0.4');
 
       gsap.to('.hero-float', { y: -20, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
 
@@ -338,8 +332,6 @@ export default function JZSmartMediaLanding() {
 
       {/* ── Navigation — transparent → glass on scroll, pill menu with comet border ── */}
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           menuOpen
             ? isDark
