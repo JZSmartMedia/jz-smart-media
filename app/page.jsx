@@ -408,6 +408,7 @@ export default function JZSmartMediaLanding() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
                 className={`p-2.5 rounded-full ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} transition-colors`}
               >
                 {isDark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-gray-700" />}
@@ -464,6 +465,7 @@ export default function JZSmartMediaLanding() {
         </div>
       </motion.nav>
 
+      <main>
       {/* ── Hero Section ─────────────────────────────────────────────────────── */}
       <section id="home" ref={heroRef} className="min-h-screen flex items-center px-6 pt-28 pb-16 relative overflow-x-hidden">
         <div className="w-full max-w-7xl mx-auto relative z-10">
@@ -556,7 +558,7 @@ export default function JZSmartMediaLanding() {
                   ))}
                 </div>
                 <span className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>5.0 / 5 Stars</span>
-                <span className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>· Rated by 50+ home service businesses</span>
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>· Rated by 50+ home service businesses</span>
               </div>
             </div>
 
@@ -657,8 +659,9 @@ export default function JZSmartMediaLanding() {
 
                         {/* Industry */}
                         <div>
-                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
+                          <label htmlFor="hero-industry" className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
                           <select
+                            id="hero-industry"
                             required
                             value={formData.industry}
                             onChange={setField('industry')}
@@ -687,7 +690,7 @@ export default function JZSmartMediaLanding() {
                           Get My Free Audit <ArrowRight className="w-4 h-4" />
                         </motion.button>
 
-                        <p className={`text-center text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                        <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                           🔒 No spam. No commitment. Results in 30 minutes.
                         </p>
                       </form>
@@ -827,6 +830,7 @@ export default function JZSmartMediaLanding() {
             <div className="flex items-center justify-between mt-10">
               <button
                 onClick={prevService}
+                aria-label="Previous service"
                 className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -836,12 +840,14 @@ export default function JZSmartMediaLanding() {
                   <button
                     key={i}
                     onClick={() => setServiceIndex(i)}
+                    aria-label={`Go to service page ${i + 1}`}
                     className={`transition-all rounded-full ${i === serviceIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'}`}`}
                   />
                 ))}
               </div>
               <button
                 onClick={nextService}
+                aria-label="Next service"
                 className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
               >
                 <ChevronRight className="w-5 h-5" />
@@ -1050,6 +1056,7 @@ export default function JZSmartMediaLanding() {
             <div className="flex items-center justify-between mt-8">
               <button
                 onClick={prevProject}
+                aria-label="Previous project"
                 className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -1059,12 +1066,14 @@ export default function JZSmartMediaLanding() {
                   <button
                     key={i}
                     onClick={() => setProjectIndex(i)}
+                    aria-label={`View project: ${results[i].title}`}
                     className={`transition-all rounded-full ${i === projectIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`}`}
                   />
                 ))}
               </div>
               <button
                 onClick={nextProject}
+                aria-label="Next project"
                 className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
               >
                 <ChevronRight className="w-5 h-5" />
@@ -1268,8 +1277,9 @@ export default function JZSmartMediaLanding() {
                         </div>
                       ))}
                       <div>
-                        <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
+                        <label htmlFor="contact-industry" className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
                         <select
+                          id="contact-industry"
                           required
                           value={contactForm.industry}
                           onChange={setContactField('industry')}
@@ -1414,6 +1424,7 @@ export default function JZSmartMediaLanding() {
           </div>
         </div>
       </footer>
+      </main>
 
       {/* ── WhatsApp floating button ──────────────────────────────────────────── */}
       <a
