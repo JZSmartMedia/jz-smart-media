@@ -423,7 +423,7 @@ export default function JZSmartMediaLanding() {
                 Get Started <ArrowRight className="w-4 h-4" />
               </motion.a>
 
-              <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2">
+              <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2" aria-label={menuOpen ? 'Close menu' : 'Open menu'}>
                 {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
@@ -710,7 +710,7 @@ export default function JZSmartMediaLanding() {
 
           {/* Trusted platforms */}
           <div className="text-center mb-10">
-            <p className={`text-xs font-bold tracking-[0.25em] uppercase mb-5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+            <p className={`text-xs font-bold tracking-[0.25em] uppercase mb-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
               Trusted platforms we manage
             </p>
             <div className="flex flex-wrap justify-center gap-3">
@@ -835,14 +835,16 @@ export default function JZSmartMediaLanding() {
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 {Array.from({ length: servicePages }).map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setServiceIndex(i)}
                     aria-label={`Go to service page ${i + 1}`}
-                    className={`transition-all rounded-full ${i === serviceIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'}`}`}
-                  />
+                    className="p-2 flex items-center justify-center"
+                  >
+                    <span className={`transition-all rounded-full block ${i === serviceIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'}`}`} />
+                  </button>
                 ))}
               </div>
               <button
@@ -854,7 +856,7 @@ export default function JZSmartMediaLanding() {
               </button>
             </div>
 
-            <p className={`text-center mt-4 text-sm ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+            <p className={`text-center mt-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
               Page {serviceIndex + 1} of {servicePages} · {services.length} Services
             </p>
           </div>
@@ -1044,7 +1046,7 @@ export default function JZSmartMediaLanding() {
                       {results[projectIndex].metrics.map((metric, idx) => (
                         <div key={idx} className="text-center">
                           <div className={`text-2xl font-bold bg-gradient-to-r ${results[projectIndex].gradient} bg-clip-text text-transparent mb-1`}>{metric.value}</div>
-                          <div className={`text-xs uppercase tracking-wide ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>{metric.label}</div>
+                          <div className={`text-xs uppercase tracking-wide ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>{metric.label}</div>
                         </div>
                       ))}
                     </div>
@@ -1061,14 +1063,16 @@ export default function JZSmartMediaLanding() {
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 {results.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setProjectIndex(i)}
                     aria-label={`View project: ${results[i].title}`}
-                    className={`transition-all rounded-full ${i === projectIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`}`}
-                  />
+                    className="p-2 flex items-center justify-center"
+                  >
+                    <span className={`transition-all rounded-full block ${i === projectIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`}`} />
+                  </button>
                 ))}
               </div>
               <button
@@ -1221,7 +1225,7 @@ export default function JZSmartMediaLanding() {
               >
                 Book Your Free Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.a>
-              <p className={`mt-3 text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+              <p className={`mt-3 text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                 Takes less than 2 minutes — spots are limited
               </p>
 
@@ -1305,7 +1309,7 @@ export default function JZSmartMediaLanding() {
                       >
                         Claim My Free Audit <ArrowRight className="w-4 h-4" />
                       </motion.button>
-                      <p className={`text-center text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                      <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                         🔒 Your info is private. No spam ever.
                       </p>
                     </form>
@@ -1336,7 +1340,7 @@ export default function JZSmartMediaLanding() {
                 <item.icon className="w-5 h-5 text-white" />
               </div>
               <div>
-                <div className={`text-xs font-bold tracking-wide uppercase mb-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{item.label}</div>
+                <div className={`text-xs font-bold tracking-wide uppercase mb-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>{item.label}</div>
                 {item.href
                   ? <a href={item.href} className="text-base font-semibold text-[#667eea] hover:underline">{item.value}</a>
                   : <div className={`text-base font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.value}</div>
@@ -1419,7 +1423,7 @@ export default function JZSmartMediaLanding() {
             </div>
           </div>
           {/* Bottom row */}
-          <div className={`text-center pt-6 border-t ${isDark ? 'border-gray-800/60 text-gray-500' : 'border-gray-200 text-gray-400'} text-sm`}>
+          <div className={`text-center pt-6 border-t ${isDark ? 'border-gray-800/60 text-gray-400' : 'border-gray-200 text-gray-400'} text-sm`}>
             © 2026 JZ. Smart Media. All Rights Reserved.
           </div>
         </div>
