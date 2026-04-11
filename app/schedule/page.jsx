@@ -278,7 +278,7 @@ export default function SchedulePage() {
           </span>
           <span className="text-xs font-medium tracking-wide text-gray-500">Smart Media</span>
         </div>
-        <p>© 2026 JZ Smart Media · Miami, FL · (352) 321-8206</p>
+        <p>© 2026 JZ Smart Media · Miami, FL · (352) 755-6501</p>
         <p className="mt-1">
           <a href="mailto:info@jzsmartmedia.com" className="hover:text-gray-400 transition-colors">
             info@jzsmartmedia.com
