@@ -83,4 +83,3 @@ Hosted on **Vercel**. Pushes to `main` deploy automatically.
 | Location | Miami, FL (serves nationwide) |
 | Phone | (352) 755-6501 |
 | Email | info@jzsmartmedia.com |
-| Cal.com | `yarden-zemer` |
