@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState, Fragment } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Menu, X, Sun, Moon, ArrowRight, Sparkles, Target,
   Code, Rocket, CheckCircle, Star,
@@ -13,9 +11,6 @@ import {
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 /* ─── Moving comet border — section pill badges ─────────────────────────── */
 function CometBadge({ children, isDark }) {
@@ -115,72 +110,77 @@ export default function JZSmartMediaLanding() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Lenis smooth scroll — drive via GSAP ticker so ScrollTrigger gets correct values
+  // Lenis + GSAP — lazy loaded so they don't block the initial render
   useEffect(() => {
     let lenis;
+    let ctx;
     let tickerFn;
-    const initLenis = async () => {
-      const Lenis = (await import('@studio-freight/lenis')).default;
+
+    const init = async () => {
+      const [{ gsap }, { ScrollTrigger }, { default: Lenis }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+        import('@studio-freight/lenis'),
+      ]);
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Lenis smooth scroll driven by GSAP ticker
       lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
       lenis.on('scroll', ScrollTrigger.update);
       tickerFn = (time) => lenis.raf(time * 1000);
       gsap.ticker.add(tickerFn);
       gsap.ticker.lagSmoothing(0);
+
+      // Scroll animations
+      ctx = gsap.context(() => {
+        gsap.to('.hero-float', { y: -20, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+
+        gsap.to('.parallax-bg', {
+          scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1 },
+          y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
+          ease: 'none',
+        });
+
+        gsap.from('.testimonial-slide', {
+          scrollTrigger: { trigger: testimonialsRef.current, start: 'top 70%' },
+          y: 100, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out',
+        });
+
+        gsap.utils.toArray('.reveal').forEach((elem) => {
+          gsap.from(elem, {
+            scrollTrigger: { trigger: elem, start: 'top 85%' },
+            y: 80, opacity: 0, duration: 1, ease: 'power3.out',
+          });
+        });
+
+        document.querySelectorAll('.magnetic-btn').forEach((btn) => {
+          btn.addEventListener('mouseenter', () => setCursorVariant('button'));
+          btn.addEventListener('mouseleave', () => setCursorVariant('default'));
+          btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.3, ease: 'power2.out' });
+          });
+          btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+          });
+        });
+      });
     };
-    initLenis();
+
+    init();
+
     return () => {
       if (lenis) lenis.destroy();
-      if (tickerFn) gsap.ticker.remove(tickerFn);
+      if (tickerFn && typeof window !== 'undefined') import('gsap').then(({ gsap }) => gsap.ticker.remove(tickerFn));
+      if (ctx) ctx.revert();
     };
   }, []);
 
-  // Mount flag — separate from GSAP to avoid hydration mismatch
+  // Mount flag — separate to avoid hydration mismatch
   useEffect(() => { setMounted(true); }, []);
-
-  // GSAP animations
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const ctx = gsap.context(() => {
-
-      gsap.to('.hero-float', { y: -20, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-
-      gsap.to('.parallax-bg', {
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 1 },
-        y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
-        ease: 'none',
-      });
-
-      gsap.from('.testimonial-slide', {
-        scrollTrigger: { trigger: testimonialsRef.current, start: 'top 70%' },
-        y: 100, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out',
-      });
-
-      gsap.utils.toArray('.reveal').forEach((elem) => {
-        gsap.from(elem, {
-          scrollTrigger: { trigger: elem, start: 'top 85%' },
-          y: 80, opacity: 0, duration: 1, ease: 'power3.out',
-        });
-      });
-
-
-      document.querySelectorAll('.magnetic-btn').forEach((btn) => {
-        btn.addEventListener('mouseenter', () => setCursorVariant('button'));
-        btn.addEventListener('mouseleave', () => setCursorVariant('default'));
-        btn.addEventListener('mousemove', (e) => {
-          const rect = btn.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-          gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.3, ease: 'power2.out' });
-        });
-        btn.addEventListener('mouseleave', () => {
-          gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
-        });
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
 
   /* ── Data ────────────────────────────────────────────────────────────── */
   const services = [
