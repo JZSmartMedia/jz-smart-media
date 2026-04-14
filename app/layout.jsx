@@ -1,5 +1,6 @@
 import { ThemeProvider } from 'next-themes';
 import { Fraunces, DM_Sans } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 
 const fraunces = Fraunces({
@@ -148,6 +149,12 @@ export default function RootLayout({ children }) {
         >
           {children}
         </ThemeProvider>
+        <Script
+          src="https://widgets.leadconnectorhq.com/loader.js"
+          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id="69de52ae2676ea4c54b6a95a"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

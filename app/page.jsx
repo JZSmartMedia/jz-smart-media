@@ -332,8 +332,7 @@ export default function JZSmartMediaLanding() {
 
       {/* ── Navigation — transparent → glass on scroll, pill menu with comet border ── */}
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          menuOpen
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${menuOpen
             ? isDark
               ? 'bg-[#0d0d0d] border-b border-gray-800/60'
               : 'bg-white border-b border-gray-200/60'
@@ -342,7 +341,7 @@ export default function JZSmartMediaLanding() {
                 ? 'bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-gray-800/50'
                 : 'bg-white/90 backdrop-blur-xl border-b border-gray-200/50'
               : 'bg-transparent'
-        }`}
+          }`}
       >
         <div className={`max-w-7xl mx-auto px-6 py-5 ${menuOpen ? (isDark ? 'bg-[#0d0d0d]' : 'bg-white') : ''} transition-colors duration-200`}>
           <div className="flex items-center justify-between">
@@ -466,206 +465,828 @@ export default function JZSmartMediaLanding() {
       </motion.nav>
 
       <main>
-      {/* ── Hero Section ─────────────────────────────────────────────────────── */}
-      <section id="home" ref={heroRef} className="min-h-screen flex items-center px-6 pt-28 pb-16 relative overflow-x-hidden">
-        <div className="w-full max-w-7xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        {/* ── Hero Section ─────────────────────────────────────────────────────── */}
+        <section id="home" ref={heroRef} className="min-h-screen flex items-center px-6 pt-28 pb-16 relative overflow-x-hidden">
+          <div className="w-full max-w-7xl mx-auto relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-            {/* ── Left: Content ── */}
-            <div>
-              {/* Badge */}
-              <div className="hero-float hero-badge mb-6">
-                <CometBadge isDark={isDark}>
-                  <span className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[#667eea]" />
-                    <span className="text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-                      Home Services Digital Agency
+              {/* ── Left: Content ── */}
+              <div>
+                {/* Badge */}
+                <div className="hero-float hero-badge mb-6">
+                  <CometBadge isDark={isDark}>
+                    <span className="flex items-center gap-2">
+                      <Sparkles className="w-3.5 h-3.5 text-[#667eea]" />
+                      <span className="text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
+                        Home Services Digital Agency
+                      </span>
                     </span>
-                  </span>
-                </CometBadge>
-              </div>
-
-              {/* H1 */}
-              <h1 className="font-black mb-6 leading-[0.93] tracking-tight">
-                <div className="overflow-hidden mb-1">
-                  <div
-                    className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]"
-                    style={{ color: isDark ? '#ffffff' : '#0f0f0f' }}
-                  >
-                    We Don't Run Ads.
-                  </div>
+                  </CometBadge>
                 </div>
-                <div className="overflow-hidden mb-1">
-                  <div className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]" style={{ color: isDark ? '#ffffff' : '#0f0f0f' }}>
-                    We Build{' '}
-                    <span
+
+                {/* H1 */}
+                <h1 className="font-black mb-6 leading-[0.93] tracking-tight">
+                  <div className="overflow-hidden mb-1">
+                    <div
+                      className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]"
+                      style={{ color: isDark ? '#ffffff' : '#0f0f0f' }}
+                    >
+                      We Don't Run Ads.
+                    </div>
+                  </div>
+                  <div className="overflow-hidden mb-1">
+                    <div className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]" style={{ color: isDark ? '#ffffff' : '#0f0f0f' }}>
+                      We Build{' '}
+                      <span
+                        style={{
+                          backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#667eea)',
+                          backgroundSize: '200% auto',
+                          WebkitBackgroundClip: 'text',
+                          backgroundClip: 'text',
+                          color: 'transparent',
+                          animation: 'gradient-shift 5s linear infinite',
+                          fontStyle: 'italic',
+                        }}
+                      >
+                        Revenue
+                      </span>
+                    </div>
+                  </div>
+                  <div className="overflow-hidden">
+                    <div
+                      className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]"
                       style={{
-                        backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#667eea)',
-                        backgroundSize: '200% auto',
-                        WebkitBackgroundClip: 'text',
-                        backgroundClip: 'text',
                         color: 'transparent',
-                        animation: 'gradient-shift 5s linear infinite',
-                        fontStyle: 'italic',
+                        WebkitTextStroke: `2px ${isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.8)'}`,
                       }}
                     >
-                      Revenue
-                    </span>
+                      Pipelines.
+                    </div>
                   </div>
-                </div>
-                <div className="overflow-hidden">
-                  <div
-                    className="hero-line text-5xl md:text-6xl lg:text-[3.5rem]"
-                    style={{
-                      color: 'transparent',
-                      WebkitTextStroke: `2px ${isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.8)'}`,
-                    }}
+                </h1>
+
+                {/* Subtext */}
+                <p className={`hero-subtitle text-base md:text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-lg leading-relaxed`}>
+                  JZ. Smart Media delivers performance-driven digital marketing exclusively for home service businesses — roofing, HVAC, restoration, remodeling. More calls. More jobs. More revenue.
+                </p>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-4 items-start mb-8">
+                  <motion.a
+                    href="#contact"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="hero-cta-btn magnetic-btn group px-8 py-4 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold text-sm inline-flex items-center gap-2 shadow-2xl shadow-[#667eea]/30 self-start"
                   >
-                    Pipelines.
-                  </div>
+                    Get Your Free Growth Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </motion.a>
+                  <motion.a
+                    href="#services"
+                    whileHover={{ x: 3 }}
+                    className={`inline-flex items-center gap-1.5 font-semibold text-sm self-start sm:self-center ${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors`}
+                  >
+                    See Our Services <ArrowRight className="w-4 h-4" />
+                  </motion.a>
                 </div>
-              </h1>
 
-              {/* Subtext */}
-              <p className={`hero-subtitle text-base md:text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 max-w-lg leading-relaxed`}>
-                JZ. Smart Media delivers performance-driven digital marketing exclusively for home service businesses — roofing, HVAC, restoration, remodeling. More calls. More jobs. More revenue.
-              </p>
-
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-4 items-start mb-8">
-                <motion.a
-                  href="#contact"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="hero-cta-btn magnetic-btn group px-8 py-4 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold text-sm inline-flex items-center gap-2 shadow-2xl shadow-[#667eea]/30 self-start"
-                >
-                  Get Your Free Growth Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </motion.a>
-                <motion.a
-                  href="#services"
-                  whileHover={{ x: 3 }}
-                  className={`inline-flex items-center gap-1.5 font-semibold text-sm self-start sm:self-center ${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors`}
-                >
-                  See Our Services <ArrowRight className="w-4 h-4" />
-                </motion.a>
+                {/* Stars */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-[#fda085] text-[#fda085]" />
+                    ))}
+                  </div>
+                  <span className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>5.0 / 5 Stars</span>
+                  <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>· Rated by 50+ home service businesses</span>
+                </div>
               </div>
 
-              {/* Stars */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#fda085] text-[#fda085]" />
-                  ))}
+              {/* ── Right: Lead Form ── */}
+              <div className="hero-float">
+                <div
+                  className="relative rounded-2xl overflow-hidden"
+                  style={{
+                    border: `1.5px solid ${isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.25)'}`,
+                    background: isDark ? '#111111' : '#ffffff',
+                    boxShadow: isDark
+                      ? '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(102,126,234,0.1)'
+                      : '0 32px 80px rgba(102,126,234,0.12), 0 0 0 1px rgba(102,126,234,0.08)',
+                  }}
+                >
+                  {/* Top gradient bar */}
+                  <div style={{ height: '3px', background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', position: 'absolute', top: 0, left: 0, right: 0 }} />
+
+                  <div className="px-8 pt-10 pb-8">
+                    {formSubmitted ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="py-10 text-center"
+                      >
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#667eea] to-[#f093fb] flex items-center justify-center">
+                          <CheckCircle className="w-8 h-8 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-black mb-2" style={{ color: isDark ? '#fff' : '#111', fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
+                          You're all set!
+                        </h3>
+                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                          We'll review your info and reach out within 30 minutes with your free audit.
+                        </p>
+                      </motion.div>
+                    ) : (
+                      <>
+                        <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#667eea] mb-2">Free Growth Audit</p>
+                        <h2
+                          className="text-2xl font-black mb-6 leading-tight"
+                          style={{ color: isDark ? '#ffffff' : '#0f0f0f', fontFamily: 'var(--font-fraunces), Georgia, serif' }}
+                        >
+                          See exactly what's holding your business back
+                        </h2>
+
+                        <form onSubmit={handleFormSubmit} className="space-y-4">
+                          {/* Name */}
+                          <div>
+                            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Name</label>
+                            <input
+                              type="text"
+                              required
+                              placeholder="Mike Johnson"
+                              value={formData.name}
+                              onChange={setField('name')}
+                              className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                            />
+                          </div>
+
+                          {/* Business Name */}
+                          <div>
+                            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Business Name</label>
+                            <input
+                              type="text"
+                              required
+                              placeholder="Johnson Roofing LLC"
+                              value={formData.business}
+                              onChange={setField('business')}
+                              className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                            />
+                          </div>
+
+                          {/* Phone */}
+                          <div>
+                            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Phone Number</label>
+                            <input
+                              type="tel"
+                              required
+                              placeholder="(555) 000-0000"
+                              value={formData.phone}
+                              onChange={setField('phone')}
+                              className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                            />
+                          </div>
+
+                          {/* Email */}
+                          <div>
+                            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Email Address</label>
+                            <input
+                              type="email"
+                              required
+                              placeholder="mike@yourcompany.com"
+                              value={formData.email}
+                              onChange={setField('email')}
+                              className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                            />
+                          </div>
+
+                          {/* Industry */}
+                          <div>
+                            <label htmlFor="hero-industry" className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
+                            <select
+                              id="hero-industry"
+                              required
+                              value={formData.industry}
+                              onChange={setField('industry')}
+                              className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 appearance-none cursor-pointer ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#667eea]/60'} ${!formData.industry ? (isDark ? 'text-gray-600' : 'text-gray-400') : ''}`}
+                            >
+                              <option value="" disabled>Select your industry...</option>
+                              <option value="roofing">Roofing</option>
+                              <option value="hvac">HVAC</option>
+                              <option value="restoration">Restoration</option>
+                              <option value="remodeling">Remodeling</option>
+                              <option value="plumbing">Plumbing</option>
+                              <option value="electrical">Electrical</option>
+                              <option value="landscaping">Landscaping</option>
+                              <option value="other">Other</option>
+                            </select>
+                          </div>
+
+                          {/* Submit */}
+                          <motion.button
+                            type="submit"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30"
+                            style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', backgroundSize: '200% auto' }}
+                          >
+                            Get My Free Audit <ArrowRight className="w-4 h-4" />
+                          </motion.button>
+
+                          <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                            🔒 No spam. No commitment. Results in 30 minutes.
+                          </p>
+                        </form>
+                      </>
+                    )}
+                  </div>
                 </div>
-                <span className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>5.0 / 5 Stars</span>
-                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>· Rated by 50+ home service businesses</span>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ── Stats + Platforms Section ─────────────────────────────────────────── */}
+        <section className="py-20 px-6 relative z-10">
+          <div className="max-w-7xl mx-auto">
+
+            {/* Trusted platforms */}
+            <div className="text-center mb-10">
+              <p className={`text-xs font-bold tracking-[0.25em] uppercase mb-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+                Trusted platforms we manage
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {['Google Ads', 'Local SEO', 'Yelp Ads', 'Custom CRM', 'AI Solutions', 'Web Dev'].map((platform) => (
+                  <span
+                    key={platform}
+                    className={`px-5 py-2 rounded-full text-sm font-semibold border ${isDark ? 'border-gray-700 text-gray-300 bg-gray-900/60' : 'border-gray-200 text-gray-700 bg-gray-50'}`}
+                  >
+                    {platform}
+                  </span>
+                ))}
               </div>
             </div>
 
-            {/* ── Right: Lead Form ── */}
-            <div className="hero-float">
-              <div
-                className="relative rounded-2xl overflow-hidden"
-                style={{
-                  border: `1.5px solid ${isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.25)'}`,
-                  background: isDark ? '#111111' : '#ffffff',
-                  boxShadow: isDark
-                    ? '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(102,126,234,0.1)'
-                    : '0 32px 80px rgba(102,126,234,0.12), 0 0 0 1px rgba(102,126,234,0.08)',
-                }}
-              >
-                {/* Top gradient bar */}
-                <div style={{ height: '3px', background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', position: 'absolute', top: 0, left: 0, right: 0 }} />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {stats.map((stat, index) => (
+                <CometCard
+                  key={index}
+                  duration={`${3 + index * 0.4}s`}
+                  delay={`${index * 0.3}s`}
+                  innerBg={isDark ? 'bg-[#111111]' : 'bg-gray-50'}
+                >
+                  <div className="text-center p-8">
+                    <div className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
+                      {stat.number}
+                    </div>
+                    <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm font-medium leading-snug`}>{stat.label}</div>
+                  </div>
+                </CometCard>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                <div className="px-8 pt-10 pb-8">
-                  {formSubmitted ? (
+        {/* ── Services Slider ───────────────────────────────────────────────────── */}
+        <section id="services" className="py-32 px-6 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <CometBadge isDark={isDark}>
+                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                  What We Do
+                </span>
+              </CometBadge>
+              <h2 className="text-4xl md:text-5xl font-black mb-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+                Everything your business<br />needs to{' '}
+                <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                  dominate locally
+                </span>
+              </h2>
+              <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-xl mx-auto`}>
+                Every service built around one outcome: qualified calls from homeowners ready to book.
+              </p>
+            </div>
+
+            {/* Services Grid Slider — 3 per page */}
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={serviceIndex}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                >
+                  {services.slice(serviceIndex * SERVICES_PER_PAGE, (serviceIndex + 1) * SERVICES_PER_PAGE).map((service, idx) => (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="py-10 text-center"
+                      key={idx}
+                      whileHover={{ y: -6 }}
+                      className={`rounded-2xl border overflow-hidden flex flex-col ${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white border-gray-200'} shadow-xl transition-shadow hover:shadow-2xl`}
                     >
-                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#667eea] to-[#f093fb] flex items-center justify-center">
-                        <CheckCircle className="w-8 h-8 text-white" />
+                      {/* Image container — TOP */}
+                      <div className="relative h-44 overflow-hidden">
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                        {/* Dark bottom-to-top overlay so image is visible at top */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10" />
+                        {/* Subtle brand colour tint */}
+                        <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-30`} />
+                        <span className="absolute top-3 left-4 text-white/70 text-xs font-bold tracking-widest z-10">{service.number}</span>
+                        {service.badge && (
+                          <span className="absolute top-3 right-4 px-2.5 py-1 bg-black/40 backdrop-blur-sm text-white text-xs font-semibold rounded-full z-10 border border-white/20">
+                            {service.badge}
+                          </span>
+                        )}
+                        <div className="absolute inset-0 flex items-center justify-center z-10">
+                          <div className="w-14 h-14 rounded-2xl bg-black/30 backdrop-blur-sm border border-white/25 flex items-center justify-center text-white shadow-lg">
+                            {service.icon}
+                          </div>
+                        </div>
                       </div>
-                      <h3 className="text-2xl font-black mb-2" style={{ color: isDark ? '#fff' : '#111', fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
-                        You're all set!
-                      </h3>
-                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                        We'll review your info and reach out within 30 minutes with your free audit.
-                      </p>
+
+                      {/* Content — BELOW */}
+                      <div className="p-6 flex flex-col flex-grow">
+                        <h3 className={`text-lg font-bold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>{service.title}</h3>
+                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-5 leading-relaxed flex-grow`}>{service.description}</p>
+                        <div className="space-y-2">
+                          {service.features.map((feature, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient} flex-shrink-0`} />
+                              <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </motion.div>
-                  ) : (
-                    <>
-                      <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#667eea] mb-2">Free Growth Audit</p>
-                      <h2
-                        className="text-2xl font-black mb-6 leading-tight"
-                        style={{ color: isDark ? '#ffffff' : '#0f0f0f', fontFamily: 'var(--font-fraunces), Georgia, serif' }}
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Arrow Controls */}
+              <div className="flex items-center justify-between mt-10">
+                <button
+                  onClick={prevService}
+                  aria-label="Previous service"
+                  className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <div className="flex gap-1">
+                  {Array.from({ length: servicePages }).map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setServiceIndex(i)}
+                      aria-label={`Go to service page ${i + 1}`}
+                      className="p-2 flex items-center justify-center"
+                    >
+                      <span className={`transition-all rounded-full block ${i === serviceIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'}`}`} />
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={nextService}
+                  aria-label="Next service"
+                  className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+              <p className={`text-center mt-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+                Page {serviceIndex + 1} of {servicePages} · {services.length} Services
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Why JZ. Smart Media ───────────────────────────────────────────────── */}
+        <section id="about" className="py-32 px-6 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="reveal mb-16">
+              <CometBadge isDark={isDark}>
+                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                  Why JZ. Smart Media
+                </span>
+              </CometBadge>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mt-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+                Built differently.{' '}
+                <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                  Built for results.
+                </span>
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-16">
+              {[
+                { num: '1.', title: 'Home Services Only', body: 'We work exclusively in your vertical. We know the search intent, seasonality, and buying triggers for roofers, restoration companies, HVAC techs, and remodelers.' },
+                { num: '2.', title: 'Full-Stack, One Roof', body: 'SEO, paid ads, CRM, web, and AI — all coordinated by one team toward the same KPIs. No finger-pointing between vendors.' },
+                { num: '3.', title: 'Budget Accountability', body: "We treat your ad spend the way a CFO would. Every dollar is accountable. No wasted impressions or brand campaigns that don't convert." },
+                { num: '4.', title: 'Radical Transparency', body: 'Monthly reports with real KPIs — cost per lead, close rate, ROI by channel. No padded dashboards or vanity metrics.' },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeOut' }}
+                  className={`reveal p-8 rounded-2xl border ${isDark ? 'bg-gray-900/60 border-gray-800' : 'bg-white border-gray-200'} shadow-lg`}
+                >
+                  <div className="text-4xl font-black mb-3 leading-none" style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                    {item.num}
+                  </div>
+                  <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.title}</h3>
+                  <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.body}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className={`reveal rounded-2xl p-8 md:p-10 border ${isDark ? 'bg-gray-900/40 border-gray-800' : 'bg-gray-50 border-gray-200'}`}
+            >
+              <p className={`text-lg md:text-xl italic leading-relaxed mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                &ldquo;The agencies that win long-term treat your budget like it&apos;s their own and your pipeline like it&apos;s their KPI.&rdquo;
+              </p>
+              <p className="text-sm font-bold text-[#667eea]">— JZ. Smart Media Philosophy</p>
+            </motion.div>
+
+            <div className="flex flex-wrap gap-3 mt-8 justify-center">
+              {['Google Ads Certified', 'LSA Specialist', 'GHL Partner', 'Yelp Ads', 'AI-Enabled'].map((badge) => (
+                <span key={badge} className={`px-4 py-2 rounded-full text-xs font-semibold border ${isDark ? 'border-[#667eea]/30 text-[#a78bfa] bg-[#667eea]/10' : 'border-[#667eea]/40 text-[#667eea] bg-[#667eea]/10'}`}>
+                  {badge}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Marquee / Ticker ──────────────────────────────────────────────────── */}
+        <div
+          className={`relative z-10 py-10 ${isDark ? 'border-y border-gray-800/60 bg-[#0a0a0a]' : 'border-y border-gray-200 bg-white'}`}
+          style={{ overflowX: 'clip' }}
+        >
+          {/* Top row — scrolls left */}
+          <div style={{ display: 'flex', width: 'max-content', animation: 'marquee-left 28s linear infinite', marginBottom: '12px' }}>
+            {[...Array(2)].flatMap((_, loopIndex) =>
+              ['GROW', 'CONVERT', 'SCALE', 'RANK', 'DOMINATE', 'RESULTS', 'REVENUE', 'LEADS'].map((word, i) => (
+                <span
+                  key={`top-${loopIndex}-${i}-${word}`}
+                  className="flex items-center gap-6 mr-6 text-5xl md:text-7xl font-black tracking-tighter select-none whitespace-nowrap"
+                >
+                  <span
+                    style={{
+                      color: 'transparent',
+                      WebkitTextStroke: `1.5px ${isDark ? 'rgba(102,126,234,0.45)' : 'rgba(102,126,234,0.3)'}`,
+                      letterSpacing: '-0.04em',
+                    }}
+                  >
+                    {word}
+                  </span>
+                  <span style={{ color: isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.2)', fontSize: '0.5em', verticalAlign: 'middle' }}>✦</span>
+                </span>
+              ))
+            )}
+          </div>
+
+          {/* Bottom row — scrolls right (reverse) */}
+          <div style={{ display: 'flex', width: 'max-content', animation: 'marquee-left 22s linear infinite reverse' }}>
+            {[...Array(2)].flatMap((_, loopIndex) =>
+              ['LOCAL SEO', 'GOOGLE ADS', 'CRM SETUP', 'AUTOMATION', 'AI AGENTS', 'YELP ADS', 'WEB DEV', 'GBP MAPS'].map((word, i) => (
+                <span
+                  key={`bot-${loopIndex}-${i}-${word}`}
+                  className="flex items-center gap-6 mr-6 text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase select-none whitespace-nowrap"
+                >
+                  <span
+                    style={{
+                      backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#fda085,#667eea)',
+                      backgroundSize: '300% auto',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      color: 'transparent',
+                      animation: `gradient-shift ${8 + i}s linear infinite`,
+                    }}
+                  >
+                    {word}
+                  </span>
+                  <span style={{ color: isDark ? 'rgba(240,147,251,0.3)' : 'rgba(240,147,251,0.4)', fontSize: '0.6em' }}>◆</span>
+                </span>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* ── Results / Projects Slider ─────────────────────────────────────────── */}
+        <section id="results" className={`py-32 px-6 relative z-10 ${isDark ? 'bg-gray-900/30' : 'bg-gray-50'}`}>
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <CometBadge isDark={isDark}>
+                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                  Client Results
+                </span>
+              </CometBadge>
+              <h2 className="text-4xl md:text-5xl font-black mb-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+                Real clients.{' '}
+                <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
+                  Real results.
+                </span>
+              </h2>
+            </div>
+
+            {/* Case studies slider */}
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={projectIndex}
+                  initial={{ opacity: 0, x: 60 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -60 }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  className={`rounded-3xl border ${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white border-gray-200'} shadow-2xl overflow-hidden`}
+                >
+                  <div className="grid md:grid-cols-2 min-h-[460px]">
+                    {/* Image panel */}
+                    <div className="relative overflow-hidden min-h-[280px] md:min-h-0">
+                      <Image
+                        src={results[projectIndex].image}
+                        alt={results[projectIndex].title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/5" />
+                      <div className={`absolute inset-0 bg-gradient-to-br ${results[projectIndex].gradient} opacity-25`} />
+                      {/* Category pill */}
+                      <div className="absolute top-6 right-6 z-10">
+                        <span className="px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-medium">
+                          {results[projectIndex].category}
+                        </span>
+                      </div>
+                      {/* Tags at bottom */}
+                      <div className="absolute bottom-6 left-6 z-10 flex gap-2 flex-wrap">
+                        {results[projectIndex].tags.map((tag, idx) => (
+                          <span key={idx} className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-xs">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Content panel */}
+                    <div className="p-10 md:p-12 flex flex-col justify-center">
+                      <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                        {results[projectIndex].title}
+                      </h3>
+                      <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 leading-relaxed`}>
+                        {results[projectIndex].description}
+                      </p>
+                      <div className="grid grid-cols-3 gap-4">
+                        {results[projectIndex].metrics.map((metric, idx) => (
+                          <div key={idx} className="text-center">
+                            <div className={`text-2xl font-bold bg-gradient-to-r ${results[projectIndex].gradient} bg-clip-text text-transparent mb-1`}>{metric.value}</div>
+                            <div className={`text-xs uppercase tracking-wide ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>{metric.label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="flex items-center justify-between mt-8">
+                <button
+                  onClick={prevProject}
+                  aria-label="Previous project"
+                  className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <div className="flex gap-1">
+                  {results.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setProjectIndex(i)}
+                      aria-label={`View project: ${results[i].title}`}
+                      className="p-2 flex items-center justify-center"
+                    >
+                      <span className={`transition-all rounded-full block ${i === projectIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`}`} />
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={nextProject}
+                  aria-label="Next project"
+                  className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Process ──────────────────────────────────────────────────────────── */}
+        <section id="process" className="py-24 px-6 relative z-10">
+          <div className="max-w-7xl mx-auto">
+
+            {/* Header */}
+            <div className="mb-16 reveal">
+              <CometBadge isDark={isDark}>
+                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                  How We Work
+                </span>
+              </CometBadge>
+              <h2 className="text-4xl md:text-5xl font-black mt-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+                From audit to{' '}
+                <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', fontStyle: 'italic' }}>
+                  results
+                </span>{' '}
+                in 30 days
+              </h2>
+            </div>
+
+            {/* 4-step — single row on desktop, stacked on mobile */}
+            <div className={`flex flex-col md:flex-row rounded-2xl overflow-hidden border ${isDark ? 'border-gray-800' : 'border-gray-200'}`}>
+              {processSteps.map((step, index) => (
+                <div key={index} className="flex md:flex-1 flex-col md:flex-row">
+                  {/* Arrow connector between steps (desktop) */}
+                  {index > 0 && (
+                    <div className="hidden md:flex flex-shrink-0 w-0 items-center justify-center relative z-10" style={{ marginLeft: '-14px', marginRight: '-14px' }}>
+                      <ArrowRight className="w-5 h-5 text-[#667eea] opacity-50" />
+                    </div>
+                  )}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.12, duration: 0.5, ease: 'easeOut' }}
+                    className={`flex-1 p-8 md:p-10 ${isDark ? 'bg-gray-900/60 hover:bg-gray-900/90' : 'bg-white hover:bg-gray-50'} transition-colors ${index < processSteps.length - 1 ? (isDark ? 'border-b md:border-b-0 md:border-r border-gray-800' : 'border-b md:border-b-0 md:border-r border-gray-200') : ''}`}
+                  >
+                    <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#667eea] mb-4">{step.step}</p>
+                    <h3 className={`text-xl font-black mb-3 leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>{step.title}</h3>
+                    <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{step.description}</p>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Testimonials ─────────────────────────────────────────────────────── */}
+        <section id="clients" ref={testimonialsRef} className={`py-32 px-6 relative z-10 ${isDark ? 'bg-gray-900/30' : 'bg-gray-50'}`}>
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <CometBadge isDark={isDark}>
+                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                  Client Results
+                </span>
+              </CometBadge>
+              <h2 className="text-4xl md:text-5xl font-black mb-3 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+                Don't take our word for it
+              </h2>
+              <div className="flex items-center justify-center gap-1.5">
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
+                <span className={`text-sm font-semibold ml-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>5.0 / 5 Stars</span>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ y: -10 }}
+                  className={`testimonial-slide p-8 ${isDark ? 'bg-gray-900/80 border-gray-800/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-3xl border shadow-xl`}
+                >
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'} mb-8 leading-relaxed`}>
+                    &ldquo;{testimonial.content}&rdquo;
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-lg`}>
+                      {testimonial.initial}
+                    </div>
+                    <div>
+                      <div className={`font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{testimonial.name}</div>
+                      <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{testimonial.role}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Contact / Get Started ─────────────────────────────────────────────── */}
+        <section id="contact" ref={contactRef} className="py-24 px-6 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+              {/* Left — headline + bullets + CTA */}
+              <div className="reveal">
+                <CometBadge isDark={isDark}>
+                  <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
+                    Get Started Today
+                  </span>
+                </CometBadge>
+                <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
+                  Ready to stop losing leads to your competitors?
+                </h2>
+                <p className={`text-lg mb-8 leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Book a free 30-minute audit call. We'll show you exactly what's holding you back and what we'd do to fix it — no pitch, no pressure, no obligation.
+                </p>
+
+                <div className="space-y-3 mb-10">
+                  {[
+                    'Free 30-minute strategy session',
+                    'Custom growth plan included',
+                    'No long-term contracts required',
+                    'Results in first 30 days or we\'ll fix it',
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-r from-[#43e97b] to-[#38f9d7] flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-3 h-3 text-white" />
+                      </div>
+                      <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <motion.a
+                  href="mailto:yarden@jzsmartmedia.com"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="magnetic-btn group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold text-sm shadow-2xl shadow-[#667eea]/30"
+                >
+                  Book Your Free Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </motion.a>
+                <p className={`mt-3 text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+                  Takes less than 2 minutes — spots are limited
+                </p>
+
+              </div>
+
+              {/* Right — contact form */}
+              <div>
+                <div
+                  className="relative rounded-2xl overflow-hidden"
+                  style={{
+                    border: `1.5px solid ${isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.25)'}`,
+                    background: isDark ? '#111111' : '#ffffff',
+                    boxShadow: isDark
+                      ? '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(102,126,234,0.1)'
+                      : '0 32px 80px rgba(102,126,234,0.12)',
+                  }}
+                >
+                  <div style={{ height: '3px', background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', position: 'absolute', top: 0, left: 0, right: 0 }} />
+                  <div className="px-8 pt-10 pb-8">
+                    {contactSubmitted ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="py-10 text-center"
                       >
-                        See exactly what's holding your business back
-                      </h2>
-
-                      <form onSubmit={handleFormSubmit} className="space-y-4">
-                        {/* Name */}
-                        <div>
-                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Name</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="Mike Johnson"
-                            value={formData.name}
-                            onChange={setField('name')}
-                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
-                          />
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#667eea] to-[#f093fb] flex items-center justify-center">
+                          <CheckCircle className="w-8 h-8 text-white" />
                         </div>
-
-                        {/* Business Name */}
+                        <h3 className="text-2xl font-black mb-2" style={{ color: isDark ? '#fff' : '#111', fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
+                          Audit request received!
+                        </h3>
+                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                          We'll be in touch within 30 minutes with your free growth audit.
+                        </p>
+                      </motion.div>
+                    ) : (
+                      <form onSubmit={handleContactSubmit} className="space-y-4">
+                        {[
+                          { label: 'Your Name', field: 'name', type: 'text', placeholder: 'Mike Johnson' },
+                          { label: 'Phone Number', field: 'phone', type: 'tel', placeholder: '(555) 000-0000' },
+                          { label: 'Email Address', field: 'email', type: 'email', placeholder: 'mike@yourcompany.com' },
+                        ].map(({ label, field, type, placeholder }) => (
+                          <div key={field}>
+                            <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{label}</label>
+                            <input
+                              type={type}
+                              required
+                              placeholder={placeholder}
+                              value={contactForm[field]}
+                              onChange={setContactField(field)}
+                              className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
+                            />
+                          </div>
+                        ))}
                         <div>
-                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Business Name</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="Johnson Roofing LLC"
-                            value={formData.business}
-                            onChange={setField('business')}
-                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
-                          />
-                        </div>
-
-                        {/* Phone */}
-                        <div>
-                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Phone Number</label>
-                          <input
-                            type="tel"
-                            required
-                            placeholder="(555) 000-0000"
-                            value={formData.phone}
-                            onChange={setField('phone')}
-                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
-                          />
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Email Address</label>
-                          <input
-                            type="email"
-                            required
-                            placeholder="mike@yourcompany.com"
-                            value={formData.email}
-                            onChange={setField('email')}
-                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
-                          />
-                        </div>
-
-                        {/* Industry */}
-                        <div>
-                          <label htmlFor="hero-industry" className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
+                          <label htmlFor="contact-industry" className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
                           <select
-                            id="hero-industry"
+                            id="contact-industry"
                             required
-                            value={formData.industry}
-                            onChange={setField('industry')}
-                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 appearance-none cursor-pointer ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#667eea]/60'} ${!formData.industry ? (isDark ? 'text-gray-600' : 'text-gray-400') : ''}`}
+                            value={contactForm.industry}
+                            onChange={setContactField('industry')}
+                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 appearance-none cursor-pointer ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#667eea]/60'} ${!contactForm.industry ? (isDark ? 'text-gray-600' : 'text-gray-400') : ''}`}
                           >
                             <option value="" disabled>Select your industry...</option>
                             <option value="roofing">Roofing</option>
@@ -678,771 +1299,136 @@ export default function JZSmartMediaLanding() {
                             <option value="other">Other</option>
                           </select>
                         </div>
-
-                        {/* Submit */}
                         <motion.button
                           type="submit"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30"
-                          style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', backgroundSize: '200% auto' }}
+                          style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)' }}
                         >
-                          Get My Free Audit <ArrowRight className="w-4 h-4" />
+                          Claim My Free Audit <ArrowRight className="w-4 h-4" />
                         </motion.button>
-
-                        <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                          🔒 No spam. No commitment. Results in 30 minutes.
+                        <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+                          🔒 Your info is private. No spam ever.
                         </p>
                       </form>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── Stats + Platforms Section ─────────────────────────────────────────── */}
-      <section className="py-20 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-
-          {/* Trusted platforms */}
-          <div className="text-center mb-10">
-            <p className={`text-xs font-bold tracking-[0.25em] uppercase mb-5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-              Trusted platforms we manage
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {['Google Ads', 'Local SEO', 'Yelp Ads', 'GoHighLevel', 'AI Solutions', 'Web Dev'].map((platform) => (
-                <span
-                  key={platform}
-                  className={`px-5 py-2 rounded-full text-sm font-semibold border ${isDark ? 'border-gray-700 text-gray-300 bg-gray-900/60' : 'border-gray-200 text-gray-700 bg-gray-50'}`}
-                >
-                  {platform}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <CometCard
-                key={index}
-                duration={`${3 + index * 0.4}s`}
-                delay={`${index * 0.3}s`}
-                innerBg={isDark ? 'bg-[#111111]' : 'bg-gray-50'}
-              >
-                <div className="text-center p-8">
-                  <div className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                    {stat.number}
+                    )}
                   </div>
-                  <div className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm font-medium leading-snug`}>{stat.label}</div>
                 </div>
-              </CometCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Services Slider ───────────────────────────────────────────────────── */}
-      <section id="services" className="py-32 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <CometBadge isDark={isDark}>
-              <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                What We Do
-              </span>
-            </CometBadge>
-            <h2 className="text-4xl md:text-5xl font-black mb-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
-              Everything your business<br />needs to{' '}
-              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
-                dominate locally
-              </span>
-            </h2>
-            <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-xl mx-auto`}>
-              Every service built around one outcome: qualified calls from homeowners ready to book.
-            </p>
-          </div>
-
-          {/* Services Grid Slider — 3 per page */}
-          <div className="relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={serviceIndex}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-6"
-              >
-                {services.slice(serviceIndex * SERVICES_PER_PAGE, (serviceIndex + 1) * SERVICES_PER_PAGE).map((service, idx) => (
-                  <motion.div
-                    key={idx}
-                    whileHover={{ y: -6 }}
-                    className={`rounded-2xl border overflow-hidden flex flex-col ${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white border-gray-200'} shadow-xl transition-shadow hover:shadow-2xl`}
-                  >
-                    {/* Image container — TOP */}
-                    <div className="relative h-44 overflow-hidden">
-                      <Image
-                        src={service.image}
-                        alt={service.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                      {/* Dark bottom-to-top overlay so image is visible at top */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10" />
-                      {/* Subtle brand colour tint */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-30`} />
-                      <span className="absolute top-3 left-4 text-white/70 text-xs font-bold tracking-widest z-10">{service.number}</span>
-                      {service.badge && (
-                        <span className="absolute top-3 right-4 px-2.5 py-1 bg-black/40 backdrop-blur-sm text-white text-xs font-semibold rounded-full z-10 border border-white/20">
-                          {service.badge}
-                        </span>
-                      )}
-                      <div className="absolute inset-0 flex items-center justify-center z-10">
-                        <div className="w-14 h-14 rounded-2xl bg-black/30 backdrop-blur-sm border border-white/25 flex items-center justify-center text-white shadow-lg">
-                          {service.icon}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Content — BELOW */}
-                    <div className="p-6 flex flex-col flex-grow">
-                      <h3 className={`text-lg font-bold mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>{service.title}</h3>
-                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-5 leading-relaxed flex-grow`}>{service.description}</p>
-                      <div className="space-y-2">
-                        {service.features.map((feature, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient} flex-shrink-0`} />
-                            <span className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Arrow Controls */}
-            <div className="flex items-center justify-between mt-10">
-              <button
-                onClick={prevService}
-                aria-label="Previous service"
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <div className="flex gap-1">
-                {Array.from({ length: servicePages }).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setServiceIndex(i)}
-                    aria-label={`Go to service page ${i + 1}`}
-                    className="p-2 flex items-center justify-center"
-                  >
-                    <span className={`transition-all rounded-full block ${i === serviceIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'}`}`} />
-                  </button>
-                ))}
               </div>
-              <button
-                onClick={nextService}
-                aria-label="Next service"
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+
             </div>
-
-            <p className={`text-center mt-4 text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-              Page {serviceIndex + 1} of {servicePages} · {services.length} Services
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Why JZ. Smart Media ───────────────────────────────────────────────── */}
-      <section id="about" className="py-32 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="reveal mb-16">
-            <CometBadge isDark={isDark}>
-              <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                Why JZ. Smart Media
-              </span>
-            </CometBadge>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mt-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
-              Built differently.{' '}
-              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
-                Built for results.
-              </span>
-            </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-16">
+        </section>
+
+        {/* ── Contact Info Bar ─────────────────────────────────────────────────── */}
+        <section className={`px-6 py-14 border-t ${isDark ? 'border-gray-800/60' : 'border-gray-200'} relative z-10`}>
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { num: '1.', title: 'Home Services Only', body: 'We work exclusively in your vertical. We know the search intent, seasonality, and buying triggers for roofers, restoration companies, HVAC techs, and remodelers.' },
-              { num: '2.', title: 'Full-Stack, One Roof', body: 'SEO, paid ads, CRM, web, and AI — all coordinated by one team toward the same KPIs. No finger-pointing between vendors.' },
-              { num: '3.', title: 'Budget Accountability', body: "We treat your ad spend the way a CFO would. Every dollar is accountable. No wasted impressions or brand campaigns that don't convert." },
-              { num: '4.', title: 'Radical Transparency', body: 'Monthly reports with real KPIs — cost per lead, close rate, ROI by channel. No padded dashboards or vanity metrics.' },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeOut' }}
-                className={`reveal p-8 rounded-2xl border ${isDark ? 'bg-gray-900/60 border-gray-800' : 'bg-white border-gray-200'} shadow-lg`}
-              >
-                <div className="text-4xl font-black mb-3 leading-none" style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
-                  {item.num}
-                </div>
-                <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.title}</h3>
-                <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.body}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className={`reveal rounded-2xl p-8 md:p-10 border ${isDark ? 'bg-gray-900/40 border-gray-800' : 'bg-gray-50 border-gray-200'}`}
-          >
-            <p className={`text-lg md:text-xl italic leading-relaxed mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-              &ldquo;The agencies that win long-term treat your budget like it&apos;s their own and your pipeline like it&apos;s their KPI.&rdquo;
-            </p>
-            <p className="text-sm font-bold text-[#667eea]">— JZ. Smart Media Philosophy</p>
-          </motion.div>
-
-          <div className="flex flex-wrap gap-3 mt-8 justify-center">
-            {['Google Ads Certified', 'LSA Specialist', 'GHL Partner', 'Yelp Ads', 'AI-Enabled'].map((badge) => (
-              <span key={badge} className={`px-4 py-2 rounded-full text-xs font-semibold border ${isDark ? 'border-[#667eea]/30 text-[#a78bfa] bg-[#667eea]/10' : 'border-[#667eea]/40 text-[#667eea] bg-[#667eea]/10'}`}>
-                {badge}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Marquee / Ticker ──────────────────────────────────────────────────── */}
-      <div
-        className={`relative z-10 py-10 ${isDark ? 'border-y border-gray-800/60 bg-[#0a0a0a]' : 'border-y border-gray-200 bg-white'}`}
-        style={{ overflowX: 'clip' }}
-      >
-        {/* Top row — scrolls left */}
-        <div style={{ display: 'flex', width: 'max-content', animation: 'marquee-left 28s linear infinite', marginBottom: '12px' }}>
-          {[...Array(2)].flatMap((_, loopIndex) =>
-            ['GROW', 'CONVERT', 'SCALE', 'RANK', 'DOMINATE', 'RESULTS', 'REVENUE', 'LEADS'].map((word, i) => (
-              <span
-                key={`top-${loopIndex}-${i}-${word}`}
-                className="flex items-center gap-6 mr-6 text-5xl md:text-7xl font-black tracking-tighter select-none whitespace-nowrap"
-              >
-                <span
-                  style={{
-                    color: 'transparent',
-                    WebkitTextStroke: `1.5px ${isDark ? 'rgba(102,126,234,0.45)' : 'rgba(102,126,234,0.3)'}`,
-                    letterSpacing: '-0.04em',
-                  }}
-                >
-                  {word}
-                </span>
-                <span style={{ color: isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.2)', fontSize: '0.5em', verticalAlign: 'middle' }}>✦</span>
-              </span>
-            ))
-          )}
-        </div>
-
-        {/* Bottom row — scrolls right (reverse) */}
-        <div style={{ display: 'flex', width: 'max-content', animation: 'marquee-left 22s linear infinite reverse' }}>
-          {[...Array(2)].flatMap((_, loopIndex) =>
-            ['LOCAL SEO', 'GOOGLE ADS', 'CRM SETUP', 'AUTOMATION', 'AI AGENTS', 'YELP ADS', 'WEB DEV', 'GBP MAPS'].map((word, i) => (
-              <span
-                key={`bot-${loopIndex}-${i}-${word}`}
-                className="flex items-center gap-6 mr-6 text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase select-none whitespace-nowrap"
-              >
-                <span
-                  style={{
-                    backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb,#f5576c,#fda085,#667eea)',
-                    backgroundSize: '300% auto',
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                    color: 'transparent',
-                    animation: `gradient-shift ${8 + i}s linear infinite`,
-                  }}
-                >
-                  {word}
-                </span>
-                <span style={{ color: isDark ? 'rgba(240,147,251,0.3)' : 'rgba(240,147,251,0.4)', fontSize: '0.6em' }}>◆</span>
-              </span>
-            ))
-          )}
-        </div>
-      </div>
-
-      {/* ── Results / Projects Slider ─────────────────────────────────────────── */}
-      <section id="results" className={`py-32 px-6 relative z-10 ${isDark ? 'bg-gray-900/30' : 'bg-gray-50'}`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <CometBadge isDark={isDark}>
-              <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                Client Results
-              </span>
-            </CometBadge>
-            <h2 className="text-4xl md:text-5xl font-black mb-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
-              Real clients.{' '}
-              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
-                Real results.
-              </span>
-            </h2>
-          </div>
-
-          {/* Case studies slider */}
-          <div className="relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={projectIndex}
-                initial={{ opacity: 0, x: 60 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -60 }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-                className={`rounded-3xl border ${isDark ? 'bg-gray-900/80 border-gray-800' : 'bg-white border-gray-200'} shadow-2xl overflow-hidden`}
-              >
-                <div className="grid md:grid-cols-2 min-h-[460px]">
-                  {/* Image panel */}
-                  <div className="relative overflow-hidden min-h-[280px] md:min-h-0">
-                    <Image
-                      src={results[projectIndex].image}
-                      alt={results[projectIndex].title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/5" />
-                    <div className={`absolute inset-0 bg-gradient-to-br ${results[projectIndex].gradient} opacity-25`} />
-                    {/* Category pill */}
-                    <div className="absolute top-6 right-6 z-10">
-                      <span className="px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-medium">
-                        {results[projectIndex].category}
-                      </span>
-                    </div>
-                    {/* Tags at bottom */}
-                    <div className="absolute bottom-6 left-6 z-10 flex gap-2 flex-wrap">
-                      {results[projectIndex].tags.map((tag, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-xs">{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Content panel */}
-                  <div className="p-10 md:p-12 flex flex-col justify-center">
-                    <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                      {results[projectIndex].title}
-                    </h3>
-                    <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} mb-8 leading-relaxed`}>
-                      {results[projectIndex].description}
-                    </p>
-                    <div className="grid grid-cols-3 gap-4">
-                      {results[projectIndex].metrics.map((metric, idx) => (
-                        <div key={idx} className="text-center">
-                          <div className={`text-2xl font-bold bg-gradient-to-r ${results[projectIndex].gradient} bg-clip-text text-transparent mb-1`}>{metric.value}</div>
-                          <div className={`text-xs uppercase tracking-wide ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>{metric.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            <div className="flex items-center justify-between mt-8">
-              <button
-                onClick={prevProject}
-                aria-label="Previous project"
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <div className="flex gap-1">
-                {results.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setProjectIndex(i)}
-                    aria-label={`View project: ${results[i].title}`}
-                    className="p-2 flex items-center justify-center"
-                  >
-                    <span className={`transition-all rounded-full block ${i === projectIndex ? 'w-8 h-2.5 bg-gradient-to-r from-[#667eea] to-[#f093fb]' : `w-2.5 h-2.5 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`}`} />
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={nextProject}
-                aria-label="Next project"
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all hover:scale-110 ${isDark ? 'border-gray-700 bg-gray-900 hover:bg-gray-800 text-white' : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'} shadow-lg`}
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Process ──────────────────────────────────────────────────────────── */}
-      <section id="process" className="py-24 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-
-          {/* Header */}
-          <div className="mb-16 reveal">
-            <CometBadge isDark={isDark}>
-              <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                How We Work
-              </span>
-            </CometBadge>
-            <h2 className="text-4xl md:text-5xl font-black mt-4 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
-              From audit to{' '}
-              <span style={{ backgroundImage: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', fontStyle: 'italic' }}>
-                results
-              </span>{' '}
-              in 30 days
-            </h2>
-          </div>
-
-          {/* 4-step — single row on desktop, stacked on mobile */}
-          <div className={`flex flex-col md:flex-row rounded-2xl overflow-hidden border ${isDark ? 'border-gray-800' : 'border-gray-200'}`}>
-            {processSteps.map((step, index) => (
-              <div key={index} className="flex md:flex-1 flex-col md:flex-row">
-                {/* Arrow connector between steps (desktop) */}
-                {index > 0 && (
-                  <div className="hidden md:flex flex-shrink-0 w-0 items-center justify-center relative z-10" style={{ marginLeft: '-14px', marginRight: '-14px' }}>
-                    <ArrowRight className="w-5 h-5 text-[#667eea] opacity-50" />
-                  </div>
-                )}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.12, duration: 0.5, ease: 'easeOut' }}
-                  className={`flex-1 p-8 md:p-10 ${isDark ? 'bg-gray-900/60 hover:bg-gray-900/90' : 'bg-white hover:bg-gray-50'} transition-colors ${index < processSteps.length - 1 ? (isDark ? 'border-b md:border-b-0 md:border-r border-gray-800' : 'border-b md:border-b-0 md:border-r border-gray-200') : ''}`}
-                >
-                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#667eea] mb-4">{step.step}</p>
-                  <h3 className={`text-xl font-black mb-3 leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>{step.title}</h3>
-                  <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{step.description}</p>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Testimonials ─────────────────────────────────────────────────────── */}
-      <section id="clients" ref={testimonialsRef} className={`py-32 px-6 relative z-10 ${isDark ? 'bg-gray-900/30' : 'bg-gray-50'}`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <CometBadge isDark={isDark}>
-              <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                Client Results
-              </span>
-            </CometBadge>
-            <h2 className="text-4xl md:text-5xl font-black mb-3 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
-              Don't take our word for it
-            </h2>
-            <div className="flex items-center justify-center gap-1.5">
-              {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
-              <span className={`text-sm font-semibold ml-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>5.0 / 5 Stars</span>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
+              { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
+              { icon: Phone, label: 'Call Us', value: '(352) 755-6501', href: 'tel:+13527556501' },
+              { icon: MapPin, label: 'Based in Miami, FL', value: 'Home Service Businesses Nationwide' },
+            ].map((item, index) => (
               <motion.div
                 key={index}
-                whileHover={{ y: -10 }}
-                className={`testimonial-slide p-8 ${isDark ? 'bg-gray-900/80 border-gray-800/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-3xl border shadow-xl`}
+                whileHover={{ y: -4 }}
+                className={`flex items-center gap-5 p-6 rounded-2xl border ${isDark ? 'bg-gray-900/50 border-gray-800/60' : 'bg-gray-50 border-gray-200'}`}
               >
-                <div className="flex gap-1 mb-6">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
+                <div className="w-12 h-12 bg-gradient-to-br from-[#667eea] to-[#f093fb] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#667eea]/20">
+                  <item.icon className="w-5 h-5 text-white" />
                 </div>
-                <p className={`${isDark ? 'text-gray-300' : 'text-gray-700'} mb-8 leading-relaxed`}>
-                  &ldquo;{testimonial.content}&rdquo;
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-lg`}>
-                    {testimonial.initial}
-                  </div>
-                  <div>
-                    <div className={`font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{testimonial.name}</div>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{testimonial.role}</div>
-                  </div>
+                <div>
+                  <div className={`text-xs font-bold tracking-wide uppercase mb-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>{item.label}</div>
+                  {item.href
+                    ? <a href={item.href} className="text-base font-semibold text-[#667eea] hover:underline">{item.value}</a>
+                    : <div className={`text-base font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.value}</div>
+                  }
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Contact / Get Started ─────────────────────────────────────────────── */}
-      <section id="contact" ref={contactRef} className="py-24 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-
-            {/* Left — headline + bullets + CTA */}
-            <div className="reveal">
-              <CometBadge isDark={isDark}>
-                <span className="text-sm font-semibold bg-gradient-to-r from-[#667eea] to-[#f093fb] bg-clip-text text-transparent">
-                  Get Started Today
+        {/* ── Footer ───────────────────────────────────────────────────────────── */}
+        <footer className={`py-12 px-6 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'} relative z-10`}>
+          <div className="max-w-7xl mx-auto">
+            {/* Top row */}
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+              {/* Logo */}
+              <div className="flex items-baseline gap-1.5 select-none">
+                <span
+                  className="text-3xl font-black bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent leading-none"
+                  style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}
+                >
+                  JZ.
                 </span>
-              </CometBadge>
-              <h2 className="text-4xl md:text-5xl font-black mt-4 mb-6 leading-tight" style={{ color: isDark ? '#fff' : '#0f0f0f' }}>
-                Ready to stop losing leads to your competitors?
-              </h2>
-              <p className={`text-lg mb-8 leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                Book a free 30-minute audit call. We'll show you exactly what's holding you back and what we'd do to fix it — no pitch, no pressure, no obligation.
-              </p>
-
-              <div className="space-y-3 mb-10">
-                {[
-                  'Free 30-minute strategy session',
-                  'Custom growth plan included',
-                  'No long-term contracts required',
-                  'Results in first 30 days or we\'ll fix it',
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-r from-[#43e97b] to-[#38f9d7] flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-3 h-3 text-white" />
-                    </div>
-                    <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{item}</span>
-                  </div>
+                <span
+                  className={`text-sm font-medium tracking-wide ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                  style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}
+                >
+                  Smart Media
+                </span>
+              </div>
+              {/* Nav links */}
+              <div className="flex flex-wrap justify-center gap-6">
+                {navItems.concat(['Contact']).map((item) => (
+                  <a
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    className={`text-sm ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors`}
+                  >
+                    {item}
+                  </a>
                 ))}
               </div>
-
-              <motion.a
-                href="mailto:yarden@jzsmartmedia.com"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className="magnetic-btn group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] text-white rounded-full font-semibold text-sm shadow-2xl shadow-[#667eea]/30"
-              >
-                Book Your Free Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
-              <p className={`mt-3 text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-                Takes less than 2 minutes — spots are limited
-              </p>
-
-            </div>
-
-            {/* Right — contact form */}
-            <div>
-              <div
-                className="relative rounded-2xl overflow-hidden"
-                style={{
-                  border: `1.5px solid ${isDark ? 'rgba(102,126,234,0.3)' : 'rgba(102,126,234,0.25)'}`,
-                  background: isDark ? '#111111' : '#ffffff',
-                  boxShadow: isDark
-                    ? '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(102,126,234,0.1)'
-                    : '0 32px 80px rgba(102,126,234,0.12)',
-                }}
-              >
-                <div style={{ height: '3px', background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', position: 'absolute', top: 0, left: 0, right: 0 }} />
-                <div className="px-8 pt-10 pb-8">
-                  {contactSubmitted ? (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="py-10 text-center"
-                    >
-                      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#667eea] to-[#f093fb] flex items-center justify-center">
-                        <CheckCircle className="w-8 h-8 text-white" />
-                      </div>
-                      <h3 className="text-2xl font-black mb-2" style={{ color: isDark ? '#fff' : '#111', fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
-                        Audit request received!
-                      </h3>
-                      <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                        We'll be in touch within 30 minutes with your free growth audit.
-                      </p>
-                    </motion.div>
-                  ) : (
-                    <form onSubmit={handleContactSubmit} className="space-y-4">
-                      {[
-                        { label: 'Your Name', field: 'name', type: 'text', placeholder: 'Mike Johnson' },
-                        { label: 'Phone Number', field: 'phone', type: 'tel', placeholder: '(555) 000-0000' },
-                        { label: 'Email Address', field: 'email', type: 'email', placeholder: 'mike@yourcompany.com' },
-                      ].map(({ label, field, type, placeholder }) => (
-                        <div key={field}>
-                          <label className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{label}</label>
-                          <input
-                            type={type}
-                            required
-                            placeholder={placeholder}
-                            value={contactForm[field]}
-                            onChange={setContactField(field)}
-                            className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white placeholder-gray-600 focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[#667eea]/60'}`}
-                          />
-                        </div>
-                      ))}
-                      <div>
-                        <label htmlFor="contact-industry" className={`block text-xs font-semibold mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Your Industry</label>
-                        <select
-                          id="contact-industry"
-                          required
-                          value={contactForm.industry}
-                          onChange={setContactField('industry')}
-                          className={`w-full px-4 py-3 rounded-xl text-sm border transition-all outline-none focus:ring-2 focus:ring-[#667eea]/30 appearance-none cursor-pointer ${isDark ? 'bg-[#1a1a1a] border-gray-700/70 text-white focus:border-[#667eea]/60' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#667eea]/60'} ${!contactForm.industry ? (isDark ? 'text-gray-600' : 'text-gray-400') : ''}`}
-                        >
-                          <option value="" disabled>Select your industry...</option>
-                          <option value="roofing">Roofing</option>
-                          <option value="hvac">HVAC</option>
-                          <option value="restoration">Restoration</option>
-                          <option value="remodeling">Remodeling</option>
-                          <option value="plumbing">Plumbing</option>
-                          <option value="electrical">Electrical</option>
-                          <option value="landscaping">Landscaping</option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-                      <motion.button
-                        type="submit"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30"
-                        style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)' }}
-                      >
-                        Claim My Free Audit <ArrowRight className="w-4 h-4" />
-                      </motion.button>
-                      <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-                        🔒 Your info is private. No spam ever.
-                      </p>
-                    </form>
-                  )}
-                </div>
+              {/* Social icons */}
+              <div className="flex items-center gap-3">
+                {[
+                  {
+                    href: 'https://www.facebook.com/profile.php?id=61579089646043',
+                    label: 'Facebook',
+                    path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z',
+                  },
+                  {
+                    href: 'http://instagram.com/jz.smartmedia',
+                    label: 'Instagram',
+                    path: 'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2z',
+                  },
+                  {
+                    href: 'https://www.youtube.com/@JZ.SmartMedia',
+                    label: 'YouTube',
+                    path: 'M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z',
+                  },
+                  {
+                    href: 'https://www.linkedin.com/company/jz-smart-media/about/?viewAsMember=true',
+                    label: 'LinkedIn',
+                    path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
+                  },
+                ].map(({ href, label, path }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 ${isDark ? 'bg-gray-800 hover:bg-gradient-to-br hover:from-[#667eea] hover:to-[#f093fb] text-gray-400 hover:text-white' : 'bg-gray-100 hover:bg-gradient-to-br hover:from-[#667eea] hover:to-[#f093fb] text-gray-500 hover:text-white'}`}
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={path} />
+                    </svg>
+                  </a>
+                ))}
               </div>
             </div>
-
-          </div>
-        </div>
-
-      </section>
-
-      {/* ── Contact Info Bar ─────────────────────────────────────────────────── */}
-      <section className={`px-6 py-14 border-t ${isDark ? 'border-gray-800/60' : 'border-gray-200'} relative z-10`}>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { icon: Mail, label: 'Send a Message', value: 'yarden@jzsmartmedia.com', href: 'mailto:yarden@jzsmartmedia.com' },
-            { icon: Phone, label: 'Call Us', value: '(352) 755-6501', href: 'tel:+13527556501' },
-            { icon: MapPin, label: 'Based in Miami, FL', value: 'Home Service Businesses Nationwide' },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ y: -4 }}
-              className={`flex items-center gap-5 p-6 rounded-2xl border ${isDark ? 'bg-gray-900/50 border-gray-800/60' : 'bg-gray-50 border-gray-200'}`}
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-[#667eea] to-[#f093fb] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#667eea]/20">
-                <item.icon className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <div className={`text-xs font-bold tracking-wide uppercase mb-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>{item.label}</div>
-                {item.href
-                  ? <a href={item.href} className="text-base font-semibold text-[#667eea] hover:underline">{item.value}</a>
-                  : <div className={`text-base font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{item.value}</div>
-                }
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Footer ───────────────────────────────────────────────────────────── */}
-      <footer className={`py-12 px-6 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'} relative z-10`}>
-        <div className="max-w-7xl mx-auto">
-          {/* Top row */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-            {/* Logo */}
-            <div className="flex items-baseline gap-1.5 select-none">
-              <span
-                className="text-3xl font-black bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent leading-none"
-                style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}
-              >
-                JZ.
-              </span>
-              <span
-                className={`text-sm font-medium tracking-wide ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
-                style={{ fontFamily: 'var(--font-dm-sans), sans-serif' }}
-              >
-                Smart Media
-              </span>
-            </div>
-            {/* Nav links */}
-            <div className="flex flex-wrap justify-center gap-6">
-              {navItems.concat(['Contact']).map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className={`text-sm ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'} transition-colors`}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-            {/* Social icons */}
-            <div className="flex items-center gap-3">
-              {[
-                {
-                  href: 'https://www.facebook.com/profile.php?id=61579089646043',
-                  label: 'Facebook',
-                  path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z',
-                },
-                {
-                  href: 'http://instagram.com/jz.smartmedia',
-                  label: 'Instagram',
-                  path: 'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2z',
-                },
-                {
-                  href: 'https://www.youtube.com/@JZ.SmartMedia',
-                  label: 'YouTube',
-                  path: 'M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z',
-                },
-                {
-                  href: 'https://www.linkedin.com/company/jz-smart-media/about/?viewAsMember=true',
-                  label: 'LinkedIn',
-                  path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
-                },
-              ].map(({ href, label, path }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 ${isDark ? 'bg-gray-800 hover:bg-gradient-to-br hover:from-[#667eea] hover:to-[#f093fb] text-gray-400 hover:text-white' : 'bg-gray-100 hover:bg-gradient-to-br hover:from-[#667eea] hover:to-[#f093fb] text-gray-500 hover:text-white'}`}
-                >
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={path} />
-                  </svg>
-                </a>
-              ))}
+            {/* Bottom row */}
+            <div className={`text-center pt-6 border-t ${isDark ? 'border-gray-800/60 text-gray-400' : 'border-gray-200 text-gray-400'} text-sm`}>
+              © 2026 JZ. Smart Media. All Rights Reserved.
             </div>
           </div>
-          {/* Bottom row */}
-          <div className={`text-center pt-6 border-t ${isDark ? 'border-gray-800/60 text-gray-400' : 'border-gray-200 text-gray-400'} text-sm`}>
-            © 2026 JZ. Smart Media. All Rights Reserved.
-          </div>
-        </div>
-      </footer>
+        </footer>
       </main>
 
-      {/* ── WhatsApp floating button ──────────────────────────────────────────── */}
-      <a
-        href="https://wa.me/13527556501"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp"
-        className="fixed bottom-6 right-6 z-[9998] flex items-center justify-center w-14 h-14 rounded-full shadow-lg shadow-green-500/30 hover:scale-110 active:scale-95 transition-transform duration-200"
-        style={{ background: '#25D366' }}
-      >
-        <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-        </svg>
-      </a>
     </div>
   );
 }
