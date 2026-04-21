@@ -1,7 +1,7 @@
 export const metadata = {
   title: 'Schedule a Meeting',
   description:
-    'Book a free 30-minute discovery call with JZ Smart Media to discuss your home service business goals — or check in if you\'re an existing client.',
+    'Book a time with the JZ Smart Media team. Whether you\'re exploring how we can help your business grow or checking in on an active project.',
   alternates: {
     canonical: 'https://jzsmartmedia.com/schedule',
   },
