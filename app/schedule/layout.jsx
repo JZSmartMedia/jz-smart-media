@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: 'Schedule a Meeting | JZ Smart Media',
     description:
-      'Book a free 30-minute discovery call to see how JZ Smart Media can grow your home service business.',
+      'Book a time with the JZ Smart Media team. Whether you\'re exploring how we can help your business grow or checking in on an active project.',
     url: 'https://jzsmartmedia.com/schedule',
   },
 };
