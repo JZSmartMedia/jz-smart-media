@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-const BOOKINGS = [
+const MAIN_CARDS = [
   {
     id: 'new',
     emoji: '👋',
@@ -37,16 +37,48 @@ const BOOKINGS = [
     id: 'team',
     emoji: '🧑‍💼',
     title: 'Book with Our Team',
-    description: 'Connect directly with the right person — account management, social media, tech support, or development.',
+    description: 'Connect directly with the right person on our team.',
     badge: 'TEAM MEETING',
     badgeStyle: { background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.25)', color: '#fcd34d' },
     duration: '30 MIN',
     accent: '#f59e0b',
     glowColor: 'rgba(245,158,11,0.10)',
     bgActive: 'rgba(245,158,11,0.06)',
-    namespace: 'book-with-team',
-    calLink: 'yarden-zemer/book-with-team',
   },
+];
+
+const TEAM_OPTIONS = [
+  {
+    id: 'alice',
+    emoji: '🎨',
+    label: 'Alice',
+    sublabel: 'Social Media',
+    namespace: 'alice-social-media',
+    calLink: 'yarden-zemer/alice-social-media',
+  },
+  {
+    id: 'edward',
+    emoji: '🛠️',
+    label: 'Edward',
+    sublabel: 'Tech Support',
+    namespace: 'edward-tech-support',
+    calLink: 'yarden-zemer/edward-tech-support',
+  },
+  {
+    id: 'dev',
+    emoji: '💻',
+    label: 'Development',
+    sublabel: 'Dev Team',
+    namespace: 'development',
+    calLink: 'yarden-zemer/development',
+  },
+];
+
+// All embeds that need a DOM slot
+const ALL_EMBEDS = [
+  { id: 'new',    namespace: '30-min-discovery-call',  calLink: 'yarden-zemer/30-min-discovery-call' },
+  { id: 'existing', namespace: 'client-check-in',      calLink: 'yarden-zemer/client-check-in' },
+  ...TEAM_OPTIONS.map((t) => ({ id: t.id, namespace: t.namespace, calLink: t.calLink })),
 ];
 
 function bootstrapCal() {
@@ -78,30 +110,39 @@ function bootstrapCal() {
 }
 
 export default function SchedulePage() {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(null);     // 'new' | 'existing' | 'team'
+  const [teamMember, setTeamMember] = useState(null); // 'alice' | 'edward' | 'dev'
   const initializedRef = useRef(new Set());
 
   useEffect(() => { bootstrapCal(); }, []);
 
+  // Which embed is actually visible
+  const activeEmbedId = selected === 'team' ? teamMember : selected;
+
   useEffect(() => {
-    if (!selected) return;
-    if (initializedRef.current.has(selected)) return;
-    initializedRef.current.add(selected);
+    if (!activeEmbedId) return;
+    if (initializedRef.current.has(activeEmbedId)) return;
+    initializedRef.current.add(activeEmbedId);
 
-    const booking = BOOKINGS.find((b) => b.id === selected);
-    if (!booking) return;
+    const embed = ALL_EMBEDS.find((e) => e.id === activeEmbedId);
+    if (!embed) return;
 
-    const { namespace, calLink } = booking;
+    const { namespace, calLink } = embed;
     Cal('init', namespace, { origin: 'https://app.cal.com' });
     Cal.ns[namespace]('inline', {
-      elementOrSelector: `#cal-${selected}`,
+      elementOrSelector: `#cal-${activeEmbedId}`,
       config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
       calLink,
     });
     Cal.ns[namespace]('ui', { hideEventTypeDetails: false, layout: 'month_view' });
-  }, [selected]);
+  }, [activeEmbedId]);
 
-  const selectedBooking = BOOKINGS.find((b) => b.id === selected);
+  const handleMainSelect = (id) => {
+    setSelected(id);
+    if (id !== 'team') setTeamMember(null);
+  };
+
+  const selectedTeamOption = TEAM_OPTIONS.find((t) => t.id === teamMember);
 
   return (
     <div
@@ -167,12 +208,12 @@ export default function SchedulePage() {
           </div>
         </div>
 
-        {/* Selection cards — 3 col on md+ */}
-        <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-10">
-          {BOOKINGS.map((opt) => (
+        {/* Step 1 — Main cards */}
+        <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-6">
+          {MAIN_CARDS.map((opt) => (
             <button
               key={opt.id}
-              onClick={() => setSelected(opt.id)}
+              onClick={() => handleMainSelect(opt.id)}
               aria-label={`Select ${opt.title}`}
               className="relative p-6 rounded-2xl border text-left transition-all duration-300 w-full"
               style={{
@@ -181,7 +222,6 @@ export default function SchedulePage() {
                 boxShadow: selected === opt.id ? `0 0 40px ${opt.glowColor}` : 'none',
               }}
             >
-              {/* Radio indicator */}
               <div
                 className="absolute top-4 right-4 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all"
                 style={{ borderColor: selected === opt.id ? opt.accent : '#4b5563' }}
@@ -214,33 +254,89 @@ export default function SchedulePage() {
           ))}
         </div>
 
-        {/* Selected label pill */}
-        {selected && (
+        {/* Step 2 — Team sub-options (only when "team" selected) */}
+        <div
+          className="max-w-4xl mx-auto overflow-hidden transition-all duration-500"
+          style={{
+            maxHeight: selected === 'team' ? '160px' : '0px',
+            opacity: selected === 'team' ? 1 : 0,
+            marginBottom: selected === 'team' ? '24px' : '0px',
+          }}
+        >
+          <div
+            className="rounded-2xl p-5"
+            style={{ background: 'rgba(245,158,11,0.04)', border: '1px solid rgba(245,158,11,0.15)' }}
+          >
+            <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4">
+              Who would you like to meet with?
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {TEAM_OPTIONS.map((opt) => (
+                <button
+                  key={opt.id}
+                  onClick={() => setTeamMember(opt.id)}
+                  aria-label={`Book with ${opt.label}`}
+                  className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border transition-all duration-200"
+                  style={{
+                    background: teamMember === opt.id ? 'rgba(245,158,11,0.12)' : 'rgba(255,255,255,0.03)',
+                    borderColor: teamMember === opt.id ? '#f59e0b' : 'rgba(255,255,255,0.08)',
+                    boxShadow: teamMember === opt.id ? '0 0 20px rgba(245,158,11,0.12)' : 'none',
+                  }}
+                >
+                  <span className="text-lg">{opt.emoji}</span>
+                  <div className="text-left">
+                    <div className="text-sm font-bold text-white leading-none mb-0.5">{opt.label}</div>
+                    <div className="text-xs text-gray-500">{opt.sublabel}</div>
+                  </div>
+                  {teamMember === opt.id && (
+                    <div
+                      className="w-4 h-4 rounded-full flex items-center justify-center ml-1 flex-shrink-0"
+                      style={{ background: '#f59e0b' }}
+                    >
+                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                        <path d="M1 4l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Active selection label pill */}
+        {activeEmbedId && (
           <div className="flex justify-center mb-8">
             <div
               className="px-5 py-2.5 rounded-full text-sm text-gray-300"
               style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
             >
-              {selectedBooking?.emoji} {selectedBooking?.title}
+              {selected === 'new' && '👋 New Client — 30-Min Discovery Call'}
+              {selected === 'existing' && '🤝 Existing Client — Check-In'}
+              {selected === 'team' && selectedTeamOption && `${selectedTeamOption.emoji} ${selectedTeamOption.label} — ${selectedTeamOption.sublabel}`}
             </div>
           </div>
         )}
 
         {/* Cal.com embeds — all in DOM, toggled via display */}
         <div className="max-w-4xl mx-auto">
-          {!selected && (
+          {!activeEmbedId && (
             <div className="flex flex-col items-center justify-center py-20 text-gray-600 gap-3">
               <div className="text-4xl opacity-40">📆</div>
-              <p className="text-base">Select a meeting type above to see available times</p>
+              <p className="text-base">
+                {selected === 'team'
+                  ? 'Choose a team member above to see their availability'
+                  : 'Select a meeting type above to see available times'}
+              </p>
             </div>
           )}
 
-          {BOOKINGS.map((b) => (
+          {ALL_EMBEDS.map((e) => (
             <div
-              key={b.id}
-              id={`cal-${b.id}`}
+              key={e.id}
+              id={`cal-${e.id}`}
               style={{
-                display: selected === b.id ? 'block' : 'none',
+                display: activeEmbedId === e.id ? 'block' : 'none',
                 width: '100%',
                 height: '700px',
                 overflow: 'scroll',
