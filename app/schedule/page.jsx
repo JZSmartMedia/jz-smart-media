@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   ArrowLeft, UserPlus, Users, Building2,
   CalendarDays, CheckCircle2, Mail,
-  Megaphone, Headphones, Code2,
+  Megaphone, Headphones, Code2, BarChart2,
 } from 'lucide-react';
 
 const MAIN_CARDS = [
@@ -60,7 +60,8 @@ const TEAM_OPTIONS = [
     icon: Megaphone,
     iconGradient: 'from-[#ec4899] to-[#a855f7]',
     label: 'Alice',
-    sublabel: 'Social Media',
+    sublabel: 'Account Operations',
+    description: 'General account management, client support & daily requests',
     namespace: 'alice-social-media',
     calLink: 'yarden-zemer/alice-social-media',
   },
@@ -70,6 +71,7 @@ const TEAM_OPTIONS = [
     iconGradient: 'from-[#3b82f6] to-[#06b6d4]',
     label: 'Edward',
     sublabel: 'Tech Support',
+    description: 'CRM setup, tracking, AI responses & automations',
     namespace: 'edward-tech-support',
     calLink: 'yarden-zemer/edward-tech-support',
   },
@@ -79,14 +81,25 @@ const TEAM_OPTIONS = [
     iconGradient: 'from-[#667eea] to-[#764ba2]',
     label: 'Development',
     sublabel: 'Dev Team',
+    description: 'Website changes, new features & bug fixes',
     namespace: 'development',
     calLink: 'yarden-zemer/development',
+  },
+  {
+    id: 'jordan',
+    icon: BarChart2,
+    iconGradient: 'from-[#06b6d4] to-[#10b981]',
+    label: 'Jordan',
+    sublabel: 'Metrics & Reporting',
+    description: 'Call tracking, leads & monthly performance',
+    namespace: 'jordan-metrics',
+    calLink: 'yarden-zemer/client-check-in',
   },
 ];
 
 const ALL_EMBEDS = [
-  { id: 'new',      namespace: '30-min-discovery-call', calLink: 'yarden-zemer/30-min-discovery-call' },
-  { id: 'existing', namespace: 'client-check-in',       calLink: 'yarden-zemer/client-check-in' },
+  { id: 'new', namespace: '30-min-discovery-call', calLink: 'yarden-zemer/30-min-discovery-call' },
+  { id: 'existing', namespace: 'client-check-in', calLink: 'yarden-zemer/client-check-in' },
   ...TEAM_OPTIONS.map((t) => ({ id: t.id, namespace: t.namespace, calLink: t.calLink })),
 ];
 
@@ -202,9 +215,9 @@ export default function SchedulePage() {
           {/* Feature pills */}
           <div className="flex flex-wrap justify-center gap-3 mt-8">
             {[
-              { icon: CalendarDays,   label: 'Live calendar sync' },
-              { icon: CheckCircle2,   label: 'Instant confirmation' },
-              { icon: Mail,           label: 'Email + calendar invite' },
+              { icon: CalendarDays, label: 'Live calendar sync' },
+              { icon: CheckCircle2, label: 'Instant confirmation' },
+              { icon: Mail, label: 'Email + calendar invite' },
             ].map(({ icon: Icon, label }) => (
               <div
                 key={label}
@@ -280,7 +293,7 @@ export default function SchedulePage() {
         <div
           className="max-w-4xl mx-auto overflow-hidden transition-all duration-500"
           style={{
-            maxHeight: selected === 'team' ? '260px' : '0px',
+            maxHeight: selected === 'team' ? '520px' : '0px',
             opacity: selected === 'team' ? 1 : 0,
             marginBottom: selected === 'team' ? '28px' : '0px',
           }}
@@ -293,7 +306,7 @@ export default function SchedulePage() {
               Who would you like to meet with?
             </p>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               {TEAM_OPTIONS.map((opt) => {
                 const Icon = opt.icon;
                 const isActive = teamMember === opt.id;
@@ -302,7 +315,7 @@ export default function SchedulePage() {
                     key={opt.id}
                     onClick={() => setTeamMember(opt.id)}
                     aria-label={`Book with ${opt.label}`}
-                    className="relative flex flex-col items-center text-center p-5 rounded-xl border transition-all duration-250 group"
+                    className="relative flex items-start gap-4 text-left p-4 rounded-xl border transition-all duration-250 group"
                     style={{
                       background: isActive ? 'rgba(102,126,234,0.08)' : 'rgba(255,255,255,0.02)',
                       borderColor: isActive ? '#667eea' : 'rgba(255,255,255,0.07)',
@@ -323,18 +336,21 @@ export default function SchedulePage() {
 
                     {/* Icon */}
                     <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center mb-3 bg-gradient-to-br ${opt.iconGradient} shadow-md transition-transform duration-200 group-hover:scale-105`}
+                      className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br ${opt.iconGradient} shadow-md transition-transform duration-200 group-hover:scale-105`}
                     >
-                      <Icon className="w-5 h-5 text-white" />
+                      <Icon className="w-4.5 h-4.5 text-white" />
                     </div>
 
-                    <div
-                      className="text-sm font-bold text-white mb-0.5"
-                      style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}
-                    >
-                      {opt.label}
+                    <div className="min-w-0">
+                      <div
+                        className="text-sm font-bold text-white leading-snug"
+                        style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}
+                      >
+                        {opt.label}
+                      </div>
+                      <div className="text-xs text-gray-400 font-medium mb-1">{opt.sublabel}</div>
+                      <div className="text-xs text-gray-500 leading-relaxed">{opt.description}</div>
                     </div>
-                    <div className="text-xs text-gray-500">{opt.sublabel}</div>
                   </button>
                 );
               })}
