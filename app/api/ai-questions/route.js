@@ -3,8 +3,11 @@ export async function POST(request) {
     const { role, years, industries, tools } = await request.json();
 
     if (!process.env.ANTHROPIC_API_KEY) {
+      console.warn('[ai-questions] ANTHROPIC_API_KEY is not set — returning null');
       return Response.json({ questions: null });
     }
+
+    console.log('[ai-questions] Generating for role:', role);
 
     const prompt = `You are the hiring manager at JZ Smart Media, a digital marketing agency for home service businesses (roofing, HVAC, locksmith, home remodeling, medical transport, etc.).
 
@@ -37,13 +40,16 @@ Return ONLY a valid JSON array with exactly 5 objects. No markdown, no explanati
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-3-5-haiku-20241022',
         max_tokens: 1200,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
 
-    if (!res.ok) throw new Error(`Anthropic API ${res.status}`);
+    if (!res.ok) {
+      const errBody = await res.text();
+      throw new Error(`Anthropic API ${res.status}: ${errBody}`);
+    }
 
     const data = await res.json();
     const text = data.content?.[0]?.text?.trim() || '';
@@ -54,9 +60,10 @@ Return ONLY a valid JSON array with exactly 5 objects. No markdown, no explanati
     const questions = JSON.parse(match[0]);
     if (!Array.isArray(questions) || questions.length < 5) throw new Error('Bad format');
 
+    console.log('[ai-questions] Successfully generated', questions.length, 'questions');
     return Response.json({ questions: questions.slice(0, 5) });
   } catch (err) {
-    console.error('ai-questions error:', err.message);
+    console.error('[ai-questions] Error:', err.message);
     return Response.json({ questions: null });
   }
 }

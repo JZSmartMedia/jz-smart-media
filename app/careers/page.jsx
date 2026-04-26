@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft, Loader2, Sparkles, Upload, X,
-  FileText, AlertCircle, CheckCircle2, ChevronRight, ChevronLeft,
+  FileText, AlertCircle, CheckCircle2, ChevronRight, ChevronLeft, ChevronDown,
 } from 'lucide-react';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -85,29 +85,75 @@ function StyledTextarea({ error, minH = 120, ...props }) {
   );
 }
 
-const ARROW_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E")`;
+function CustomSelect({ value, onChange, options, placeholder = 'Select one...', error }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
 
-function StyledSelect({ error, children, ...props }) {
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => { if (!ref.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  const selectedLabel = options.find((o) => (typeof o === 'string' ? o : o.value) === value);
+  const displayLabel = selectedLabel
+    ? typeof selectedLabel === 'string' ? selectedLabel : selectedLabel.label
+    : null;
+
   return (
-    <select
-      className={inputClass(error)}
-      style={{
-        appearance: 'none',
-        backgroundImage: ARROW_SVG,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'right 14px center',
-        paddingRight: '36px',
-      }}
-      {...props}
-    >
-      {children}
-    </select>
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm text-left outline-none transition-all bg-white/[0.04] border
+          ${open ? 'border-[#667eea] ring-2 ring-[#667eea]/20' : error ? 'border-red-500/40' : 'border-white/[0.09]'}
+          ${displayLabel ? 'text-white' : 'text-gray-600'}`}
+      >
+        <span>{displayLabel || placeholder}</span>
+        <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      {open && (
+        <div
+          className="absolute top-full left-0 right-0 mt-1.5 rounded-xl overflow-hidden z-50 shadow-2xl"
+          style={{ background: '#141421', border: '1px solid rgba(255,255,255,0.1)' }}
+        >
+          <div className="max-h-64 overflow-y-auto">
+            {options.map((opt, i) => {
+              const optVal = typeof opt === 'string' ? opt : opt.value;
+              const optLabel = typeof opt === 'string' ? opt : opt.label;
+              const isSelected = optVal === value;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => { onChange(optVal); setOpen(false); }}
+                  className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center justify-between
+                    ${isSelected
+                      ? 'bg-[#667eea]/15 text-white'
+                      : 'text-gray-300 hover:bg-white/[0.05] hover:text-white'}`}
+                >
+                  {optLabel}
+                  {isSelected && (
+                    <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+                      <path d="M1 5.5L5 9.5L13 1.5" stroke="#667eea" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
 function CheckItem({ checked, onChange, children }) {
   return (
     <label
+      onClick={onChange}
       className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all text-sm select-none
         ${checked
           ? 'bg-[#667eea]/10 border-[#667eea]/50 text-white'
@@ -160,6 +206,7 @@ export default function CareersPage() {
   const [aiQuestions, setAiQuestions] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiUsed, setAiUsed] = useState(false);
+  const [aiAttempted, setAiAttempted] = useState(false);
   const [errors, setErrors] = useState({});
   const [files, setFiles] = useState([]);
   const [dragging, setDragging] = useState(false);
@@ -253,6 +300,7 @@ export default function CareersPage() {
     // After step 2, fetch AI-tailored questions
     if (step === 2 && !aiQuestions) {
       setAiLoading(true);
+      setAiAttempted(true);
       try {
         const res = await fetch('/api/ai-questions', {
           method: 'POST',
@@ -263,9 +311,11 @@ export default function CareersPage() {
         if (data.questions && Array.isArray(data.questions) && data.questions.length === 5) {
           setAiQuestions(data.questions);
           setAiUsed(true);
+        } else {
+          console.warn('AI questions: unexpected response', data);
         }
-      } catch {
-        // Fall back to static questions silently
+      } catch (err) {
+        console.error('AI questions fetch failed:', err);
       } finally {
         setAiLoading(false);
       }
@@ -514,23 +564,21 @@ export default function CareersPage() {
                   <p className="text-gray-400 text-sm mb-8">Tell us what you actually do and where you've done it.</p>
 
                   <Field label="Role you are applying for" required error={errors.role} className="mb-5">
-                    <StyledSelect
-                      value={form.role} onChange={(e) => setField('role', e.target.value)}
+                    <CustomSelect
+                      value={form.role}
+                      onChange={(val) => setField('role', val)}
+                      options={ROLES}
                       error={errors.role}
-                    >
-                      <option value="">Select one...</option>
-                      {ROLES.map((r) => <option key={r}>{r}</option>)}
-                    </StyledSelect>
+                    />
                   </Field>
 
                   <Field label="Years doing SEO professionally" required error={errors.years} className="mb-5">
-                    <StyledSelect
-                      value={form.years} onChange={(e) => setField('years', e.target.value)}
+                    <CustomSelect
+                      value={form.years}
+                      onChange={(val) => setField('years', val)}
+                      options={YEARS}
                       error={errors.years}
-                    >
-                      <option value="">Select one...</option>
-                      {YEARS.map((y) => <option key={y}>{y}</option>)}
-                    </StyledSelect>
+                    />
                   </Field>
 
                   <Field
@@ -566,13 +614,12 @@ export default function CareersPage() {
                   </Field>
 
                   <Field label="Hours per week you can commit" required error={errors.hours}>
-                    <StyledSelect
-                      value={form.hours} onChange={(e) => setField('hours', e.target.value)}
+                    <CustomSelect
+                      value={form.hours}
+                      onChange={(val) => setField('hours', val)}
+                      options={HOURS}
                       error={errors.hours}
-                    >
-                      <option value="">Select one...</option>
-                      {HOURS.map((h) => <option key={h}>{h}</option>)}
-                    </StyledSelect>
+                    />
                   </Field>
                 </div>
               )}
@@ -582,13 +629,20 @@ export default function CareersPage() {
                 <div>
                   <div className="flex items-start justify-between gap-4 mb-1">
                     <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>How you think.</h2>
-                    {aiUsed && (
+                    {aiUsed ? (
                       <div
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium flex-shrink-0"
                         style={{ background: 'rgba(102,126,234,0.12)', border: '1px solid rgba(102,126,234,0.25)', color: '#a5b4fc' }}
                       >
                         <Sparkles className="w-3 h-3" />
                         AI-tailored
+                      </div>
+                    ) : aiAttempted && (
+                      <div
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium flex-shrink-0"
+                        style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)', color: '#fbbf24' }}
+                      >
+                        Default questions
                       </div>
                     )}
                   </div>
