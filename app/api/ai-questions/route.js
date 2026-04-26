@@ -8,6 +8,7 @@ export async function POST(request) {
     }
 
     console.log('[ai-questions] Generating for role:', role);
+    console.log('[ai-questions] Key prefix:', process.env.ANTHROPIC_API_KEY?.substring(0, 20), '| len:', process.env.ANTHROPIC_API_KEY?.length);
 
     const prompt = `You are the hiring manager at JZ Smart Media, a digital marketing agency for home service businesses (roofing, HVAC, locksmith, home remodeling, medical transport, etc.).
 
@@ -40,7 +41,7 @@ Return ONLY a valid JSON array with exactly 5 objects. No markdown, no explanati
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'claude-3-5-haiku-20241022',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 1200,
         messages: [{ role: 'user', content: prompt }],
       }),
