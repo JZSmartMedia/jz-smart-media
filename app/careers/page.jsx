@@ -41,8 +41,8 @@ const INDUSTRIES = [
 
 const TOOLS = [
   'Ahrefs', 'Semrush', 'Local Falcon', 'BrightLocal',
-  'Google Search Console', 'GA4', 'Screaming Frog', 'Surfer SEO',
-  'Frase', 'GBP Manager', 'Looker Studio', 'Other',
+  'Google Search Console', 'GA4', 'Google Ads', 'Screaming Frog',
+  'Surfer SEO', 'Frase', 'GBP Manager', 'Looker Studio', 'Other',
 ];
 
 // ─── Helper UI components ─────────────────────────────────────────────────────
@@ -210,7 +210,15 @@ export default function CareersPage() {
   const [errors, setErrors] = useState({});
   const [files, setFiles] = useState([]);
   const [dragging, setDragging] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const [blocked, setBlocked] = useState(false);
+  const [blockReason, setBlockReason] = useState(null);
   const fileInputRef = useRef(null);
+  const formRef = useRef(null);
+  const stepStartRef = useRef(Date.now());
+  const stepTimesRef = useRef({});
+  const refreshCountRef = useRef(0);
+  const prevStepRef = useRef(1);
 
   const [form, setForm] = useState({
     firstName: '', lastName: '', email: '', phone: '', locationTz: '',
@@ -220,26 +228,110 @@ export default function CareersPage() {
     rate: '', startDate: '', links: '', other: '', confirmed: false,
   });
 
-  // Timer countdown
+  // IP check on mount
+  useEffect(() => {
+    fetch('/api/track-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'check' }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (!data.allowed) {
+          setBlocked(true);
+          setBlockReason(data.reason);
+        } else if (data.sessionId) {
+          setSessionId(data.sessionId);
+        }
+      })
+      .catch(() => {}); // never block on tracking failure
+  }, []);
+
+  // Record time spent on each step and save progress when step changes
+  useEffect(() => {
+    const elapsed = Math.round((Date.now() - stepStartRef.current) / 1000);
+    // Record time for the step the user just LEFT (prevStepRef), not the new step
+    stepTimesRef.current[prevStepRef.current] = (stepTimesRef.current[prevStepRef.current] || 0) + elapsed;
+    prevStepRef.current = step;
+    stepStartRef.current = Date.now();
+
+    if (!sessionId || step === 1) return;
+    fetch('/api/track-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'progress',
+        sessionId,
+        step,
+        formSnapshot: formRef.current,
+        behavior: {
+          stepTimes: stepTimesRef.current,
+          aiUsed: aiUsed,
+          aiAttempted: aiAttempted,
+          refreshCount: refreshCountRef.current,
+        },
+      }),
+    }).catch(() => {});
+  }, [step, sessionId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // beforeunload warning + count refresh attempts
+  useEffect(() => {
+    if (step === 1 && !form.firstName && !form.email) return;
+    const handler = (e) => {
+      refreshCountRef.current += 1;
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [step, form.firstName, form.email]);
+
+  // Timer countdown — save timeout to Supabase when it hits 0
   useEffect(() => {
     const id = setInterval(() => {
       setTimeLeft((t) => {
-        if (t <= 1) { clearInterval(id); setExpired(true); return 0; }
+        if (t <= 1) {
+          clearInterval(id);
+          setExpired(true);
+          if (sessionId) {
+            fetch('/api/track-session', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action: 'timeout',
+                sessionId,
+                behavior: {
+                  stepTimes: stepTimesRef.current,
+                  aiUsed,
+                  aiAttempted,
+                  refreshCount: refreshCountRef.current,
+                },
+              }),
+            }).catch(() => {});
+          }
+          return 0;
+        }
         return t - 1;
       });
     }, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [sessionId]);
 
   const setField = useCallback((key, value) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setForm((prev) => {
+      const next = { ...prev, [key]: value };
+      formRef.current = next;
+      return next;
+    });
     setErrors((prev) => { const next = { ...prev }; delete next[key]; return next; });
   }, []);
 
   const toggleArray = useCallback((key, value) => {
     setForm((prev) => {
       const arr = prev[key];
-      return { ...prev, [key]: arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value] };
+      const next = { ...prev, [key]: arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value] };
+      formRef.current = next;
+      return next;
     });
     setErrors((prev) => { const next = { ...prev }; delete next[key]; return next; });
   }, []);
@@ -351,6 +443,13 @@ export default function CareersPage() {
       fd.append('questions', JSON.stringify(qs));
       files.forEach((f) => fd.append('files', f));
 
+      if (sessionId) fd.append('sessionId', sessionId);
+      fd.append('behavior', JSON.stringify({
+        stepTimes: stepTimesRef.current,
+        aiUsed,
+        aiAttempted,
+        refreshCount: refreshCountRef.current,
+      }));
       const res = await fetch('/api/apply', { method: 'POST', body: fd });
       if (!res.ok) throw new Error('failed');
       setSubmitted(true);
@@ -370,6 +469,36 @@ export default function CareersPage() {
       : timeLeft <= 300
       ? { background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.4)', color: '#fbbf24' }
       : { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#9ca3af' };
+
+  // ─── Blocked screen ──────────────────────────────────────────────────────────
+  if (blocked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0a0a0a', fontFamily: 'var(--font-dm-sans), sans-serif' }}>
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.25)' }}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f87171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" /><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+            </svg>
+          </div>
+          <h2 className="text-3xl font-black text-white mb-3" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
+            {blockReason === 'submitted' ? 'Already submitted.' : 'Access blocked.'}
+          </h2>
+          <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            {blockReason === 'submitted'
+              ? 'We already received an application from this connection. Each person may apply once. If you believe this is a mistake, reach out directly.'
+              : 'A submission was already started or completed from this connection. Each person may apply once.'}
+          </p>
+          <a
+            href="mailto:yarden@jzsmartmedia.com?subject=Application Access Question"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white transition-all hover:opacity-90"
+            style={{ background: 'linear-gradient(135deg, #667eea, #764ba2)' }}
+          >
+            Contact us
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   // ─── Expired screen ──────────────────────────────────────────────────────────
   if (expired) {

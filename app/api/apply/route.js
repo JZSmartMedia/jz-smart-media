@@ -1,9 +1,15 @@
+import supabase from '@/lib/supabase';
+
 export async function POST(request) {
   try {
     const formData = await request.formData();
 
     const get = (key) => formData.get(key)?.toString() || '';
     const getAll = (key) => formData.getAll(key).map((v) => v.toString()).filter(Boolean);
+
+    const sessionId = get('sessionId') || null;
+    let behavior = null;
+    try { const raw = get('behavior'); if (raw) behavior = JSON.parse(raw); } catch {}
 
     const applicant = {
       name: `${get('firstName')} ${get('lastName')}`.trim(),
@@ -74,6 +80,45 @@ export async function POST(request) {
       const errText = await resendRes.text();
       console.error('Resend error:', errText);
       return Response.json({ error: 'Email delivery failed' }, { status: 500 });
+    }
+
+    // Save full submission to Supabase
+    if (process.env.SUPABASE_URL) {
+      const payload = {
+        status: 'submitted',
+        completion_pct: 100,
+        step: 5,
+        submitted_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        name: applicant.name,
+        email: applicant.email,
+        phone: applicant.phone,
+        location_tz: applicant.locationTz,
+        role: applicant.role,
+        years: applicant.years,
+        industries: applicant.industries,
+        tools: applicant.tools,
+        hours: applicant.hours,
+        answers: [applicant.q1, applicant.q2, applicant.q3, applicant.q4, applicant.q5],
+        project_context: applicant.projectContext,
+        timeline: applicant.timeline,
+        story_full: applicant.storyFull,
+        biggest_unlock: applicant.biggestUnlock,
+        rate: applicant.rate,
+        start_date: applicant.startDate,
+        links: applicant.links,
+        other: applicant.other,
+        file_count: attachments.length,
+        ai_used: behavior?.aiUsed ?? false,
+        ai_attempted: behavior?.aiAttempted ?? false,
+        step_times: behavior?.stepTimes ?? null,
+        refresh_count: behavior?.refreshCount ?? 0,
+      };
+      if (sessionId) {
+        await supabase.from('applications').update(payload).eq('id', sessionId);
+      } else {
+        await supabase.from('applications').insert(payload);
+      }
     }
 
     return Response.json({ success: true });
