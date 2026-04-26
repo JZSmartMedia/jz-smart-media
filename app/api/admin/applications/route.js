@@ -29,3 +29,19 @@ export async function GET(request) {
     headers: { 'Content-Type': 'application/json' },
   });
 }
+
+export async function DELETE(request) {
+  const { searchParams } = new URL(request.url);
+  const secret = process.env.ADMIN_SECRET;
+  if (secret && searchParams.get('secret') !== secret) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const id = searchParams.get('id');
+  if (!id) return Response.json({ error: 'Missing id' }, { status: 400 });
+
+  const { error } = await supabase.from('applications').delete().eq('id', id);
+  if (error) return Response.json({ error: error.message }, { status: 500 });
+
+  return Response.json({ ok: true });
+}

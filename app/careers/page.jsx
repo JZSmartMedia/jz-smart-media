@@ -495,6 +495,13 @@ export default function CareersPage() {
           >
             Contact us
           </a>
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all hover:opacity-90 ml-3"
+            style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: '#9ca3af' }}
+          >
+            Back to home
+          </a>
         </div>
       </div>
     );
@@ -784,7 +791,7 @@ export default function CareersPage() {
                   {activeQuestions.map((q, i) => {
                     const field = qFields[i];
                     const question = typeof q === 'string' ? q : q.question;
-                    const hint = typeof q === 'string' ? 'Up to 200 words.' : q.hint;
+                    const hint = 'Up to 200 words.';
                     return (
                       <Field
                         key={i}

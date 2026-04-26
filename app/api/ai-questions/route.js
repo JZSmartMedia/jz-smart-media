@@ -24,13 +24,14 @@ Generate 5 precise technical interview questions tailored specifically to this p
 - Reference their specific industries and role directly where it makes sense
 - Keep questions sharp and concise, not vague
 
-Return ONLY a valid JSON array with exactly 5 objects. No markdown, no explanation, no text outside the array:
+Return ONLY a valid JSON array with exactly 5 objects. No markdown, no explanation, no text outside the array.
+The "question" field is shown to the candidate. The "scoring_hint" field is for internal reviewer use only (what a strong vs weak answer looks like — 2-4 sentences).
 [
-  { "question": "...", "hint": "Up to 200 words." },
-  { "question": "...", "hint": "Up to 200 words." },
-  { "question": "...", "hint": "Up to 200 words." },
-  { "question": "...", "hint": "Up to 200 words." },
-  { "question": "...", "hint": "Up to 200 words." }
+  { "question": "...", "scoring_hint": "..." },
+  { "question": "...", "scoring_hint": "..." },
+  { "question": "...", "scoring_hint": "..." },
+  { "question": "...", "scoring_hint": "..." },
+  { "question": "...", "scoring_hint": "..." }
 ]`;
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {

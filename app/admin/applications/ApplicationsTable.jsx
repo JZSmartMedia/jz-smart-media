@@ -2,6 +2,12 @@
 
 import { useState } from 'react';
 
+function formatIP(ip) {
+  if (!ip || ip === 'unknown') return '—';
+  if (ip === '::1' || ip === '127.0.0.1') return 'localhost (dev)';
+  return ip;
+}
+
 const STATUS_COLORS = {
   submitted:   { bg: 'rgba(16,185,129,0.12)',  border: 'rgba(16,185,129,0.3)',  text: '#34d399' },
   in_progress: { bg: 'rgba(245,158,11,0.10)',  border: 'rgba(245,158,11,0.3)',  text: '#fbbf24' },
@@ -27,7 +33,7 @@ function AiBadge({ used, attempted }) {
   return             <span style={{ background: 'rgba(255,255,255,0.04)',   border: '1px solid rgba(255,255,255,0.1)',  color: '#6b7280',  padding: '2px 8px', borderRadius: 99, fontSize: 11 }}>Default Qs</span>;
 }
 
-function DetailPanel({ row }) {
+function DetailPanel({ row, onDelete }) {
   const st = row.step_times || {};
   const stepNames = ['—', 'Who you are', 'Background', 'How you think', 'Proof of work', 'Logistics'];
 
@@ -70,7 +76,7 @@ function DetailPanel({ row }) {
           <Info label="Phone"    value={d.phone} />
           <Info label="Timezone" value={d.location_tz} />
           <Info label="Device"   value={row.device} />
-          <Info label="IP"       value={<span style={{ fontFamily: 'monospace', fontSize: 11 }}>{row.ip}</span>} />
+          <Info label="IP"       value={<span style={{ fontFamily: 'monospace', fontSize: 11 }}>{formatIP(row.ip)}</span>} />
         </div>
 
         {/* Background */}
@@ -136,12 +142,24 @@ function DetailPanel({ row }) {
 
       {/* Links & notes */}
       {(d.links || d.other) && (
-        <div>
+        <div style={{ marginBottom: 24 }}>
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#667eea', marginBottom: 12 }}>Extra</div>
           <Info label="Links" value={d.links} />
           <Info label="Notes" value={d.other} />
         </div>
       )}
+
+      {/* Delete */}
+      <div style={{ paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'flex-end' }}>
+        <button
+          onClick={onDelete}
+          style={{ padding: '7px 18px', borderRadius: 8, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', color: '#f87171', fontSize: 12, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s' }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(239,68,68,0.2)'; e.currentTarget.style.borderColor = 'rgba(239,68,68,0.5)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(239,68,68,0.1)'; e.currentTarget.style.borderColor = 'rgba(239,68,68,0.25)'; }}
+        >
+          Delete submission
+        </button>
+      </div>
     </div>
   );
 }
@@ -156,11 +174,31 @@ function Info({ label, value }) {
   );
 }
 
-export default function ApplicationsTable({ rows }) {
+export default function ApplicationsTable({ rows: initialRows, adminSecret }) {
+  const [rows, setRows] = useState(initialRows);
   const [expanded, setExpanded] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [deleting, setDeleting] = useState(null);
 
   const filtered = filter === 'all' ? rows : rows.filter((r) => r.status === filter);
+
+  const handleDelete = async (id) => {
+    if (!confirm('Delete this submission permanently?')) return;
+    setDeleting(id);
+    try {
+      const res = await fetch(`/api/admin/applications?id=${id}&secret=${encodeURIComponent(adminSecret || '')}`, { method: 'DELETE' });
+      if (res.ok) {
+        setRows((prev) => prev.filter((r) => r.id !== id));
+        setExpanded(null);
+      } else {
+        alert('Delete failed — check console');
+      }
+    } catch {
+      alert('Delete failed');
+    } finally {
+      setDeleting(null);
+    }
+  };
 
   return (
     <div>
@@ -251,7 +289,11 @@ export default function ApplicationsTable({ rows }) {
                   {isOpen && (
                     <tr key={`${row.id}-detail`} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                       <td colSpan={10} style={{ padding: 0 }}>
-                        <DetailPanel row={row} />
+                        <DetailPanel
+                          row={row}
+                          onDelete={() => handleDelete(row.id)}
+                          deleting={deleting === row.id}
+                        />
                       </td>
                     </tr>
                   )}

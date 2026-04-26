@@ -99,7 +99,7 @@ export default async function AdminApplicationsPage({ searchParams }) {
         )}
 
         {/* Table */}
-        <ApplicationsTable rows={rows} />
+        <ApplicationsTable rows={rows} adminSecret={params?.secret ?? ''} />
       </div>
     </div>
   );
