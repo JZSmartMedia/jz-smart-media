@@ -2,6 +2,96 @@
 
 import { useState } from 'react';
 
+function isImage(name = '') {
+  return /\.(png|jpe?g|webp|gif|svg)$/i.test(name);
+}
+function isPdf(name = '') {
+  return /\.pdf$/i.test(name);
+}
+
+function FilesSection({ fileUrls, fileCount }) {
+  const [lightbox, setLightbox] = useState(null);
+
+  if (!fileUrls?.length && !fileCount) return null;
+
+  const cvFiles    = fileUrls?.filter((f) => f.kind === 'cv')    || [];
+  const proofFiles = fileUrls?.filter((f) => f.kind === 'proof') || [];
+
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#667eea', marginBottom: 14 }}>Attached Files</div>
+
+      {/* CV files */}
+      {cvFiles.length > 0 && (
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 11, color: '#6b7280', fontWeight: 600, marginBottom: 8 }}>CV / Resume</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {cvFiles.map((f, i) => (
+              <a key={i} href={f.url} target="_blank" rel="noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: 'rgba(102,126,234,0.1)', border: '1px solid rgba(102,126,234,0.3)', color: '#a5b4fc', fontSize: 12, fontWeight: 600, textDecoration: 'none', cursor: 'pointer' }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                {f.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Proof files */}
+      {proofFiles.length > 0 && (
+        <div>
+          <div style={{ fontSize: 11, color: '#6b7280', fontWeight: 600, marginBottom: 8 }}>Proof Files</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            {proofFiles.map((f, i) => (
+              isImage(f.name) ? (
+                <div key={i} onClick={() => setLightbox(f.url)} style={{ cursor: 'zoom-in', borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', position: 'relative' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={f.url} alt={f.name} style={{ width: 120, height: 90, objectFit: 'cover', display: 'block' }} />
+                  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.6)', padding: '3px 6px', fontSize: 10, color: '#d1d5db', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.name}</div>
+                </div>
+              ) : (
+                <a key={i} href={f.url} target="_blank" rel="noreferrer"
+                  style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6, width: 100, padding: '14px 8px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: '#9ca3af', fontSize: 11, textDecoration: 'none', textAlign: 'center', cursor: 'pointer' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isPdf(f.name) ? '#f87171' : '#9ca3af'} strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/>{isPdf(f.name) && <text x="6" y="18" fontSize="5" fill="#f87171" stroke="none" fontWeight="700">PDF</text>}</svg>
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 84 }}>{f.name}</span>
+                </a>
+              )
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* No URLs stored but count exists */}
+      {!fileUrls?.length && fileCount > 0 && (
+        <div style={{ fontSize: 12, color: '#6b7280' }}>{fileCount} file{fileCount !== 1 ? 's' : ''} sent via email (submitted before storage was enabled)</div>
+      )}
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          onClick={() => setLightbox(null)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.88)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
+        >
+          <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={lightbox} alt="preview" style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', borderRadius: 8, display: 'block' }} />
+            <div style={{ position: 'absolute', top: 10, right: 10, display: 'flex', gap: 8 }}>
+              <a href={lightbox} target="_blank" rel="noreferrer"
+                style={{ padding: '6px 12px', borderRadius: 6, background: 'rgba(102,126,234,0.9)', color: '#fff', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>
+                Open in new tab
+              </a>
+              <button onClick={() => setLightbox(null)}
+                style={{ padding: '6px 12px', borderRadius: 6, background: 'rgba(255,255,255,0.1)', color: '#fff', fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function formatIP(ip) {
   if (!ip || ip === 'unknown') return '—';
   if (ip === '::1' || ip === '127.0.0.1') return 'localhost (dev)';
@@ -130,7 +220,7 @@ function DetailPanel({ row, onDelete }) {
           <Info label="Project context"   value={d.project_context} />
           <Info label="Timeline"          value={d.timeline} />
           <Info label="Biggest unlock"    value={d.biggest_unlock} />
-          <Info label="Files attached"    value={row.file_count ? `${row.file_count} file${row.file_count !== 1 ? 's' : ''}` : null} />
+          <Info label="Proof files sent"   value={row.file_count ? `${row.file_count} file${row.file_count !== 1 ? 's' : ''}` : null} />
           {d.story_full && (
             <div style={{ marginTop: 10, padding: '14px 16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8 }}>
               <div style={{ fontSize: 11, color: '#6b7280', marginBottom: 8 }}>Full story</div>
@@ -139,6 +229,9 @@ function DetailPanel({ row, onDelete }) {
           )}
         </div>
       )}
+
+      {/* Files */}
+      <FilesSection fileUrls={row.file_urls} fileCount={row.file_count} />
 
       {/* Links & notes */}
       {(d.links || d.other) && (

@@ -209,11 +209,14 @@ export default function CareersPage() {
   const [aiAttempted, setAiAttempted] = useState(false);
   const [errors, setErrors] = useState({});
   const [files, setFiles] = useState([]);
+  const [cvFiles, setCvFiles] = useState([]);
   const [dragging, setDragging] = useState(false);
+  const [cvDragging, setCvDragging] = useState(false);
   const [sessionId, setSessionId] = useState(null);
   const [blocked, setBlocked] = useState(false);
   const [blockReason, setBlockReason] = useState(null);
   const fileInputRef = useRef(null);
+  const cvFileInputRef = useRef(null);
   const formRef = useRef(null);
   const stepStartRef = useRef(Date.now());
   const stepTimesRef = useRef({});
@@ -442,6 +445,7 @@ export default function CareersPage() {
       );
       fd.append('questions', JSON.stringify(qs));
       files.forEach((f) => fd.append('files', f));
+      cvFiles.forEach((f) => fd.append('cvFiles', f));
 
       if (sessionId) fd.append('sessionId', sessionId);
       fd.append('behavior', JSON.stringify({
@@ -963,6 +967,70 @@ export default function CareersPage() {
                       />
                     </Field>
                   </div>
+
+                  {/* CV / Resume upload */}
+                  <Field
+                    label="CV / Resume"
+                    hint="PDF or Word document. Optional but recommended."
+                    className="mb-5"
+                  >
+                    <div
+                      className={`mt-1 rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-all ${
+                        cvDragging
+                          ? 'border-[#667eea]/70 bg-[#667eea]/05'
+                          : 'border-white/10 hover:border-white/20 hover:bg-white/[0.02]'
+                      }`}
+                      onClick={() => cvFileInputRef.current?.click()}
+                      onDragOver={(e) => { e.preventDefault(); setCvDragging(true); }}
+                      onDragLeave={() => setCvDragging(false)}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        setCvDragging(false);
+                        const incoming = Array.from(e.dataTransfer.files).filter((f) => f.size <= 25 * 1024 * 1024);
+                        setCvFiles((prev) => [...prev, ...incoming]);
+                      }}
+                    >
+                      <input
+                        ref={cvFileInputRef}
+                        type="file"
+                        multiple
+                        accept=".pdf,.doc,.docx"
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files) {
+                            const incoming = Array.from(e.target.files).filter((f) => f.size <= 25 * 1024 * 1024);
+                            setCvFiles((prev) => [...prev, ...incoming]);
+                          }
+                        }}
+                      />
+                      <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center mx-auto mb-2"
+                        style={{ background: 'rgba(102,126,234,0.12)', border: '1px solid rgba(102,126,234,0.2)' }}
+                      >
+                        <FileText className="w-4 h-4 text-[#a5b4fc]" />
+                      </div>
+                      <p className="text-sm text-gray-300 font-medium mb-1">Drop CV or click to upload</p>
+                      <p className="text-xs text-gray-600">PDF, DOC, DOCX · Max 25 MB</p>
+                    </div>
+                    {cvFiles.length > 0 && (
+                      <div className="mt-3 flex flex-col gap-2">
+                        {cvFiles.map((file, i) => (
+                          <div key={i} className="flex items-center gap-3 rounded-lg px-3 py-2" style={{ background: 'rgba(102,126,234,0.08)', border: '1px solid rgba(102,126,234,0.15)' }}>
+                            <FileText className="w-4 h-4 text-[#a5b4fc] flex-shrink-0" />
+                            <span className="text-sm text-white flex-1 truncate">{file.name}</span>
+                            <span className="text-xs text-gray-500 flex-shrink-0">{formatBytes(file.size)}</span>
+                            <button
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); setCvFiles((prev) => prev.filter((_, idx) => idx !== i)); }}
+                              className="text-gray-600 hover:text-gray-300 transition-colors flex-shrink-0"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </Field>
 
                   <Field
                     label="Portfolio, LinkedIn, or case study links"

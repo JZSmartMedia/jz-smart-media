@@ -42,16 +42,25 @@ export async function POST(request) {
       if (raw) questions = JSON.parse(raw);
     } catch {}
 
-    // Convert uploaded files to Resend attachment format
+    // Convert uploaded files to Resend attachment format + collect buffers for storage
     const fileEntries = formData.getAll('files');
+    const cvEntries   = formData.getAll('cvFiles');
     const attachments = [];
+    const proofBuffers = [];
+    const cvBuffers    = [];
+
     for (const file of fileEntries) {
       if (file instanceof File && file.size > 0) {
         const buf = await file.arrayBuffer();
-        attachments.push({
-          filename: file.name,
-          content: Buffer.from(buf).toString('base64'),
-        });
+        attachments.push({ filename: file.name, content: Buffer.from(buf).toString('base64') });
+        proofBuffers.push({ name: file.name, type: file.type, buf });
+      }
+    }
+    for (const file of cvEntries) {
+      if (file instanceof File && file.size > 0) {
+        const buf = await file.arrayBuffer();
+        attachments.push({ filename: `CV — ${file.name}`, content: Buffer.from(buf).toString('base64') });
+        cvBuffers.push({ name: file.name, type: file.type, buf });
       }
     }
 
@@ -71,7 +80,7 @@ export async function POST(request) {
         to: ['yarden@jzsmartmedia.com', 'assistant@jzsmartmedia.com'],
         reply_to: applicant.email,
         subject: `Application: ${applicant.role} — ${applicant.name}`,
-        html: buildEmailHtml(applicant, questions, attachments.length),
+        html: buildEmailHtml(applicant, questions, proofBuffers.length, cvBuffers.length),
         ...(attachments.length > 0 && { attachments }),
       }),
     });
@@ -82,8 +91,35 @@ export async function POST(request) {
       return Response.json({ error: 'Email delivery failed' }, { status: 500 });
     }
 
-    // Save full submission to Supabase
+    // Save full submission to Supabase + upload files to Storage
     if (process.env.SUPABASE_URL) {
+      const storageId = sessionId || crypto.randomUUID();
+      const fileUrls  = [];
+
+      // Upload proof files to Supabase Storage
+      for (const { name, type, buf } of proofBuffers) {
+        const path = `${storageId}/proof/${name}`;
+        const { error } = await supabase.storage.from('applications').upload(path, buf, { contentType: type || 'application/octet-stream', upsert: true });
+        if (!error) {
+          const { data: { publicUrl } } = supabase.storage.from('applications').getPublicUrl(path);
+          fileUrls.push({ name, url: publicUrl, kind: 'proof' });
+        } else {
+          console.warn('[apply] storage upload failed:', error.message);
+        }
+      }
+
+      // Upload CV files to Supabase Storage
+      for (const { name, type, buf } of cvBuffers) {
+        const path = `${storageId}/cv/${name}`;
+        const { error } = await supabase.storage.from('applications').upload(path, buf, { contentType: type || 'application/octet-stream', upsert: true });
+        if (!error) {
+          const { data: { publicUrl } } = supabase.storage.from('applications').getPublicUrl(path);
+          fileUrls.push({ name, url: publicUrl, kind: 'cv' });
+        } else {
+          console.warn('[apply] CV storage upload failed:', error.message);
+        }
+      }
+
       const payload = {
         status: 'submitted',
         completion_pct: 100,
@@ -108,7 +144,8 @@ export async function POST(request) {
         start_date: applicant.startDate,
         links: applicant.links,
         other: applicant.other,
-        file_count: attachments.length,
+        file_count: proofBuffers.length,
+        file_urls: fileUrls.length > 0 ? fileUrls : null,
         ai_used: behavior?.aiUsed ?? false,
         ai_attempted: behavior?.aiAttempted ?? false,
         step_times: behavior?.stepTimes ?? null,
@@ -117,7 +154,7 @@ export async function POST(request) {
       if (sessionId) {
         await supabase.from('applications').update(payload).eq('id', sessionId);
       } else {
-        await supabase.from('applications').insert(payload);
+        await supabase.from('applications').insert({ id: storageId, ...payload });
       }
     }
 
@@ -136,7 +173,7 @@ function esc(str) {
     .replace(/\n/g, '<br>');
 }
 
-function buildEmailHtml(applicant, questions, fileCount) {
+function buildEmailHtml(applicant, questions, fileCount, cvCount = 0) {
   const q = (i) => {
     const item = questions?.[i];
     return typeof item === 'string' ? item : item?.question || `Question ${i + 1}`;
@@ -197,7 +234,8 @@ function buildEmailHtml(applicant, questions, fileCount) {
     row('Engagement Timeline', applicant.timeline) +
     answer('Full Story: BEFORE / WHAT YOU DID / AFTER', applicant.storyFull) +
     answer('Biggest Unlock', applicant.biggestUnlock) +
-    row('Proof Files Attached', `${fileCount} file${fileCount !== 1 ? 's' : ''}`)
+    row('Proof Files Attached', `${fileCount} file${fileCount !== 1 ? 's' : ''}`) +
+    (cvCount > 0 ? row('CV Attached', `${cvCount} file${cvCount !== 1 ? 's' : ''}`) : '')
   )}
 
   ${section('Logistics',
