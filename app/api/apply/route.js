@@ -103,8 +103,9 @@ export async function POST(request) {
         if (!error) {
           const { data: { publicUrl } } = supabase.storage.from('applications').getPublicUrl(path);
           fileUrls.push({ name, url: publicUrl, kind: 'proof' });
+          console.log('[apply] uploaded proof file:', path);
         } else {
-          console.warn('[apply] storage upload failed:', error.message);
+          console.error('[apply] proof upload failed:', error.message, '| path:', path);
         }
       }
 
@@ -115,8 +116,9 @@ export async function POST(request) {
         if (!error) {
           const { data: { publicUrl } } = supabase.storage.from('applications').getPublicUrl(path);
           fileUrls.push({ name, url: publicUrl, kind: 'cv' });
+          console.log('[apply] uploaded CV file:', path);
         } else {
-          console.warn('[apply] CV storage upload failed:', error.message);
+          console.error('[apply] CV upload failed:', error.message, '| path:', path);
         }
       }
 
