@@ -27,6 +27,7 @@ const ROLES = [
   'Content and On-page SEO',
   'Technical SEO',
   'SEO Generalist (full stack)',
+  'Google Ads Specialist',
   'Other',
 ];
 
