@@ -1,0 +1,219 @@
+{
+  "name": "My workflow 29",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/webmasters/v3/sites",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "options": {}
+      },
+      "id": "4082a2a0-5365-459d-ab21-58be68e85c04",
+      "name": "list sites request",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        -592,
+        368
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "5k1TND2hg528Posx",
+          "name": "GSC JZmedia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://www.googleapis.com/webmasters/v3/sites/{{ encodeURIComponent($fromAI('siteUrl', 'The Search Console property, e.g. sc-domain:example.com or https://example.com/', 'string')) }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "options": {}
+      },
+      "id": "a1c11bf9-fa1b-4259-ba55-63a2f2265cba",
+      "name": "Get Site Info Request1",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        -448,
+        368
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "5k1TND2hg528Posx",
+          "name": "GSC JZmedia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://www.googleapis.com/webmasters/v3/sites/{{ encodeURIComponent($fromAI('siteUrl', 'The Search Console property, e.g. sc-domain:example.com or https://example.com/', 'string')) }}/searchAnalytics/query",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ startDate: $fromAI('startDate', 'Start date in YYYY-MM-DD format', 'string'), endDate: $fromAI('endDate', 'End date in YYYY-MM-DD format', 'string'), dimensions: $fromAI('dimensions', 'Array of dimensions to group by, e.g. [\"query\"] or [\"page\",\"query\"]. Valid values: query, page, country, device, date, searchAppearance', 'json', [\"query\"]), rowLimit: $fromAI('rowLimit', 'Maximum number of rows to return', 'number', 25) }) }}",
+        "options": {}
+      },
+      "id": "58d2b310-db6e-4423-b212-1104682c13dd",
+      "name": "Search Analytics Request1",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        -288,
+        368
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "5k1TND2hg528Posx",
+          "name": "GSC JZmedia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://www.googleapis.com/webmasters/v3/sites/{{ encodeURIComponent($fromAI('siteUrl', 'The Search Console property, e.g. sc-domain:example.com or https://example.com/', 'string')) }}/sitemaps/{{ encodeURIComponent($fromAI('feedpath', 'The full URL of the sitemap to submit, e.g. https://example.com/sitemap.xml', 'string')) }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "options": {}
+      },
+      "id": "431ee31c-41d7-4f6f-a963-8d35d203ff97",
+      "name": "Submit Sitemap Request1",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        -128,
+        368
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "5k1TND2hg528Posx",
+          "name": "GSC JZmedia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://indexing.googleapis.com/v3/urlNotifications:publish",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $fromAI('inspectionUrl', 'The full URL to submit to the Indexing API, e.g. https://example.com/page', 'string') }}"
+            },
+            {
+              "name": "type",
+              "value": "URL_UPDATED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dbb6387a-78d7-4bc8-974c-cf52859e32f4",
+      "name": "Request Indexing Request1",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "position": [
+        32,
+        368
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "googleOAuth2Api": {
+          "id": "5k1TND2hg528Posx",
+          "name": "GSC JZmedia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "seo-automation"
+      },
+      "id": "ce6616db-3bd6-4777-8029-6cf34cfe7cb6",
+      "name": "MCP GSC",
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "position": [
+        -464,
+        -16
+      ],
+      "webhookId": "125ed1a6-7292-4085-b22e-9a1028c22449",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "list sites request": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP GSC",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Site Info Request1": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP GSC",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit Sitemap Request1": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP GSC",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Indexing Request1": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP GSC",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Analytics Request1": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP GSC",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "a1cdd738-ad0d-44d4-8c8a-ffd6a91a84d5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e7c4c05e7d4ca0ebbbddf464182a1a900bf458edd559b0c1021b707213e9395f"
+  },
+  "id": "Sq9CYVPdKnLTd0tR",
+  "tags": []
+}
