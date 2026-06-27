@@ -6,6 +6,7 @@ import {
   ArrowLeft, UserPlus, Users, Building2,
   CalendarDays, CheckCircle2, Mail,
   Megaphone, Headphones, Code2, BarChart2,
+  Briefcase, Upload, X, FileText, Loader2, AlertCircle,
 } from 'lucide-react';
 
 const MAIN_CARDS = [
@@ -51,6 +52,20 @@ const MAIN_CARDS = [
     accent: '#f59e0b',
     glowColor: 'rgba(245,158,11,0.10)',
     bgActive: 'rgba(245,158,11,0.06)',
+  },
+  {
+    id: 'careers',
+    icon: Briefcase,
+    iconGradient: 'from-[#ec4899] to-[#f43f5e]',
+    title: 'Careers / Hiring',
+    description: "You've been invited to interview. Pick a time that works and let's get to know each other.",
+    badge: 'INTERVIEW',
+    badgeStyle: { background: 'rgba(236,72,153,0.12)', border: '1px solid rgba(236,72,153,0.25)', color: '#f9a8d4' },
+    duration: '45 MIN',
+    accent: '#ec4899',
+    glowColor: 'rgba(236,72,153,0.10)',
+    bgActive: 'rgba(236,72,153,0.06)',
+    isForm: true,
   },
 ];
 
@@ -131,14 +146,51 @@ function bootstrapCal() {
   })(window, 'https://app.cal.com/embed/embed.js', 'init');
 }
 
+const careerInputClass = (error) =>
+  `w-full px-4 py-3 rounded-xl text-sm text-white placeholder-gray-600 outline-none transition-all
+   bg-white/[0.04] border focus:ring-2 focus:ring-[#ec4899]/20 focus:border-[#ec4899]
+   ${error ? 'border-red-500/40' : 'border-white/[0.09]'}`;
+
+function CareerField({ label, required, hint, error, children, className = '' }) {
+  return (
+    <div className={className}>
+      <label className="block text-sm font-medium text-gray-200 mb-2">
+        {label}
+        {required && <span className="text-pink-400 ml-1">*</span>}
+        {hint && <span className="block text-xs text-gray-500 mt-1 font-normal leading-relaxed">{hint}</span>}
+      </label>
+      {children}
+      {error && (
+        <p className="mt-1.5 flex items-center gap-1 text-xs text-red-400">
+          <AlertCircle className="w-3 h-3 flex-shrink-0" />
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function SchedulePage() {
   const [selected, setSelected] = useState(null);
   const [teamMember, setTeamMember] = useState(null);
   const initializedRef = useRef(new Set());
 
+  // Careers / interview intake form
+  const [careerForm, setCareerForm] = useState({
+    name: '', email: '', phone: '', position: '', linkedin: '', tz: '', preferred: '', notes: '',
+  });
+  const [resume, setResume] = useState(null);
+  const [careerErrors, setCareerErrors] = useState({});
+  const [careerDragging, setCareerDragging] = useState(false);
+  const [careerSubmitting, setCareerSubmitting] = useState(false);
+  const [careerSubmitted, setCareerSubmitted] = useState(false);
+  const [careerSubmitError, setCareerSubmitError] = useState(null);
+  const resumeInputRef = useRef(null);
+
   useEffect(() => { bootstrapCal(); }, []);
 
-  const activeEmbedId = selected === 'team' ? teamMember : selected;
+  const isCareers = selected === 'careers';
+  const activeEmbedId = isCareers ? null : (selected === 'team' ? teamMember : selected);
 
   useEffect(() => {
     if (!activeEmbedId) return;
@@ -161,6 +213,53 @@ export default function SchedulePage() {
   const handleMainSelect = (id) => {
     setSelected(id);
     if (id !== 'team') setTeamMember(null);
+  };
+
+  const setCareerField = (key, value) => {
+    setCareerForm((prev) => ({ ...prev, [key]: value }));
+    setCareerErrors((prev) => { const next = { ...prev }; delete next[key]; return next; });
+  };
+
+  const addResume = (file) => {
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      setCareerErrors((prev) => ({ ...prev, resume: 'File exceeds 10 MB' }));
+      return;
+    }
+    setResume(file);
+    setCareerErrors((prev) => { const next = { ...prev }; delete next.resume; return next; });
+  };
+
+  const validateCareer = () => {
+    const errs = {};
+    if (!careerForm.name.trim()) errs.name = 'Required';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(careerForm.email)) errs.email = 'Valid email required';
+    if (!careerForm.phone.trim()) errs.phone = 'Required';
+    if (!careerForm.position.trim()) errs.position = 'Required';
+    if (!careerForm.tz.trim()) errs.tz = 'Required';
+    if (!resume) errs.resume = 'Please attach your resume';
+    return errs;
+  };
+
+  const handleCareerSubmit = async () => {
+    const errs = validateCareer();
+    if (Object.keys(errs).length > 0) { setCareerErrors(errs); return; }
+
+    setCareerSubmitting(true);
+    setCareerSubmitError(null);
+    try {
+      const fd = new FormData();
+      Object.entries(careerForm).forEach(([k, v]) => fd.append(k, v));
+      if (resume) fd.append('resume', resume);
+      const res = await fetch('/api/interview', { method: 'POST', body: fd });
+      if (!res.ok) throw new Error('failed');
+      setCareerSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      setCareerSubmitError('Something went wrong. Email us directly at careers@jzsmartmedia.com');
+    } finally {
+      setCareerSubmitting(false);
+    }
   };
 
   const selectedTeamOption = TEAM_OPTIONS.find((t) => t.id === teamMember);
@@ -232,7 +331,7 @@ export default function SchedulePage() {
         </div>
 
         {/* Step 1 — Main cards */}
-        <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto mb-6">
           {MAIN_CARDS.map((opt) => {
             const Icon = opt.icon;
             const isActive = selected === opt.id;
@@ -381,9 +480,203 @@ export default function SchedulePage() {
           </div>
         )}
 
+        {/* Careers / interview intake form */}
+        {isCareers && (
+          <div className="max-w-2xl mx-auto">
+            {careerSubmitted ? (
+              <div className="flex flex-col items-center justify-center text-center py-16 gap-4">
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                  style={{ background: 'rgba(236,72,153,0.12)', border: '1px solid rgba(236,72,153,0.25)' }}
+                >
+                  <CheckCircle2 className="w-7 h-7 text-pink-400" />
+                </div>
+                <h3 className="text-2xl font-black text-white" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
+                  Request received.
+                </h3>
+                <p className="text-sm text-gray-400 max-w-md leading-relaxed">
+                  Thanks{careerForm.name ? `, ${careerForm.name.split(' ')[0]}` : ''} — we&apos;ve got your details.
+                  We&apos;ll reach out by email to lock in your interview time. Keep an eye on your inbox and WhatsApp.
+                </p>
+              </div>
+            ) : (
+              <div
+                className="rounded-2xl p-6 md:p-8"
+                style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)' }}
+              >
+                <h3 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-fraunces), Georgia, serif' }}>
+                  Tell us about you.
+                </h3>
+                <p className="text-gray-400 text-sm mb-7">
+                  A few quick details so we can prep for your interview and send the invite.
+                </p>
+
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <CareerField label="Full name" required error={careerErrors.name}>
+                    <input
+                      className={careerInputClass(careerErrors.name)}
+                      value={careerForm.name}
+                      placeholder="Jane Smith"
+                      onChange={(e) => setCareerField('name', e.target.value)}
+                    />
+                  </CareerField>
+                  <CareerField label="Email" required error={careerErrors.email}>
+                    <input
+                      type="email"
+                      className={careerInputClass(careerErrors.email)}
+                      value={careerForm.email}
+                      placeholder="jane@email.com"
+                      onChange={(e) => setCareerField('email', e.target.value)}
+                    />
+                  </CareerField>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <CareerField label="Phone / WhatsApp" required error={careerErrors.phone}>
+                    <input
+                      type="tel"
+                      className={careerInputClass(careerErrors.phone)}
+                      value={careerForm.phone}
+                      placeholder="+1 305 000 0000"
+                      onChange={(e) => setCareerField('phone', e.target.value)}
+                    />
+                  </CareerField>
+                  <CareerField label="Position you're interviewing for" required error={careerErrors.position}>
+                    <input
+                      className={careerInputClass(careerErrors.position)}
+                      value={careerForm.position}
+                      placeholder="e.g. PPC Manager, SEO Specialist"
+                      onChange={(e) => setCareerField('position', e.target.value)}
+                    />
+                  </CareerField>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <CareerField label="LinkedIn or portfolio" error={careerErrors.linkedin}>
+                    <input
+                      className={careerInputClass(careerErrors.linkedin)}
+                      value={careerForm.linkedin}
+                      placeholder="linkedin.com/in/..."
+                      onChange={(e) => setCareerField('linkedin', e.target.value)}
+                    />
+                  </CareerField>
+                  <CareerField label="Your time zone" required error={careerErrors.tz}>
+                    <input
+                      className={careerInputClass(careerErrors.tz)}
+                      value={careerForm.tz}
+                      placeholder="e.g. EST, BRT"
+                      onChange={(e) => setCareerField('tz', e.target.value)}
+                    />
+                  </CareerField>
+                </div>
+
+                <CareerField
+                  label="Preferred days / times"
+                  hint="Optional — helps us pick a slot that works for you."
+                  className="mb-4"
+                >
+                  <input
+                    className={careerInputClass()}
+                    value={careerForm.preferred}
+                    placeholder="e.g. Weekday mornings, after 2pm Fri"
+                    onChange={(e) => setCareerField('preferred', e.target.value)}
+                  />
+                </CareerField>
+
+                {/* Resume upload */}
+                <CareerField label="Resume / CV" required hint="PDF, max 10MB" error={careerErrors.resume} className="mb-4">
+                  {resume ? (
+                    <div
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl"
+                      style={{ background: 'rgba(236,72,153,0.08)', border: '1px solid rgba(236,72,153,0.18)' }}
+                    >
+                      <FileText className="w-4 h-4 text-pink-300 flex-shrink-0" />
+                      <span className="text-sm text-white flex-1 truncate">{resume.name}</span>
+                      <span className="text-xs text-gray-500 flex-shrink-0">
+                        {(resume.size / (1024 * 1024)).toFixed(1)} MB
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setResume(null)}
+                        className="text-gray-600 hover:text-gray-300 transition-colors flex-shrink-0"
+                        aria-label="Remove resume"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      className={`rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-all ${
+                        careerDragging
+                          ? 'border-[#ec4899]/70 bg-[#ec4899]/5'
+                          : careerErrors.resume
+                          ? 'border-red-500/40 hover:border-red-500/60'
+                          : 'border-white/10 hover:border-white/20 hover:bg-white/[0.02]'
+                      }`}
+                      onClick={() => resumeInputRef.current?.click()}
+                      onDragOver={(e) => { e.preventDefault(); setCareerDragging(true); }}
+                      onDragLeave={() => setCareerDragging(false)}
+                      onDrop={(e) => { e.preventDefault(); setCareerDragging(false); addResume(e.dataTransfer.files?.[0]); }}
+                    >
+                      <input
+                        ref={resumeInputRef}
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        className="hidden"
+                        onChange={(e) => addResume(e.target.files?.[0])}
+                      />
+                      <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center mx-auto mb-2"
+                        style={{ background: 'rgba(236,72,153,0.12)', border: '1px solid rgba(236,72,153,0.2)' }}
+                      >
+                        <Upload className="w-4 h-4 text-pink-300" />
+                      </div>
+                      <p className="text-sm text-gray-300 font-medium mb-1">Drop your resume or click to upload</p>
+                      <p className="text-xs text-gray-600">PDF, DOC, DOCX · Max 10 MB</p>
+                    </div>
+                  )}
+                </CareerField>
+
+                <CareerField label="Anything you'd like us to know?" hint="Optional." className="mb-6">
+                  <textarea
+                    className={careerInputClass()}
+                    style={{ minHeight: 100, resize: 'vertical', lineHeight: 1.6 }}
+                    value={careerForm.notes}
+                    placeholder="A quick note, a question, or context for the interview…"
+                    onChange={(e) => setCareerField('notes', e.target.value)}
+                  />
+                </CareerField>
+
+                {careerSubmitError && (
+                  <div
+                    className="mb-5 px-4 py-3 rounded-xl text-sm text-red-300"
+                    style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}
+                  >
+                    {careerSubmitError}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleCareerSubmit}
+                  disabled={careerSubmitting}
+                  className="w-full flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
+                  style={{ background: 'linear-gradient(135deg, #ec4899, #f43f5e)' }}
+                >
+                  {careerSubmitting ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>
+                  ) : (
+                    <>Request my interview</>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Cal.com embeds */}
         <div className="max-w-4xl mx-auto">
-          {!activeEmbedId && (
+          {!activeEmbedId && !isCareers && (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
               <div
                 className="w-16 h-16 rounded-2xl flex items-center justify-center"
