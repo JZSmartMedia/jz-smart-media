@@ -21,23 +21,32 @@ const siteUrl = 'https://jzsmartmedia.com';
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'JZ Smart Media | Digital Marketing for Home Service Businesses',
+    default: 'JZ Smart Media | #1 Home Service Marketing Agency in Miami',
     template: '%s | JZ Smart Media',
   },
   description:
-    'JZ Smart Media helps home service businesses grow with Local SEO, Google Ads, Review Management, CRM automation, and AI-powered marketing. Miami-based, nationwide results.',
+    "JZ Smart Media is Miami's top digital marketing agency for home service contractors. We specialize in Local SEO, Google Ads, Google Business Profile management, Review Management, and CRM automation — proven to grow roofing, HVAC, plumbing & contractor businesses nationwide.",
   keywords: [
+    'home service marketing agency',
+    'digital marketing for contractors',
+    'local SEO agency Miami',
+    'contractor marketing agency',
+    'local SEO for home services',
+    'Google Ads for contractors',
     'home service marketing',
     'local SEO for contractors',
     'Google Ads for home services',
     'HVAC marketing agency',
     'plumber marketing',
-    'roofing marketing',
+    'roofing marketing agency',
     'Google Business Profile management',
     'Yelp ads management',
-    'review management',
-    'CRM automation',
+    'review management for contractors',
+    'CRM automation for home services',
     'Miami digital marketing agency',
+    'contractor SEO agency',
+    'home service lead generation',
+    'local service ads management',
   ],
   authors: [{ name: 'JZ Smart Media', url: siteUrl }],
   creator: 'JZ Smart Media',
@@ -50,23 +59,23 @@ export const metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'JZ Smart Media',
-    title: 'JZ Smart Media | Digital Marketing for Home Service Businesses',
+    title: "JZ Smart Media | #1 Home Service Marketing Agency in Miami",
     description:
-      'From Local SEO and Google Ads to CRM automation and web development — JZ Smart Media helps home service businesses dominate their local market.',
+      "Miami's leading digital marketing agency for home service contractors. Local SEO, Google Ads, Google Business Profile, Review Management & CRM automation — built for roofers, plumbers, HVAC pros & more.",
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'JZ Smart Media — Digital Marketing for Home Service Businesses',
+        alt: 'JZ Smart Media — #1 Home Service Marketing Agency in Miami',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JZ Smart Media | Digital Marketing for Home Service Businesses',
+    title: "JZ Smart Media | #1 Home Service Marketing Agency in Miami",
     description:
-      'Local SEO, Google Ads, Review Management & CRM automation for home service businesses. Miami-based, nationwide results.',
+      "Local SEO, Google Ads, Review Management & CRM automation for home service contractors. Miami-based, nationwide results. Get more leads today.",
     images: ['/og-image.jpg'],
     creator: '@jzsmartmedia',
   },
@@ -95,13 +104,14 @@ export const viewport = {
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'MarketingAgency',
+  '@type': ['MarketingAgency', 'ProfessionalService', 'LocalBusiness'],
   name: 'JZ Smart Media',
   url: 'https://jzsmartmedia.com',
   logo: 'https://jzsmartmedia.com/favicon.ico',
+  image: 'https://jzsmartmedia.com/og-image.jpg',
   description:
-    'JZ Smart Media helps home service businesses grow with Local SEO, Google Ads, Review Management, CRM automation, and AI-powered marketing.',
-  telephone: '+13527556501',
+    "JZ Smart Media is Miami's top digital marketing agency for home service contractors. We specialize in Local SEO, Google Ads, Google Business Profile management, Review Management, and CRM automation.",
+  telephone: '+135****6501',
   email: 'info@jzsmartmedia.com',
   address: {
     '@type': 'PostalAddress',
@@ -109,10 +119,16 @@ const jsonLd = {
     addressRegion: 'FL',
     addressCountry: 'US',
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: '25.7617',
+    longitude: '-80.1918',
+  },
   areaServed: {
     '@type': 'Country',
     name: 'United States',
   },
+  priceRange: '$$',
   sameAs: [
     'https://www.facebook.com/profile.php?id=61579089646043',
     'http://instagram.com/jz.smartmedia',
@@ -121,14 +137,15 @@ const jsonLd = {
   ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: 'Digital Marketing Services',
+    name: 'Digital Marketing Services for Home Service Contractors',
     itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO & Google Business Profile' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Google Ads & Local Service Ads' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Local SEO & Google Business Profile Management' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Google Ads & Local Service Ads for Contractors' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Yelp Ads & Review Management' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'CRM & Marketing Automation' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Web Development' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'CRM & Marketing Automation for Home Services' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Web Development for Contractors' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI Solutions & Business Intelligence' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Home Service Lead Generation' } },
     ],
   },
 };
