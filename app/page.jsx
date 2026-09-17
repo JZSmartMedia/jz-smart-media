@@ -6,10 +6,11 @@ import {
   Menu, X, Sun, Moon, ArrowRight, Sparkles, Target,
   Code, Rocket, CheckCircle, Star,
   Mail, MapPin, Phone, ChevronLeft, ChevronRight, Globe,
-  Settings, Brain, FileText, PieChart,
+  Settings, Brain, FileText, PieChart, Loader2, AlertCircle,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 /* ─── Moving comet border — section pill badges ─────────────────────────── */
@@ -71,20 +72,56 @@ export default function JZSmartMediaLanding() {
   const [serviceIndex, setServiceIndex] = useState(0);
   const [projectIndex, setProjectIndex] = useState(0);
   const [scrolled, setScrolled] = useState(false);
-  const [formData, setFormData] = useState({ name: '', business: '', phone: '', email: '', industry: '' });
+  const [formData, setFormData] = useState({ name: '', business: '', phone: '', email: '', industry: '', website: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', industry: '' });
+  const [formSending, setFormSending] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [contactForm, setContactForm] = useState({ name: '', phone: '', email: '', industry: '', website: '' });
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactSending, setContactSending] = useState(false);
+  const [contactError, setContactError] = useState('');
   const { resolvedTheme, setTheme } = useTheme();
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setFormSubmitted(true);
+  const submitLead = async (payload) => {
+    const res = await fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || 'Something went wrong. Please try again.');
+    }
   };
 
-  const handleContactSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setContactSubmitted(true);
+    if (formSending) return;
+    setFormSending(true);
+    setFormError('');
+    try {
+      await submitLead({ ...formData, source: 'hero' });
+      setFormSubmitted(true);
+    } catch (err) {
+      setFormError(err.message);
+    } finally {
+      setFormSending(false);
+    }
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    if (contactSending) return;
+    setContactSending(true);
+    setContactError('');
+    try {
+      await submitLead({ ...contactForm, source: 'contact' });
+      setContactSubmitted(true);
+    } catch (err) {
+      setContactError(err.message);
+    } finally {
+      setContactSending(false);
+    }
   };
 
   const setField = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
@@ -678,19 +715,49 @@ export default function JZSmartMediaLanding() {
                             </select>
                           </div>
 
+                          {/* Honeypot — hidden from humans, catches bots */}
+                          <input
+                            type="text"
+                            name="website"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            aria-hidden="true"
+                            value={formData.website}
+                            onChange={setField('website')}
+                            style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                          />
+
+                          {formError && (
+                            <div className="flex items-start gap-2 px-4 py-3 rounded-xl text-xs" style={{ background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
+                              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-px" />
+                              <span>{formError}</span>
+                            </div>
+                          )}
+
                           {/* Submit */}
                           <motion.button
                             type="submit"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30"
+                            disabled={formSending}
+                            whileHover={formSending ? undefined : { scale: 1.02 }}
+                            whileTap={formSending ? undefined : { scale: 0.98 }}
+                            className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30 disabled:opacity-60 disabled:cursor-not-allowed"
                             style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)', backgroundSize: '200% auto' }}
                           >
-                            Get My Free Audit <ArrowRight className="w-4 h-4" />
+                            {formSending ? (
+                              <>Sending… <Loader2 className="w-4 h-4 animate-spin" /></>
+                            ) : (
+                              <>Get My Free Audit <ArrowRight className="w-4 h-4" /></>
+                            )}
                           </motion.button>
 
                           <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                             🔒 No spam. No commitment. Results in 30 minutes.
+                          </p>
+                          <p className={`text-center text-[11px] leading-relaxed ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                            By submitting, you agree to our{' '}
+                            <Link href="/privacy" className="underline hover:text-[#667eea] transition-colors">Privacy Policy</Link>
+                            {' '}and{' '}
+                            <Link href="/terms" className="underline hover:text-[#667eea] transition-colors">Terms of Service</Link>.
                           </p>
                         </form>
                       </>
@@ -1299,17 +1366,47 @@ export default function JZSmartMediaLanding() {
                             <option value="other">Other</option>
                           </select>
                         </div>
+                        {/* Honeypot — hidden from humans, catches bots */}
+                        <input
+                          type="text"
+                          name="website"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          aria-hidden="true"
+                          value={contactForm.website}
+                          onChange={setContactField('website')}
+                          style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                        />
+
+                        {contactError && (
+                          <div className="flex items-start gap-2 px-4 py-3 rounded-xl text-xs" style={{ background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
+                            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-px" />
+                            <span>{contactError}</span>
+                          </div>
+                        )}
+
                         <motion.button
                           type="submit"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30"
+                          disabled={contactSending}
+                          whileHover={contactSending ? undefined : { scale: 1.02 }}
+                          whileTap={contactSending ? undefined : { scale: 0.98 }}
+                          className="w-full py-4 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg shadow-[#667eea]/30 disabled:opacity-60 disabled:cursor-not-allowed"
                           style={{ background: 'linear-gradient(90deg,#667eea,#764ba2,#f093fb)' }}
                         >
-                          Claim My Free Audit <ArrowRight className="w-4 h-4" />
+                          {contactSending ? (
+                            <>Sending… <Loader2 className="w-4 h-4 animate-spin" /></>
+                          ) : (
+                            <>Claim My Free Audit <ArrowRight className="w-4 h-4" /></>
+                          )}
                         </motion.button>
                         <p className={`text-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                           🔒 Your info is private. No spam ever.
+                        </p>
+                        <p className={`text-center text-[11px] leading-relaxed ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                          By submitting, you agree to our{' '}
+                          <Link href="/privacy" className="underline hover:text-[#667eea] transition-colors">Privacy Policy</Link>
+                          {' '}and{' '}
+                          <Link href="/terms" className="underline hover:text-[#667eea] transition-colors">Terms of Service</Link>.
                         </p>
                       </form>
                     )}
@@ -1422,8 +1519,16 @@ export default function JZSmartMediaLanding() {
               </div>
             </div>
             {/* Bottom row */}
-            <div className={`text-center pt-6 border-t ${isDark ? 'border-gray-800/60 text-gray-400' : 'border-gray-200 text-gray-400'} text-sm`}>
-              © 2026 JZ. Smart Media. All Rights Reserved.
+            <div className={`pt-6 border-t ${isDark ? 'border-gray-800/60 text-gray-400' : 'border-gray-200 text-gray-400'} text-sm flex flex-col md:flex-row items-center justify-between gap-4`}>
+              <span>© 2026 JZ. Smart Media. All Rights Reserved.</span>
+              <div className="flex items-center gap-5">
+                <Link href="/privacy" className={`${isDark ? 'hover:text-white' : 'hover:text-gray-900'} transition-colors`}>
+                  Privacy Policy
+                </Link>
+                <Link href="/terms" className={`${isDark ? 'hover:text-white' : 'hover:text-gray-900'} transition-colors`}>
+                  Terms of Service
+                </Link>
+              </div>
             </div>
           </div>
         </footer>
