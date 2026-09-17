@@ -150,6 +150,11 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  // Google Search Console ownership verification — do not remove, even after
+  // verification succeeds. Google re-checks periodically and will unverify.
+  verification: {
+    google: 'NdjD6hL8uql33znuC3Z8qZZfgXMKqECTpH7qe4kluaw',
+  },
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
