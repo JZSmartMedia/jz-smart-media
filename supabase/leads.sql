@@ -33,6 +33,11 @@ create table if not exists public.leads (
   notes       text
 );
 
+-- Added for the V2 audit form, which asks two extra qualifying questions.
+-- Additive and safe to run on an existing leads table.
+alter table public.leads add column if not exists market    text;
+alter table public.leads add column if not exists challenge text;
+
 create index if not exists leads_created_at_idx on public.leads (created_at desc);
 create index if not exists leads_status_idx     on public.leads (status);
 create index if not exists leads_email_idx      on public.leads (email);

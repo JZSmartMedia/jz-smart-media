@@ -10,13 +10,21 @@ const INDUSTRY_LABELS = {
   plumbing: 'Plumbing',
   electrical: 'Electrical',
   landscaping: 'Landscaping',
+  // V2 audit form adds these trades
+  'garage-door': 'Garage Door',
+  locksmith: 'Locksmith',
+  chimney: 'Chimney',
+  'other-home-service': 'Other Home Service',
   other: 'Other',
 };
 
 const SOURCE_LABELS = {
   hero: 'Homepage — Hero Form',
   contact: 'Homepage — Contact Section',
+  'v2-audit': 'V2 — Free Growth Audit',
 };
+
+const SOURCES = Object.keys(SOURCE_LABELS);
 
 export async function POST(request) {
   try {
@@ -29,13 +37,17 @@ export async function POST(request) {
       return Response.json({ success: true });
     }
 
+    const rawSource = str(body.source);
     const lead = {
       name: str(body.name),
       business: str(body.business),
       phone: str(body.phone),
       email: str(body.email),
       industry: str(body.industry),
-      source: str(body.source) === 'hero' ? 'hero' : 'contact',
+      // V2 audit form only — the homepage forms never send these.
+      market: str(body.market),
+      challenge: str(body.challenge),
+      source: SOURCES.includes(rawSource) ? rawSource : 'contact',
     };
 
     // Server-side validation — never trust the client.
@@ -84,6 +96,8 @@ export async function POST(request) {
     // Persist to Supabase. Never fail the visitor's submission over a storage error —
     // the notification email has already gone out at this point.
     if (process.env.SUPABASE_URL) {
+      // market/challenge are only included when actually supplied, so the
+      // homepage forms keep working even before those columns are added.
       const { error } = await supabase.from('leads').insert({
         name: lead.name,
         business: lead.business || null,
@@ -94,6 +108,8 @@ export async function POST(request) {
         ip,
         user_agent: userAgent,
         referer,
+        ...(lead.market && { market: lead.market }),
+        ...(lead.challenge && { challenge: lead.challenge }),
       });
       if (error) console.error('[lead] Supabase insert failed:', error.message);
     }
@@ -143,6 +159,8 @@ function buildEmailHtml(lead, meta) {
     ${row('Email', lead.email, `mailto:${lead.email}`)}
     ${row('Business', lead.business)}
     ${row('Industry', INDUSTRY_LABELS[lead.industry] || lead.industry)}
+    ${row('Primary Market', lead.market)}
+    ${row('Biggest Challenge', lead.challenge)}
     ${row('Submitted From', SOURCE_LABELS[lead.source] || lead.source)}
     ${row('Page', meta.referer)}
     ${row('IP Address', meta.ip)}
