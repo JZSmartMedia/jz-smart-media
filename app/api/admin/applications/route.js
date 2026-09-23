@@ -1,11 +1,8 @@
 import supabase from '@/lib/supabase';
 
 export async function GET(request) {
+  // Auth is handled in middleware.js before a request reaches this route.
   const { searchParams } = new URL(request.url);
-  const secret = process.env.ADMIN_SECRET;
-  if (secret && searchParams.get('secret') !== secret) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  }
 
   if (!process.env.SUPABASE_URL) {
     return Response.json({ error: 'Supabase not configured' }, { status: 503 });
@@ -31,11 +28,8 @@ export async function GET(request) {
 }
 
 export async function DELETE(request) {
+  // Auth is handled in middleware.js before a request reaches this route.
   const { searchParams } = new URL(request.url);
-  const secret = process.env.ADMIN_SECRET;
-  if (secret && searchParams.get('secret') !== secret) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  }
 
   const id = searchParams.get('id');
   if (!id) return Response.json({ error: 'Missing id' }, { status: 400 });

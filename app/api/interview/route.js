@@ -1,3 +1,5 @@
+import supabase from '@/lib/supabase';
+
 export async function POST(request) {
   try {
     const formData = await request.formData();
@@ -55,6 +57,28 @@ export async function POST(request) {
       const errText = await resendRes.text();
       console.error('[interview] Resend error:', errText);
       return Response.json({ error: 'Email delivery failed' }, { status: 500 });
+    }
+
+    // Persist so interview requests show up in the admin dashboard alongside
+    // leads and applications. Never fail the candidate's submission over a
+    // storage error — the notification email has already gone out.
+    if (process.env.SUPABASE_URL) {
+      const { error } = await supabase.from('interview_requests').insert({
+        name: candidate.name,
+        email: candidate.email,
+        phone: candidate.phone,
+        position: candidate.position,
+        linkedin: candidate.linkedin || null,
+        tz: candidate.tz,
+        preferred: candidate.preferred || null,
+        notes: candidate.notes || null,
+        has_resume: attachments.length > 0,
+        ip:
+          request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+          request.headers.get('x-real-ip') ||
+          null,
+      });
+      if (error) console.error('[interview] Supabase insert failed:', error.message);
     }
 
     return Response.json({ success: true });

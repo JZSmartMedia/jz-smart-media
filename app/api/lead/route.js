@@ -1,6 +1,11 @@
 import supabase from '@/lib/supabase';
 
-const NOTIFY_TO = ['yarden@jzsmartmedia.com', 'assistant@jzsmartmedia.com'];
+// Everyone who gets notified when a homepage / V2 lead comes in.
+const NOTIFY_TO = [
+  'ads@jzsmartmedia.com',
+  'yarden@jzsmartmedia.com',
+  'assistant@jzsmartmedia.com',
+];
 
 const INDUSTRY_LABELS = {
   roofing: 'Roofing',

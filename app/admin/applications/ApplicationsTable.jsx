@@ -267,7 +267,7 @@ function Info({ label, value }) {
   );
 }
 
-export default function ApplicationsTable({ rows: initialRows, adminSecret }) {
+export default function ApplicationsTable({ rows: initialRows }) {
   const [rows, setRows] = useState(initialRows);
   const [expanded, setExpanded] = useState(null);
   const [filter, setFilter] = useState('all');
@@ -279,7 +279,7 @@ export default function ApplicationsTable({ rows: initialRows, adminSecret }) {
     if (!confirm('Delete this submission permanently?')) return;
     setDeleting(id);
     try {
-      const res = await fetch(`/api/admin/applications?id=${id}&secret=${encodeURIComponent(adminSecret || '')}`, { method: 'DELETE' });
+      const res = await fetch(`/api/admin/applications?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setRows((prev) => prev.filter((r) => r.id !== id));
         setExpanded(null);
