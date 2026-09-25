@@ -181,6 +181,31 @@ const CASE_STUDIES = [
   },
 ];
 
+// Written from the rank grid alone — it is the only evidence supplied for this
+// client, so no call volume, revenue or timeframe is claimed anywhere here.
+const CASE_STUDY_COMPACT = {
+  n: '03',
+  title: 'From invisible to the top 3 across Lower Manhattan',
+  where: 'Lower Manhattan & Brooklyn, NY · Home services',
+  tags: ['Google Business Profile', 'Local SEO', 'Service-area structure', 'Citations', 'Rank grid tracking'],
+  copy: [
+    'Every tracked point across Lower Manhattan, Jersey City and the Brooklyn waterfront sat outside position 20 — effectively invisible on the map in one of the most competitive service markets in the country.',
+    'We rebuilt local relevance around the profile and the service area, then tracked the grid across multiple dates rather than screenshotting a single good day. Every one of the 49 tracked points now ranks in the top 3, and 42 of them sit at position #1.',
+  ],
+  metrics: [
+    { value: '42', label: 'Points at #1', sub: 'of 49 tracked' },
+    { value: '49/49', label: 'Points in top 3', sub: 'from 20+ at every point' },
+    { value: '100%', label: 'Top-3 coverage', sub: 'across the service area' },
+  ],
+  proof: {
+    src: '/assets/case-manhattan-rank-grid.jpg',
+    width: 1280,
+    height: 783,
+    alt: 'Local rank grid across Lower Manhattan and Brooklyn moving from 20+ at every point to top 3 at every point',
+    caption: 'Local rank grid across Lower Manhattan, Jersey City and the Brooklyn waterfront, recorded across multiple tracking dates. Map position is not the same as calls or booked jobs.',
+  },
+};
+
 const STEPS = [
   ['Step 01', 'Audit', 'We review your website, Google Ads, LSA, GBP, tracking and follow-up flow.'],
   ['Step 02', '90-day plan', 'We prioritize the highest-impact fixes for your market, trade and budget.'],
@@ -568,6 +593,55 @@ export default function V2Page() {
                 </div>
               </article>
             ))}
+
+            {/* Compact third case — rank grid evidence only */}
+            <article className="case-study compact">
+              <div className="case-study-compact-grid">
+                <div>
+                  <div className="case-study-head">
+                    <span className="case-study-num">{CASE_STUDY_COMPACT.n}</span>
+                    <div>
+                      <h3>{CASE_STUDY_COMPACT.title}</h3>
+                      <p className="case-study-where">{CASE_STUDY_COMPACT.where}</p>
+                    </div>
+                  </div>
+
+                  <div className="case-study-compact-copy">
+                    {CASE_STUDY_COMPACT.copy.map((para, i) => <p key={i}>{para}</p>)}
+                    <div className="case-study-tags">
+                      {CASE_STUDY_COMPACT.tags.map((t) => <span key={t}>{t}</span>)}
+                    </div>
+                    <div className="case-study-compact-metrics">
+                      {CASE_STUDY_COMPACT.metrics.map(({ value, label, sub }) => (
+                        <div key={label}>
+                          <strong>{value}</strong>
+                          <span>{label}</span>
+                          <small>{sub}</small>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <figure className="case-study-proof">
+                  <Image
+                    src={CASE_STUDY_COMPACT.proof.src}
+                    alt={CASE_STUDY_COMPACT.proof.alt}
+                    width={CASE_STUDY_COMPACT.proof.width}
+                    height={CASE_STUDY_COMPACT.proof.height}
+                    sizes="(max-width: 960px) 100vw, 560px"
+                  />
+                  <figcaption>{CASE_STUDY_COMPACT.proof.caption}</figcaption>
+                </figure>
+              </div>
+
+              <div className="case-study-foot">
+                <p className="disclaimer">
+                  Client-specific result based on account and client reporting. Results vary by
+                  market, budget, competition and sales follow-up.
+                </p>
+              </div>
+            </article>
           </div>
         </section>
 
