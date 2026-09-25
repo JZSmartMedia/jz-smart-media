@@ -113,6 +113,74 @@ const LIVE_REPORTS = [
   },
 ];
 
+const CASE_STUDIES = [
+  {
+    n: '01',
+    title: 'Roofing website, local SEO and lead generation',
+    where: 'South San Francisco, CA · Roofing',
+    tags: ['Website rebuild', 'Service + location pages', 'GBP optimization', 'Citations', 'Local Services Ads', 'Google Ads', 'Call tracking'],
+    copy: [
+      'The company was already getting leads from its Google Business Profile and Local Services Ads, but both channels shared one tracking number — so there was no way to tell which source produced which call. The website had a weak structure, incomplete service coverage and little geographic relevance beyond its immediate location.',
+      'We rebuilt the site with dedicated pages for each roofing service, clearer navigation and stronger calls to action, then aligned it with the Google Business Profile. Authentic project photography was optimized into detailed project pages built from real completed work.',
+      'Location pages followed for South San Francisco and neighboring service areas — genuinely useful, geographically specific content tied to real services and projects, not thin pages with the city name swapped out. The GBP was fully optimized and listings were corrected across Yelp, Yellow Pages, Apple Maps and Angi to fix NAP consistency.',
+      'With that foundation in place we improved the Local Services Ads account and launched Google Ads for high-intent roofing searches. Call tracking was finally separated across GBP, LSA, Google Ads assets and Yelp, so every source could be judged on its own.',
+    ],
+    before: { value: '89', label: 'Aug 2025' },
+    after: { value: '530', label: 'Jan 2026' },
+    metrics: [
+      { value: '+441', label: 'Additional monthly calls', sub: 'qualified, over 60 seconds' },
+      { value: '496%', label: 'Growth', sub: 'month over month baseline' },
+      { value: '5.96×', label: 'Monthly call volume', sub: 'versus the starting point' },
+      { value: '~5 mo', label: 'Time to result', sub: 'from project start' },
+    ],
+    proofs: [
+      {
+        src: '/assets/case-roofing-ssf-call-growth.jpg',
+        width: 1600,
+        height: 900,
+        alt: 'CallRail before and after: 89 calls in August 2025 rising to 530 calls in January 2026',
+        caption: 'CallRail, filtered to calls longer than 60 seconds. August 1–31, 2025 compared with January 1–31, 2026. Calls are not the same as booked jobs.',
+      },
+    ],
+  },
+  {
+    n: '02',
+    title: 'Chimney cleaning and repair — full local foundation',
+    where: 'Fairlawn, OH · Chimney',
+    tags: ['Website build', 'GBP verification', 'Local SEO', 'Map coverage', 'Local Services Ads', 'Google Ads', 'Call tracking'],
+    copy: [
+      'We built a complete website and local marketing foundation for a chimney cleaning and repair company based in Fairlawn, Ohio.',
+      'After the site was finished we verified and optimized the Google Business Profile, strengthened local relevance, and expanded mapped visibility across Fairlawn and the greater Akron area.',
+      'Accurate call tracking was then connected across Google Business Profile, Local Services Ads, Google Ads and website sources, so each channel could be measured separately rather than lumped together.',
+      'It is a clear demonstration of how a properly structured website, a verified and optimized profile, local SEO, paid channels and honest call tracking compound into sustainable lead growth for a home-service business.',
+    ],
+    before: { value: '33', label: 'April 2026' },
+    after: { value: '209', label: 'Sept 1–24, 2026' },
+    metrics: [
+      { value: '+176', label: 'Additional calls', sub: 'tracked, over 30 seconds' },
+      { value: '533%', label: 'Growth', sub: 'against the April baseline' },
+      { value: '6.3×', label: 'Call volume', sub: 'versus the starting point' },
+      { value: '100%', label: 'Top-3 map coverage', sub: '81 of 81 grid points' },
+    ],
+    proofs: [
+      {
+        src: '/assets/case-chimney-fairlawn-call-growth.jpg',
+        width: 1600,
+        height: 889,
+        alt: 'CallRail before and after: 33 calls in April 2026 rising to 209 calls in September 2026',
+        caption: 'CallRail, filtered to calls longer than 30 seconds. April 2026 compared with September 1–24, 2026. Calls are not the same as booked jobs.',
+      },
+      {
+        src: '/assets/case-chimney-fairlawn-rank-grid.jpg',
+        width: 1600,
+        height: 978,
+        alt: 'Local rank grid across Fairlawn and Akron moving from 20+ at every point to top 2 at every point',
+        caption: 'Local rank grid across Fairlawn and the greater Akron area: every tracked point moved from position 20+ into the top 3, with 72 points at position #1.',
+      },
+    ],
+  },
+];
+
 const STEPS = [
   ['Step 01', 'Audit', 'We review your website, Google Ads, LSA, GBP, tracking and follow-up flow.'],
   ['Step 02', '90-day plan', 'We prioritize the highest-impact fixes for your market, trade and budget.'],
@@ -426,6 +494,80 @@ export default function V2Page() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── Case studies ───────────────────────────────────────────────── */}
+        <section className="case-studies" id="case-studies">
+          <div className="wrap">
+            <div className="section-head">
+              <div>
+                <p className="eyebrow">Case studies</p>
+                <h2 style={{ marginTop: 18 }}>Two builds, start to finish.</h2>
+              </div>
+              <p className="lead">
+                What was broken, what we changed, and what happened to the phone — with the
+                tracking screenshots behind the numbers.
+              </p>
+            </div>
+
+            {CASE_STUDIES.map(({ n, title, where, tags, copy, before, after, metrics, proofs }) => (
+              <article className="case-study" key={n}>
+                <div className="case-study-head">
+                  <span className="case-study-num">{n}</span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p className="case-study-where">{where}</p>
+                    <div className="case-study-tags">
+                      {tags.map((t) => <span key={t}>{t}</span>)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="case-study-body">
+                  <div className="case-study-copy">
+                    {copy.map((para, i) => <p key={i}>{para}</p>)}
+                  </div>
+
+                  <div className="case-study-metrics">
+                    <div className="case-study-beforeafter">
+                      <div style={{ textAlign: 'center' }}>
+                        <b>{before.value}</b>
+                        <em>{before.label}</em>
+                      </div>
+                      <i aria-hidden="true">→</i>
+                      <div style={{ textAlign: 'center' }}>
+                        <b className="after">{after.value}</b>
+                        <em>{after.label}</em>
+                      </div>
+                    </div>
+                    {metrics.map(({ value, label, sub }) => (
+                      <div className="case-study-metric" key={label}>
+                        <strong>{value}</strong>
+                        <span>{label}</span>
+                        <small>{sub}</small>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="case-study-proofs">
+                  {proofs.map(({ src, width, height, alt, caption }) => (
+                    <figure className="case-study-proof" key={src}>
+                      <Image src={src} alt={alt} width={width} height={height} sizes="(max-width: 960px) 100vw, 1100px" />
+                      <figcaption>{caption}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+
+                <div className="case-study-foot">
+                  <p className="disclaimer">
+                    Client-specific result based on account and client reporting. Results vary by
+                    market, budget, competition and sales follow-up.
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 

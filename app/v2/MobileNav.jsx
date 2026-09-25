@@ -6,6 +6,7 @@ const LINKS = [
   ['#services', 'Services'],
   ['#industries', 'Industries'],
   ['#results', 'Results'],
+  ['#case-studies', 'Case studies'],
   ['#process', 'Process'],
   ['#about', 'Why JZ'],
 ];
