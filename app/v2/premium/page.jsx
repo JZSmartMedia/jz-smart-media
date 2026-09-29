@@ -157,6 +157,41 @@ const CASES = [
   },
 ];
 
+/**
+ * Recorded rank grids for Royal Roofing, South San Francisco — the same client
+ * as case study 01 (the address is printed on each grid). Ordered oldest first
+ * so the strip reads left-to-right as the actual before → after sequence.
+ */
+const RANK_VIDEOS = [
+  {
+    src: '/assets/local-seo-rank-timeline.mp4',
+    poster: '/assets/local-seo-rank-timeline.jpg',
+    stage: 'before',
+    stageLabel: 'Starting grid',
+    title: 'Roof repair · San Francisco',
+    date: 'Sept 10, 2025',
+    note: 'Positions 6–16 across most of the service area',
+  },
+  {
+    src: '/assets/roof-repair-rank-growth.mp4',
+    poster: '/assets/roof-repair-rank-growth.jpg',
+    stage: 'after',
+    stageLabel: 'After',
+    title: 'Roof repair · San Francisco',
+    date: 'Dec 31, 2025',
+    note: 'Top 3 across nearly every tracked point',
+  },
+  {
+    src: '/assets/roofing-contractor-rank-growth.mp4',
+    poster: '/assets/roofing-contractor-rank-growth.jpg',
+    stage: 'after',
+    stageLabel: 'Sustained',
+    title: 'Roofing contractor near me',
+    date: 'Jan 19, 2026',
+    note: 'Holding top 3 on a second high-intent term',
+  },
+];
+
 const STEPS = [
   ['01', 'Audit', 'We review your website, Google Ads, LSA, GBP, tracking and follow-up flow.'],
   ['02', '90-day plan', 'We prioritize the highest-impact fixes for your market, trade and budget.'],
@@ -436,6 +471,47 @@ export default function PremiumPage() {
                 </Reveal>
               </div>
             ))}
+
+            {/* Rank videos belong to case study 01 — same client, same market,
+                and the dates line up with its call growth. */}
+            <div className="v2p-videos">
+              <Reveal variant="up" className="v2p-videos-head">
+                <h4>Watch the rankings move — case study 01.</h4>
+                <p>
+                  Recorded rank grids across multiple tracking dates, not a single hand-picked
+                  screenshot. The map moved first; the calls followed.
+                </p>
+              </Reveal>
+
+              <div className="v2p-video-grid">
+                {RANK_VIDEOS.map(({ src, poster, stage, stageLabel, title, date, note }, i) => (
+                  <Reveal variant="up" delay={i * 110} className="v2p-video-card" key={src}>
+                    <div className="v2p-video-frame">
+                      <span className={`v2p-video-stage ${stage}`}>{stageLabel}</span>
+                      <video
+                        controls
+                        playsInline
+                        preload="metadata"
+                        poster={poster}
+                        aria-label={`${title}, rank grid recorded ${date}`}
+                      >
+                        <source src={src} type="video/mp4" />
+                        Your browser does not support this video.
+                      </video>
+                    </div>
+                    <div className="v2p-video-meta">
+                      <b>{title}</b>
+                      <em>{date}</em>
+                      <span>{note}</span>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+              <p className="disclaimer">
+                Royal Roofing CA, South San Francisco — the client in case study 01. Map position is
+                not the same as calls or booked jobs.
+              </p>
+            </div>
           </div>
         </section>
 

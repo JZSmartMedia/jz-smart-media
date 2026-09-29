@@ -430,3 +430,37 @@
   .v2-root .v2p-creds-row { flex-direction: column; align-items: flex-start; gap: 16px; }
   .v2-root .v2p-cred { width: 100%; }
 }
+
+/* ── Ranking video strip (sits inside a case study) ──────────────────────── */
+.v2-root .v2p-videos { margin-top: clamp(30px, 3.6vw, 46px); }
+.v2-root .v2p-videos-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 26px; flex-wrap: wrap; margin-bottom: 18px;
+}
+.v2-root .v2p-videos-head h4 {
+  font: 600 clamp(1.25rem, 2.1vw, 1.7rem)/1.15 var(--display); letter-spacing: -0.02em; margin: 0;
+}
+.v2-root .v2p-videos-head p { color: var(--muted-2); font-size: 0.85rem; max-width: 42ch; margin: 0; }
+
+.v2-root .v2p-video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.v2-root .v2p-video-card {
+  overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: #0b192a;
+  transition: border-color 0.28s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-root .v2p-video-card:hover { border-color: rgba(105, 226, 223, 0.4); transform: translateY(-4px); }
+.v2-root .v2p-video-frame { position: relative; background: #dfe8ec; aspect-ratio: 512/558; }
+.v2-root .v2p-video-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.v2-root .v2p-video-stage {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  padding: 4px 10px; border-radius: 50px; font-size: 0.66rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.09em; backdrop-filter: blur(6px);
+}
+.v2-root .v2p-video-stage.before { background: rgba(255, 116, 108, 0.9); color: #2a0b09; }
+.v2-root .v2p-video-stage.after  { background: rgba(105, 226, 223, 0.92); color: #052220; }
+.v2-root .v2p-video-meta { padding: 15px 16px 17px; }
+.v2-root .v2p-video-meta b { display: block; font-size: 0.9rem; font-weight: 700; letter-spacing: -0.01em; }
+.v2-root .v2p-video-meta em { display: block; margin-top: 5px; font-style: normal; color: var(--accent); font-size: 0.74rem; }
+.v2-root .v2p-video-meta span { display: block; margin-top: 4px; color: var(--muted-2); font-size: 0.73rem; }
+
+@media (max-width: 880px) { .v2-root .v2p-video-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .v2-root .v2p-video-grid { grid-template-columns: 1fr; } }
