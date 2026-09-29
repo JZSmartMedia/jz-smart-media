@@ -26,7 +26,8 @@ const INDUSTRY_LABELS = {
 const SOURCE_LABELS = {
   hero: 'Homepage — Hero Form',
   contact: 'Homepage — Contact Section',
-  'v2-audit': 'V2 — Free Growth Audit',
+  'homepage-audit': 'Homepage — Free Growth Audit',
+  'v2-audit': 'V2 — Free Growth Audit (archived)',
 };
 
 const SOURCES = Object.keys(SOURCE_LABELS);

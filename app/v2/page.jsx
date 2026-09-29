@@ -52,7 +52,7 @@ const VIDEO_PROOFS = [
     poster: '/assets/roof-repair-rank-growth.jpg',
     eyebrow: 'Ranking proof 01',
     title: 'Roof Repair · San Francisco',
-    note: 'Royal Roofing · tracked over time',
+    note: 'Roofing client · tracked over time',
     label: 'Roof Repair San Francisco ranking progression',
   },
   {
@@ -60,7 +60,7 @@ const VIDEO_PROOFS = [
     poster: '/assets/roofing-contractor-rank-growth.jpg',
     eyebrow: 'Ranking proof 02',
     title: 'Roofing Contractor Near Me',
-    note: 'Royal Roofing · tracked over time',
+    note: 'Roofing client · tracked over time',
     label: 'Roofing Contractor Near Me ranking progression',
   },
   {
@@ -77,7 +77,7 @@ const LIVE_REPORTS = [
   {
     featured: true,
     badge: 'Featured live result',
-    name: 'ASAP Water Damage Restoration Los Angeles',
+    name: 'Restoration company · Los Angeles',
     keyword: 'emergency water removal',
     rank: '2.16',
     solv: '87.76%',
@@ -86,7 +86,7 @@ const LIVE_REPORTS = [
   },
   {
     badge: 'Live ranking report',
-    name: 'OakTree Chimney Solutions',
+    name: 'Chimney company · Fairlawn, OH',
     keyword: 'chimney repair',
     rank: '2.68',
     solv: '72.84%',
@@ -95,7 +95,7 @@ const LIVE_REPORTS = [
   },
   {
     badge: 'Live ranking report',
-    name: 'Mia Remodeling Contractors',
+    name: 'Remodeling contractor · North Miami Beach',
     keyword: 'remodeling contractors',
     rank: '4.55',
     solv: '58.02%',
@@ -104,7 +104,7 @@ const LIVE_REPORTS = [
   },
   {
     badge: 'Live ranking report',
-    name: 'ASAP Water Damage Restoration Los Angeles',
+    name: 'Restoration company · Los Angeles',
     keyword: 'water damage restoration los angeles',
     rank: '4.26',
     solv: '44.44%',
@@ -408,7 +408,7 @@ export default function V2Page() {
             <div className="case-card">
               <div className="case-copy">
                 <p className="eyebrow">Client result</p>
-                <h2>OakTree Chimney Solutions</h2>
+                <h2>Chimney company, Fairlawn OH</h2>
                 <p>
                   A coordinated Google Ads, local SEO and Google Business Profile strategy built to
                   capture seasonal demand and convert it into qualified calls.

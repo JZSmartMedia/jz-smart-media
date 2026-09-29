@@ -267,26 +267,26 @@ export default function JZSmartMediaLanding() {
 
   const results = [
     {
-      title: 'OakTree Chimney Solutions', category: 'Local SEO + Google Ads',
+      title: 'Chimney Company · Ohio', category: 'Local SEO + Google Ads',
       description: 'Call volume more than tripled within 90 days. Full GBP overhaul, targeted search campaigns, and review generation strategy.',
       gradient: 'from-[#667eea] via-[#764ba2] to-[#f093fb]',
-      image: '/images/Project%20-%20OakTree%20Chimney%20Solutions.webp',
+      image: '/images/project-chimney.webp',
       tags: ['Local SEO', 'Google Ads', 'GBP', 'Reviews'],
       metrics: [{ value: '+340%', label: 'Lead Increase' }, { value: '-62%', label: 'Cost Per Lead' }, { value: '5.0★', label: 'GBP Rating' }],
     },
     {
-      title: 'CoStar Roofing Inc.', category: 'Yelp Ads + Reviews',
+      title: 'Roofing Contractor', category: 'Yelp Ads + Reviews',
       description: 'Within 6 weeks of Yelp ads launch: consistent inbound leads every single day. Profile fully optimized, review cadence built.',
       gradient: 'from-[#f093fb] via-[#f5576c] to-[#fda085]',
-      image: '/images/Project%20-%20CoStar%20Roofing%20Inc.webp',
+      image: '/images/project-roofing.webp',
       tags: ['Yelp Ads', 'Profile Optimization', 'Review Strategy'],
       metrics: [{ value: 'Daily', label: 'Inbound Leads' }, { value: '6 Wks', label: 'Time to Results' }, { value: '98%', label: 'Retention Rate' }],
     },
     {
-      title: 'ASAP Water Damage Restoration', category: 'CRM + AI Automation',
+      title: 'Restoration Company · Los Angeles', category: 'CRM + AI Automation',
       description: 'Automated follow-ups, review requests, and missed call recovery. Closing deals that would have been lost before.',
       gradient: 'from-[#fda085] via-[#f6d365] to-[#43e97b]',
-      image: '/images/Project%20-%20ASAP%20Water%20Damage%20Restoration.webp',
+      image: '/images/project-restoration.webp',
       tags: ['CRM', 'AI Automation', 'SMS', 'Voice AI'],
       metrics: [{ value: '100%', label: 'Calls Recovered' }, { value: 'Auto', label: 'Follow-Ups' }, { value: '+↑', label: 'Close Rate' }],
     },
@@ -313,17 +313,17 @@ export default function JZSmartMediaLanding() {
 
   const testimonials = [
     {
-      name: 'Mike R.', role: 'OakTree Chimney Solutions', initial: 'M',
+      name: 'Mike R.', role: 'Chimney company · Ohio', initial: 'M',
       content: "Since working with JZ. Smart Media our call volume has more than tripled. They know exactly how to target homeowners ready to book. Best investment we've made in years.",
       rating: 5, gradient: 'from-[#667eea] to-[#764ba2]',
     },
     {
-      name: 'Steve C.', role: 'CoStar Roofing Inc.', initial: 'S',
+      name: 'Steve C.', role: 'Roofing contractor', initial: 'S',
       content: 'The Yelp ads changed our business. JZ handled everything — setup, reviews, optimization — and within 6 weeks we had consistent inbound leads every single day.',
       rating: 5, gradient: 'from-[#f093fb] to-[#f5576c]',
     },
     {
-      name: 'David K.', role: 'ASAP Water Damage Restoration', initial: 'D',
+      name: 'David K.', role: 'Restoration company · Los Angeles', initial: 'D',
       content: 'Their CRM and AI setup changed how we operate. Automated follow-ups, review requests, missed call recovery — we close deals we would have lost before.',
       rating: 5, gradient: 'from-[#43e97b] to-[#38f9d7]',
     },

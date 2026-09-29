@@ -14,7 +14,8 @@ export const STATUS_META = {
 const SOURCE_LABELS = {
   hero: 'Hero form',
   contact: 'Contact section',
-  'v2-audit': 'V2 audit',
+  'homepage-audit': 'Homepage audit',
+  'v2-audit': 'V2 audit (archived)',
 };
 
 const INDUSTRY_LABELS = {
