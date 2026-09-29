@@ -464,3 +464,134 @@
 
 @media (max-width: 880px) { .v2-root .v2p-video-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .v2-root .v2p-video-grid { grid-template-columns: 1fr; } }
+
+/* ── Trust & expertise: partner + technology bars ────────────────────────── */
+.v2-root .v2p-bar-label {
+  display: flex; align-items: center; gap: 16px; justify-content: center;
+  color: #8fa7d6; font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 26px; text-align: center;
+}
+.v2-root .v2p-bar-label::before,
+.v2-root .v2p-bar-label::after {
+  content: ""; height: 1px; flex: 1; max-width: 120px; background: var(--line);
+}
+
+.v2-root .v2p-logos {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--line); border-radius: 14px; overflow: hidden;
+}
+.v2-root .v2p-logo {
+  background: #0b192a; padding: 22px 18px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  transition: background 0.28s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-root .v2p-logo:hover { background: #10233a; transform: translateY(-3px); }
+.v2-root .v2p-logo-mark { height: 30px; display: flex; align-items: center; justify-content: center; }
+.v2-root .v2p-logo b { font-size: 0.88rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+.v2-root .v2p-logo span { color: var(--muted-2); font-size: 0.73rem; line-height: 1.45; }
+
+.v2-root .v2p-logos.tech .v2p-logo { flex-direction: row; justify-content: center; gap: 12px; text-align: left; }
+.v2-root .v2p-logos.tech .v2p-logo-mark { height: auto; }
+.v2-root .v2p-logos.tech .v2p-logo b { display: block; }
+.v2-root .v2p-logos.tech .v2p-logo span { display: block; margin-top: 2px; }
+
+.v2-root .v2p-divider { height: 1px; background: var(--line); margin: 30px 0 28px; }
+
+/* ── Testimonials ────────────────────────────────────────────────────────── */
+.v2-root .v2p-tst { position: relative; }
+.v2-root .v2p-tst-card {
+  display: grid; grid-template-columns: 1.25fr 0.75fr; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 22px;
+  background: linear-gradient(140deg, rgba(20, 41, 67, 0.62), rgba(7, 17, 31, 0.65));
+  min-height: 268px;
+}
+.v2-root .v2p-tst-copy { padding: clamp(28px, 3.6vw, 44px); display: flex; flex-direction: column; justify-content: center; }
+.v2-root .v2p-tst-quote { color: var(--accent); opacity: 0.55; margin-bottom: 14px; }
+.v2-root .v2p-tst-text {
+  font: 400 clamp(1.05rem, 1.9vw, 1.42rem)/1.55 var(--display);
+  letter-spacing: -0.015em; color: var(--cream);
+}
+.v2-root .v2p-tst-by { display: flex; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
+.v2-root .v2p-tst-stars { display: flex; gap: 3px; color: #fbbf24; }
+.v2-root .v2p-tst-stars svg { display: block; }
+.v2-root .v2p-tst-who b { font-size: 0.92rem; font-weight: 700; }
+.v2-root .v2p-tst-who span { display: block; margin-top: 2px; color: var(--muted-2); font-size: 0.8rem; }
+.v2-root .v2p-tst-visual { position: relative; overflow: hidden; background: #10233a; }
+.v2-root .v2p-tst-visual img { width: 100%; height: 100%; object-fit: cover; }
+.v2-root .v2p-tst-visual::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(100deg, rgba(7, 17, 31, 0.92) 0%, rgba(7, 17, 31, 0.35) 42%, transparent 70%);
+}
+
+.v2-root .v2p-tst-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(7, 17, 31, 0.9); border: 1px solid var(--line); color: var(--cream);
+  cursor: pointer; transition: background 0.24s ease, border-color 0.24s ease, transform 0.24s ease;
+}
+.v2-root .v2p-tst-nav:hover { background: var(--indigo); border-color: var(--indigo); transform: translateY(-50%) scale(1.07); }
+.v2-root .v2p-tst-nav.prev { left: -20px; }
+.v2-root .v2p-tst-nav.next { right: -20px; }
+.v2-root .v2p-tst-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+.v2-root .v2p-tst-dot {
+  width: 8px; height: 8px; border-radius: 50%; border: none; cursor: pointer; padding: 0;
+  background: var(--line); transition: background 0.24s ease, width 0.24s ease;
+}
+.v2-root .v2p-tst-dot.on { width: 24px; border-radius: 50px; background: var(--accent); }
+
+/* ── Industries strip ────────────────────────────────────────────────────── */
+.v2-root .v2p-ind-strip {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+}
+.v2-root .v2p-ind {
+  background: #0b192a; padding: 22px 12px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 11px;
+  transition: background 0.26s ease, transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-root .v2p-ind:hover { background: #10233a; transform: translateY(-4px); }
+.v2-root .v2p-ind svg { color: var(--accent); transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.v2-root .v2p-ind:hover svg { transform: scale(1.12) translateY(-2px); }
+.v2-root .v2p-ind b { font-size: 0.83rem; font-weight: 600; }
+
+@media (max-width: 1080px) {
+  .v2-root .v2p-logos { grid-template-columns: repeat(2, 1fr); }
+  .v2-root .v2p-ind-strip { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 880px) {
+  .v2-root .v2p-tst-card { grid-template-columns: 1fr; }
+  .v2-root .v2p-tst-visual { min-height: 190px; order: -1; }
+  .v2-root .v2p-tst-visual::before { background: linear-gradient(180deg, transparent 30%, rgba(7, 17, 31, 0.9)); }
+  .v2-root .v2p-tst-nav.prev { left: 6px; }
+  .v2-root .v2p-tst-nav.next { right: 6px; }
+}
+@media (max-width: 640px) {
+  .v2-root .v2p-logos { grid-template-columns: 1fr; }
+  .v2-root .v2p-ind-strip { grid-template-columns: repeat(2, 1fr); }
+  .v2-root .v2p-bar-label::before, .v2-root .v2p-bar-label::after { max-width: 28px; }
+}
+
+/* ── Mobile refinements ──────────────────────────────────────────────────── */
+
+/* Why JZ cards — two up on desktop, single column on phones. Kept as a class
+   rather than an inline style so media queries can actually override it. */
+.v2-root .v2p-cards.two { grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 820px) {
+  .v2-root .v2p-cards.two { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 680px) {
+  /* The CTA panel sat inside .wrap's 14px gutter *and* carried its own 38px
+     padding — 52px of dead space each side. Break it out to full-bleed and
+     tighten the inner padding so the copy and form get the width back. */
+  .v2-root .v2p-cta {
+    margin-inline: -14px;
+    border-radius: 0;
+    padding: 34px 16px 36px;
+  }
+  .v2-root .v2p-cta-grid { gap: 26px; }
+  .v2-root .v2p-cta form { padding: 20px 16px 24px; }
+  .v2-root .v2p-cta h2 { max-width: none; }
+  .v2-root .v2p-cta p { max-width: none; }
+}

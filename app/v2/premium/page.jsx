@@ -3,25 +3,72 @@ import Link from 'next/link';
 import {
   MapPin, BarChart3, Globe, Phone, Sparkles,
   ShieldCheck, TrendingUp, Users, CheckCircle2, Lock,
-  HardHat, Hammer, Droplets, Warehouse, KeyRound, Flame,
-  Eye, Star, BadgeCheck, Building2, LayoutGrid,
+  HardHat, Hammer, Droplets, Warehouse, KeyRound, Flame, Eye,
 } from 'lucide-react';
 import AuditForm from '../AuditForm';
 import PremiumNav from './PremiumNav';
 import Reveal, { CountUp } from './Reveal';
+import Testimonials from './Testimonials';
+import {
+  GoogleG, MicrosoftSquares, MetaMark, YelpMark,
+  CallRailMark, GoHighLevelMark, GoogleLSAMark, GA4Mark,
+} from './BrandLogos';
 import '../v2.css';
 import './premium.css';
 
 /* ── Content — identical substance to /v2, restructured for scanning ────── */
 
-// Credentials shown in the bar under the hero. These are claims about JZ Smart
-// Media's own standing — confirm each one is current before this goes public,
-// and swap in official badge artwork from each partner programme where one exists.
-const CREDENTIALS = [
-  { mark: Star, title: 'Google 5-Star Reviews', sub: 'Rated by local business owners', stars: 5 },
-  { mark: BadgeCheck, title: 'Google Guaranteed', sub: 'Local Services Ads verified' },
-  { mark: Building2, title: 'Meta Business Partner', sub: 'Facebook & Instagram advertising' },
-  { mark: LayoutGrid, title: 'Microsoft Advertising Partner', sub: 'Bing search advertising' },
+// Partner claims about JZ Smart Media's own standing. Confirm each is current
+// before this goes public, and swap the marks for official badge artwork from
+// each programme where one is issued.
+const PARTNERS = [
+  { Mark: GoogleG, title: 'Google Partner', sub: 'Google Ads & LSA management' },
+  { Mark: YelpMark, title: 'Yelp Advertising Partner', sub: 'Yelp Ads management' },
+  { Mark: MetaMark, title: 'Meta Business Partner', sub: 'Facebook & Instagram advertising' },
+  { Mark: MicrosoftSquares, title: 'Microsoft Advertising Partner', sub: 'Bing search advertising' },
+];
+
+const TECHNOLOGY = [
+  { Mark: CallRailMark, title: 'CallRail', sub: 'Call tracking & attribution' },
+  { Mark: GoHighLevelMark, title: 'GoHighLevel', sub: 'CRM & automation' },
+  { Mark: GoogleLSAMark, title: 'Google Local Services Ads', sub: 'Lead generation' },
+  { Mark: GA4Mark, title: 'Google Analytics 4', sub: 'Reporting & insights' },
+];
+
+// Published verbatim from the live jzsmartmedia.com homepage — same quotes,
+// same attributions. Not written for this page.
+const TESTIMONIALS = [
+  {
+    name: 'Mike R.',
+    role: 'OakTree Chimney Solutions',
+    rating: 5,
+    content: "Since working with JZ. Smart Media our call volume has more than tripled. They know exactly how to target homeowners ready to book. Best investment we've made in years.",
+    image: '/images/Project - OakTree Chimney Solutions.webp',
+  },
+  {
+    name: 'Steve C.',
+    role: 'CoStar Roofing Inc.',
+    rating: 5,
+    content: 'The Yelp ads changed our business. JZ handled everything — setup, reviews, optimization — and within 6 weeks we had consistent inbound leads every single day.',
+    image: '/images/Project - CoStar Roofing Inc.webp',
+  },
+  {
+    name: 'David K.',
+    role: 'ASAP Water Damage Restoration',
+    rating: 5,
+    content: 'Their CRM and AI setup changed how we operate. Automated follow-ups, review requests, missed call recovery — we close deals we would have lost before.',
+    image: '/images/Project - ASAP Water Damage Restoration.webp',
+  },
+];
+
+const SPECIALTIES = [
+  [HardHat, 'Roofing'],
+  [Hammer, 'Remodeling'],
+  [Warehouse, 'Garage Door'],
+  [Flame, 'Chimney'],
+  [Droplets, 'Restoration'],
+  [KeyRound, 'Locksmith'],
+  [Sparkles, 'Cleaning'],
 ];
 
 const TRUST = [
@@ -299,28 +346,33 @@ export default function PremiumPage() {
         <section className="v2p-section tight" style={{ paddingTop: 0, paddingBottom: 'clamp(22px, 2.6vw, 34px)' }}>
           <div className="wrap">
             <Reveal variant="up" className="v2p-creds">
-              <p className="v2p-creds-label">Trusted by local businesses across the U.S.</p>
-              <div className="v2p-creds-row">
-                {CREDENTIALS.map(({ mark: Mark, title, sub, stars }, i) => (
-                  <Reveal variant="up" delay={i * 90} className="v2p-cred" key={title}>
-                    <span className="v2p-cred-mark">
-                      <Mark size={19} aria-hidden="true" style={{ color: 'var(--accent)' }} />
-                    </span>
-                    <span className="v2p-cred-text">
+              <p className="v2p-bar-label">Platform partners &amp; certifications</p>
+              <div className="v2p-logos">
+                {PARTNERS.map(({ Mark, title, sub }, i) => (
+                  <Reveal variant="up" delay={i * 90} className="v2p-logo" key={title}>
+                    <span className="v2p-logo-mark"><Mark size={26} /></span>
+                    <b>{title}</b>
+                    <span>{sub}</span>
+                  </Reveal>
+                ))}
+              </div>
+
+              <div className="v2p-divider" />
+
+              <p className="v2p-bar-label">Technology we work with</p>
+              <div className="v2p-logos tech">
+                {TECHNOLOGY.map(({ Mark, title, sub }, i) => (
+                  <Reveal variant="up" delay={i * 90} className="v2p-logo" key={title}>
+                    <span className="v2p-logo-mark"><Mark size={24} /></span>
+                    <span>
                       <b>{title}</b>
-                      {stars ? (
-                        <span className="v2p-cred-stars" aria-label={`${stars} out of 5 stars`}>
-                          {Array.from({ length: stars }).map((_, s) => (
-                            <Star key={s} size={11} fill="currentColor" strokeWidth={0} aria-hidden="true" />
-                          ))}
-                        </span>
-                      ) : null}
-                      <span className="v2p-cred-sub">{sub}</span>
+                      <span>{sub}</span>
                     </span>
                   </Reveal>
                 ))}
               </div>
             </Reveal>
+
           </div>
         </section>
 
@@ -515,6 +567,34 @@ export default function PremiumPage() {
           </div>
         </section>
 
+        {/* ── Testimonials + specialities ────────────────────────────────── */}
+        <section className="v2p-section">
+          <div className="wrap">
+            <Reveal variant="up" className="v2p-head center">
+              <p className="eyebrow">Trust &amp; expertise</p>
+              <h2>Built for local service businesses across the U.S.</h2>
+              <p>
+                Proven platform partnerships, documented results and industry-specific expertise —
+                in the words of the owners we work for.
+              </p>
+            </Reveal>
+
+            <Reveal variant="up" delay={80}>
+              <Testimonials items={TESTIMONIALS} />
+            </Reveal>
+
+            <p className="v2p-bar-label" style={{ marginTop: 46 }}>Industries we specialize in</p>
+            <div className="v2p-ind-strip">
+              {SPECIALTIES.map(([Icon, label], i) => (
+                <Reveal variant="up" delay={i * 70} className="v2p-ind" key={label}>
+                  <Icon size={24} aria-hidden="true" />
+                  <b>{label}</b>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── Industries ─────────────────────────────────────────────────── */}
         <section className="v2p-section">
           <div className="wrap">
@@ -587,7 +667,7 @@ export default function PremiumPage() {
                 Find the leaks in your funnel <span className="arrow" aria-hidden="true">→</span>
               </a>
             </Reveal>
-            <div className="v2p-cards" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="v2p-cards two">
               {WHY.map(([Icon, title, body], i) => (
                 <Reveal as="article" variant="up" delay={i * 110} className="v2p-card" key={title} style={{ padding: '24px 22px' }}>
                   <div className="v2p-card-icon"><Icon size={20} aria-hidden="true" /></div>
