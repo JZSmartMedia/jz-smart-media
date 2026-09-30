@@ -188,9 +188,12 @@ export const metadata = {
     google: 'NdjD6hL8uql33znuC3Z8qZZfgXMKqECTpH7qe4kluaw',
   },
   icons: {
-    icon: '/favicon.ico',
+    // Next auto-emits a tag for public/favicon.ico, so listing it here too
+    // would duplicate it. Only the PNG variant is declared.
+    icon: [{ url: '/brand/icon-192.png', type: 'image/png', sizes: '192x192' }],
     apple: '/apple-touch-icon.png',
   },
+  manifest: '/manifest.json',
 };
 
 export const viewport = {

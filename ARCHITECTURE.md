@@ -227,6 +227,35 @@ Test in a clean incognito window before investigating.
 
 ---
 
+## 7. Static assets (`public/`)
+
+```
+favicon.ico is NOT here — see the note below
+apple-touch-icon.png    iOS home-screen icon (180px, flattened on navy)
+manifest.json           PWA manifest
+brand/                  Logo, monogram, favicon master, PWA icons
+services/               5 approved service-card banners (varying widths)
+industries/             7 approved industry cards — label is part of the art
+proof/                  Case-study evidence: CallRail shots, rank grids, videos
+media/                  Photography: hero shots, testimonial project photos
+legacy/                 Images used only by /legacy
+```
+
+**The favicon lives at `app/favicon.ico`, not `public/`.** The App Router's
+file convention takes priority over `public/favicon.ico` and silently shadows
+it — the site served a stale 300x225 icon for a long time because of this. Put
+the real icon in `app/favicon.ico`. The master artwork is
+`public/brand/favicon-master.png`; regenerate the set from it with Pillow.
+
+**Industry cards have their label baked into the artwork**, so the markup does
+not repeat it as text — the `alt` attribute carries it for screen readers.
+Trade-off: those labels are not machine-readable text. If that matters for SEO
+later, ask the designer for label-free crops.
+
+**Service banners have different aspect ratios** (2:1 to 3.4:1). They sit in a
+fixed-height box with `object-fit: contain`, per the supplied asset guidance —
+do not stretch or crop them to match.
+
 ## 7. Local development
 
 ```bash

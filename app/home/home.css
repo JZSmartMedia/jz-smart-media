@@ -1262,3 +1262,37 @@ html:has(.v2-root) {
 @media (max-width: 1080px) {
   .v2-root .v2p-ind-strip::after { display: block; }
 }
+
+/* ── Approved artwork: service banners & industry cards ──────────────────── */
+
+/* Service card artwork. The five banners have different aspect ratios, so a
+   fixed box + object-fit: contain keeps them on a consistent visual line
+   without stretching or cropping (per the supplied asset guidance). */
+/* Full-bleed to the card edges, and the box takes each image's own aspect
+   ratio (set inline from the asset's real dimensions). The artwork then fills
+   exactly — no letterboxing to disguise — while still never being cropped or
+   stretched. Heights land close together because the wide 3.3:1 banners were
+   assigned to the wide row-2 cards. */
+.v2-root .v2p-card-art {
+  margin: -28px -26px 20px; overflow: hidden;
+  border-radius: 17px 17px 0 0;
+  border-bottom: 1px solid rgba(105, 226, 223, 0.16);
+  background: linear-gradient(135deg, #0d2250 0%, #0a1a3e 48%, #050f26 100%);
+}
+.v2-root .v2p-card-art img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-root .v2p-card:hover .v2p-card-art img { transform: scale(1.04); }
+
+/* Industry cards ship with their label baked in, so the cell is just artwork. */
+.v2-root .v2p-ind { padding: 14px 10px; }
+.v2-root .v2p-ind img {
+  width: 100%; height: auto; max-height: 190px; object-fit: contain;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-root .v2p-ind:hover img { transform: scale(1.06) translateY(-2px); }
+
+@media (max-width: 680px) {
+  .v2-root .v2p-ind img { max-height: 170px; }
+}

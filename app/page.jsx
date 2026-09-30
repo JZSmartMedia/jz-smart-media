@@ -63,32 +63,34 @@ const TESTIMONIALS = [
     role: 'Chimney company · Ohio',
     rating: 5,
     content: "Since working with JZ. Smart Media our call volume has more than tripled. They know exactly how to target homeowners ready to book. Best investment we've made in years.",
-    image: '/images/project-chimney.webp',
+    image: '/media/project-chimney.webp',
   },
   {
     name: 'Steve C.',
     role: 'Roofing contractor',
     rating: 5,
     content: 'The Yelp ads changed our business. JZ handled everything — setup, reviews, optimization — and within 6 weeks we had consistent inbound leads every single day.',
-    image: '/images/project-roofing.webp',
+    image: '/media/project-roofing.webp',
   },
   {
     name: 'David K.',
     role: 'Restoration company · Los Angeles',
     rating: 5,
     content: 'Their CRM and AI setup changed how we operate. Automated follow-ups, review requests, missed call recovery — we close deals we would have lost before.',
-    image: '/images/project-restoration.webp',
+    image: '/media/project-restoration.webp',
   },
 ];
 
+// Approved industry cards. The label is part of the artwork, so it is not
+// repeated as text — the alt attribute carries it for screen readers.
 const SPECIALTIES = [
-  [HardHat, 'Roofing'],
-  [Hammer, 'Remodeling'],
-  [Warehouse, 'Garage Door'],
-  [Flame, 'Chimney'],
-  [Droplets, 'Restoration'],
-  [KeyRound, 'Locksmith'],
-  [Sparkles, 'Cleaning'],
+  ['/industries/01-roofing.png', 'Roofing'],
+  ['/industries/02-remodeling.png', 'Remodeling'],
+  ['/industries/03-garage-door.png', 'Garage Door'],
+  ['/industries/04-chimney.png', 'Chimney'],
+  ['/industries/05-restoration.png', 'Restoration'],
+  ['/industries/06-locksmith.png', 'Locksmith'],
+  ['/industries/07-cleaning.png', 'Cleaning'],
 ];
 
 const TRUST = [
@@ -103,30 +105,35 @@ const SERVICES = [
   {
     icon: BarChart3,
     title: 'Google Ads + landing pages',
+    img: '/services/01-google-ads.png', iw: 854, ih: 426,
     body: 'Campaigns organized by service, intent and market, with pages built to turn the right searches into calls.',
     tags: ['Search campaigns', 'Call tracking', 'Landing pages'],
   },
   {
     icon: ShieldCheck,
     title: 'Local Services Ads',
+    img: '/services/02-local-services-ads.png', iw: 868, ih: 438,
     body: 'Profile setup, budget pacing, lead review and dispute management to protect spend and strengthen placement.',
     tags: ['Google Guarantee', 'Lead disputes', 'Budget pacing'],
   },
   {
     icon: MapPin,
     title: 'Local SEO + Google Business Profile',
+    img: '/services/03-local-seo-gbp.png', iw: 904, ih: 438,
     body: 'Map visibility built through correct structure, service-area content, reviews, citations and ongoing optimization.',
     tags: ['GBP management', 'Local pages', 'Rank tracking'],
   },
   {
     icon: Sparkles,
     title: 'CRM, automation + AI',
+    img: '/services/04-crm-automation-ai.png', iw: 1352, ih: 402,
     body: 'Missed-call recovery, lead follow-up, review requests and pipeline visibility so good leads do not disappear.',
     tags: ['GoHighLevel', 'SMS follow-up', 'AI workflows'],
   },
   {
     icon: Globe,
     title: 'Web, Yelp + conversion support',
+    img: '/services/05-web-yelp-conversion.png', iw: 1324, ih: 410,
     body: 'The supporting channels and digital assets your market needs—deployed when they improve the economics.',
     tags: ['Web development', 'Yelp Ads', 'Conversion rate'],
   },
@@ -167,7 +174,7 @@ const CASES = [
     afterLabel: 'Jan 2026',
     stats: [['+441', 'calls/mo'], ['496%', 'growth'], ['~5 mo', 'to result']],
     img: {
-      src: '/assets/case-roofing-ssf-call-growth.jpg',
+      src: '/proof/case-roofing-ssf-call-growth.jpg',
       width: 1600,
       height: 900,
       alt: 'CallRail before and after: 89 calls in August 2025 rising to 530 in January 2026',
@@ -191,7 +198,7 @@ const CASES = [
     afterLabel: 'Sept 2026',
     stats: [['+176', 'calls'], ['533%', 'growth'], ['100%', 'top-3 coverage']],
     img: {
-      src: '/assets/case-chimney-fairlawn-rank-grid.jpg',
+      src: '/proof/case-chimney-fairlawn-rank-grid.jpg',
       width: 1600,
       height: 978,
       alt: 'Rank grid across Fairlawn and Akron moving from 20+ at every point to top 2 at every point',
@@ -215,7 +222,7 @@ const CASES = [
     afterLabel: 'Every point',
     stats: [['42', 'points at #1'], ['49/49', 'in top 3'], ['100%', 'coverage']],
     img: {
-      src: '/assets/case-manhattan-rank-grid.jpg',
+      src: '/proof/case-manhattan-rank-grid.jpg',
       width: 1280,
       height: 783,
       alt: 'Rank grid across Lower Manhattan and Brooklyn moving from 20+ at every point to top 3',
@@ -232,8 +239,8 @@ const CASES = [
  */
 const RANK_VIDEOS = [
   {
-    src: '/assets/local-seo-rank-timeline.mp4',
-    poster: '/assets/local-seo-rank-timeline.jpg',
+    src: '/proof/local-seo-rank-timeline.mp4',
+    poster: '/proof/local-seo-rank-timeline.jpg',
     stage: 'before',
     stageLabel: 'Starting grid',
     title: 'Roof repair · San Francisco',
@@ -241,8 +248,8 @@ const RANK_VIDEOS = [
     note: 'Positions 6–16 across most of the service area',
   },
   {
-    src: '/assets/roof-repair-rank-growth.mp4',
-    poster: '/assets/roof-repair-rank-growth.jpg',
+    src: '/proof/roof-repair-rank-growth.mp4',
+    poster: '/proof/roof-repair-rank-growth.jpg',
     stage: 'after',
     stageLabel: 'After',
     title: 'Roof repair · San Francisco',
@@ -250,8 +257,8 @@ const RANK_VIDEOS = [
     note: 'Top 3 across nearly every tracked point',
   },
   {
-    src: '/assets/roofing-contractor-rank-growth.mp4',
-    poster: '/assets/roofing-contractor-rank-growth.jpg',
+    src: '/proof/roofing-contractor-rank-growth.mp4',
+    poster: '/proof/roofing-contractor-rank-growth.jpg',
     stage: 'after',
     stageLabel: 'Sustained',
     title: 'Roofing contractor near me',
@@ -302,7 +309,7 @@ export default function HomePage() {
       <nav className="site-nav">
         <div className="wrap nav-inner">
           <Link href="/" className="brand-lockup">
-            <Image className="brand-monogram" src="/assets/jz-monogram-refined.png"
+            <Image className="brand-monogram" src="/brand/monogram.png"
               alt="JZ Smart Media" width={509} height={360} priority />
             <span className="brand-name">SMART MEDIA</span>
           </Link>
@@ -346,7 +353,7 @@ export default function HomePage() {
 
             <Reveal variant="scale" delay={200} className="v2p-hero-visual">
               <Image
-                src="/assets/jz-dashboard-hero.jpg"
+                src="/media/hero-dashboard.jpg"
                 alt="JZ Smart Media lead reporting dashboard on a laptop and phone"
                 width={1122}
                 height={1402}
@@ -434,9 +441,11 @@ export default function HomePage() {
             </div>
 
             <div className="v2p-cards grid32">
-              {SERVICES.map(({ icon: Icon, title, body, tags }, i) => (
+              {SERVICES.map(({ title, body, tags, img, iw, ih }, i) => (
                 <Reveal as="article" variant="up" delay={(i % 3) * 110} className="v2p-card" key={title}>
-                  <div className="v2p-card-icon"><Icon size={21} aria-hidden="true" /></div>
+                  <div className="v2p-card-art" style={{ aspectRatio: `${iw} / ${ih}` }}>
+                    <Image src={img} alt="" width={iw} height={ih} loading="lazy" aria-hidden="true" />
+                  </div>
                   <h3>{title}</h3>
                   <p>{body}</p>
                   <div className="v2p-card-tags">
@@ -601,10 +610,9 @@ export default function HomePage() {
 
             <p className="v2p-bar-label" style={{ marginTop: 46 }}>Industries we specialize in</p>
             <div className="v2p-ind-strip">
-              {SPECIALTIES.map(([Icon, label], i) => (
+              {SPECIALTIES.map(([src, label], i) => (
                 <Reveal variant="up" delay={i * 70} className="v2p-ind" key={label}>
-                  <Icon size={24} aria-hidden="true" />
-                  <b>{label}</b>
+                  <Image src={src} alt={label} width={350} height={440} loading="lazy" />
                 </Reveal>
               ))}
             </div>
@@ -764,7 +772,7 @@ export default function HomePage() {
           <div className="footer-grid">
             <div>
               <Link href="/" className="brand-lockup-full">
-                <Image src="/assets/jz-logo-refined.png" alt="JZ Smart Media"
+                <Image src="/brand/logo.png" alt="JZ Smart Media"
                   width={895} height={900} style={{ width: 154, height: 'auto' }} />
               </Link>
               <div className="footer-contact">

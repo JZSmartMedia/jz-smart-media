@@ -48,24 +48,24 @@ const SERVICES = [
 
 const VIDEO_PROOFS = [
   {
-    src: '/assets/roof-repair-rank-growth.mp4',
-    poster: '/assets/roof-repair-rank-growth.jpg',
+    src: '/proof/roof-repair-rank-growth.mp4',
+    poster: '/proof/roof-repair-rank-growth.jpg',
     eyebrow: 'Ranking proof 01',
     title: 'Roof Repair · San Francisco',
     note: 'Roofing client · tracked over time',
     label: 'Roof Repair San Francisco ranking progression',
   },
   {
-    src: '/assets/roofing-contractor-rank-growth.mp4',
-    poster: '/assets/roofing-contractor-rank-growth.jpg',
+    src: '/proof/roofing-contractor-rank-growth.mp4',
+    poster: '/proof/roofing-contractor-rank-growth.jpg',
     eyebrow: 'Ranking proof 02',
     title: 'Roofing Contractor Near Me',
     note: 'Roofing client · tracked over time',
     label: 'Roofing Contractor Near Me ranking progression',
   },
   {
-    src: '/assets/local-seo-rank-timeline.mp4',
-    poster: '/assets/local-seo-rank-timeline.jpg',
+    src: '/proof/local-seo-rank-timeline.mp4',
+    poster: '/proof/local-seo-rank-timeline.jpg',
     eyebrow: 'Ranking proof 03',
     title: 'From the starting grid forward',
     note: 'Play the full multi-date timeline',
@@ -135,7 +135,7 @@ const CASE_STUDIES = [
     ],
     proofs: [
       {
-        src: '/assets/case-roofing-ssf-call-growth.jpg',
+        src: '/proof/case-roofing-ssf-call-growth.jpg',
         width: 1600,
         height: 900,
         alt: 'CallRail before and after: 89 calls in August 2025 rising to 530 calls in January 2026',
@@ -164,14 +164,14 @@ const CASE_STUDIES = [
     ],
     proofs: [
       {
-        src: '/assets/case-chimney-fairlawn-call-growth.jpg',
+        src: '/proof/case-chimney-fairlawn-call-growth.jpg',
         width: 1600,
         height: 889,
         alt: 'CallRail before and after: 33 calls in April 2026 rising to 209 calls in September 2026',
         caption: 'CallRail, filtered to calls longer than 30 seconds. April 2026 compared with September 1–24, 2026. Calls are not the same as booked jobs.',
       },
       {
-        src: '/assets/case-chimney-fairlawn-rank-grid.jpg',
+        src: '/proof/case-chimney-fairlawn-rank-grid.jpg',
         width: 1600,
         height: 978,
         alt: 'Local rank grid across Fairlawn and Akron moving from 20+ at every point to top 2 at every point',
@@ -198,7 +198,7 @@ const CASE_STUDY_COMPACT = {
     { value: '100%', label: 'Top-3 coverage', sub: 'across the service area' },
   ],
   proof: {
-    src: '/assets/case-manhattan-rank-grid.jpg',
+    src: '/proof/case-manhattan-rank-grid.jpg',
     width: 1280,
     height: 783,
     alt: 'Local rank grid across Lower Manhattan and Brooklyn moving from 20+ at every point to top 3 at every point',
@@ -246,7 +246,7 @@ export default function V2Page() {
           <Link href="/v2" className="brand-lockup">
             <Image
               className="brand-monogram"
-              src="/assets/jz-monogram-refined.png"
+              src="/brand/monogram.png"
               alt="JZ Smart Media"
               width={509}
               height={360}
@@ -287,7 +287,7 @@ export default function V2Page() {
             <div className="hero-visual">
               <div className="hero-photo">
                 <Image
-                  src="/assets/jz-contractor-hero-v2.png"
+                  src="/media/hero-contractor.png"
                   alt="Home service contractor in a navy uniform outside a modern home"
                   fill
                   sizes="(max-width: 960px) 100vw, 55vw"
@@ -448,7 +448,7 @@ export default function V2Page() {
               </div>
               <div className="call-proof-visual">
                 <Image
-                  src="/assets/callrail-239-calls-august.png"
+                  src="/proof/callrail-239-calls-august.png"
                   alt="CallRail dashboard showing 239 tracked calls for August"
                   width={1960}
                   height={802}
@@ -692,7 +692,7 @@ export default function V2Page() {
             </div>
             <div className="about-photo">
               <Image
-                src="/assets/jz-operations.jpg"
+                src="/media/operations.jpg"
                 alt="Home service professional preparing equipment beside a service vehicle"
                 fill
                 sizes="(max-width: 960px) 100vw, 45vw"
@@ -747,7 +747,7 @@ export default function V2Page() {
             <div>
               <Link href="/v2" className="brand-lockup-full">
                 <Image
-                  src="/assets/jz-logo-refined.png"
+                  src="/brand/logo.png"
                   alt="JZ Smart Media"
                   width={895}
                   height={900}
