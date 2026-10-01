@@ -676,30 +676,46 @@ export default function HomePage() {
 
         {/* ── Why JZ ─────────────────────────────────────────────────────── */}
         <section className="v2p-section v2p-deep" id="about">
-          <div className="wrap v2p-split">
-            <Reveal variant="left">
-              <p className="eyebrow">Why JZ Smart Media</p>
-              <h2 style={{ marginTop: 18, fontSize: 'clamp(2.1rem, 3.8vw, 3.2rem)' }}>
-                Built for the messy reality of local service marketing.
-              </h2>
-              <p className="lead" style={{ marginTop: 20 }}>
-                We work across the full customer journey — from the search and the map listing to
-                the answered call, the follow-up and the review. That is how we find problems a
-                channel-only agency misses.
-              </p>
-              <a className="btn btn-primary" href="#audit" style={{ marginTop: 26 }}>
-                Find the leaks in your funnel <span className="arrow" aria-hidden="true">→</span>
-              </a>
-            </Reveal>
-            <div className="v2p-cards two">
-              {WHY.map(([Icon, title, body], i) => (
-                <Reveal as="article" variant="up" delay={i * 110} className="v2p-card" key={title} style={{ padding: '24px 22px' }}>
-                  <div className="v2p-card-icon"><Icon size={20} aria-hidden="true" /></div>
-                  <h3 style={{ fontSize: '1.02rem' }}>{title}</h3>
-                  <p style={{ fontSize: '0.86rem' }}>{body}</p>
-                </Reveal>
-              ))}
+          <div className="wrap v2p-why">
+            <div className="v2p-why-copy">
+              <Reveal variant="left">
+                <p className="eyebrow">Why JZ Smart Media</p>
+                <h2>From the first call to the closed job.</h2>
+                <p className="lead">
+                  See where every lead came from, what you spent to get it, and what actually
+                  became revenue.
+                </p>
+              </Reveal>
+
+              <div className="v2p-why-points">
+                {WHY.map(([Icon, title, body], i) => (
+                  <Reveal variant="up" delay={i * 90} className="v2p-why-point" key={title}>
+                    <span className="v2p-why-point-icon"><Icon size={18} aria-hidden="true" /></span>
+                    <span>
+                      <b>{title}</b>
+                      <span>{body}</span>
+                    </span>
+                  </Reveal>
+                ))}
+              </div>
+
+              <Reveal variant="up" delay={420}>
+                <a className="btn btn-primary v2p-why-cta" href="#audit">
+                  See how your marketing performs <span className="arrow" aria-hidden="true">→</span>
+                </a>
+              </Reveal>
             </div>
+
+            <Reveal variant="right" delay={160} className="v2p-why-visual">
+              <Image
+                src="/media/lead-portal.png"
+                alt="JZ Lead Portal showing total leads, revenue, cost per lead, booked jobs and leads by source"
+                width={1214}
+                height={1295}
+                sizes="(max-width: 960px) 92vw, 46vw"
+                loading="lazy"
+              />
+            </Reveal>
           </div>
         </section>
 

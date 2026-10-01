@@ -1296,3 +1296,63 @@ html:has(.v2-root) {
 @media (max-width: 680px) {
   .v2-root .v2p-ind img { max-height: 170px; }
 }
+
+/* ── Why JZ — copy + 4 points left, lead portal visual right ─────────────── */
+.v2-root .v2p-why {
+  display: grid; grid-template-columns: 1.02fr 0.98fr;
+  gap: clamp(32px, 4.5vw, 70px); align-items: center;
+}
+.v2-root .v2p-why-copy h2 {
+  margin-top: 18px; font-size: clamp(2.1rem, 3.9vw, 3.3rem); max-width: 14ch;
+}
+.v2-root .v2p-why-copy .lead { margin-top: 20px; max-width: 34rem; }
+
+.v2-root .v2p-why-points {
+  display: grid; gap: 1px; margin-top: 34px;
+  background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+}
+.v2-root .v2p-why-point {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 20px; background: #0b192a;
+  transition: background 0.26s ease;
+}
+.v2-root .v2p-why-point:hover { background: #10233a; }
+.v2-root .v2p-why-point-icon {
+  width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; display: grid; place-items: center;
+  background: linear-gradient(145deg, rgba(126, 145, 255, 0.2), rgba(105, 226, 223, 0.14));
+  border: 1px solid rgba(126, 145, 255, 0.3); color: var(--accent);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-root .v2p-why-point:hover .v2p-why-point-icon { transform: scale(1.08); }
+.v2-root .v2p-why-point b { display: block; font-size: 0.97rem; font-weight: 700; letter-spacing: -0.01em; }
+.v2-root .v2p-why-point > span > span {
+  display: block; margin-top: 5px; color: var(--muted); font-size: 0.86rem; line-height: 1.6;
+}
+.v2-root .v2p-why-cta { margin-top: 28px; }
+
+/* The portal render is a transparent PNG, so it sits straight on the navy with
+   a soft brand glow behind it rather than inside a framed box. */
+.v2-root .v2p-why-visual { position: relative; display: flex; justify-content: center; }
+.v2-root .v2p-why-visual::before {
+  content: ""; position: absolute; inset: 4% 2% 10%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 52% 42%, rgba(126, 145, 255, 0.26), transparent 62%),
+    radial-gradient(circle at 60% 72%, rgba(105, 226, 223, 0.16), transparent 58%);
+  filter: blur(26px);
+}
+.v2-root .v2p-why-visual img {
+  position: relative; z-index: 1;
+  width: 100%; height: auto; max-width: 540px;
+  filter: drop-shadow(0 34px 70px rgba(0, 0, 0, 0.5));
+}
+
+@media (max-width: 960px) {
+  /* Copy first, visual below — per the supplied implementation notes. */
+  .v2-root .v2p-why { grid-template-columns: 1fr; gap: 40px; }
+  .v2-root .v2p-why-visual img { max-width: 420px; }
+}
+@media (max-width: 680px) {
+  .v2-root .v2p-why-copy h2 { max-width: none; }
+  .v2-root .v2p-why-cta { width: 100%; }
+  .v2-root .v2p-why-visual img { max-width: 100%; }
+}
