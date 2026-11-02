@@ -25,7 +25,7 @@ export const metadata = {
     template: '%s | JZ Smart Media — Contractor SEO & Home Services Lead Generation',
   },
   description:
-    'JZ Smart Media — #1 contractor SEO agency & home services lead generation agency in Miami, FL. Expert roofing SEO agency & roofing company SEO & roofing company marketing, shingle roofing SEO, roof inspection SEO, re-roofing SEO, HVAC SEO services, HVAC SEO company & HVAC digital marketing agency, HVAC contractor SEO, mini split installation SEO, heat pump SEO, commercial HVAC SEO, plumber SEO agency, plumbing SEO services & plumbing company SEO, hydro jetting SEO, trenchless sewer SEO, water softener SEO, electrician SEO agency, painter SEO & painting company marketing, remodeling contractor SEO, bathroom remodeling SEO agency, kitchen remodeling SEO agency, general contractor SEO, concrete contractor SEO, demolition contractor SEO, foundation repair SEO, pest control SEO agency, junk removal SEO, moving company SEO services, garage door SEO, landscaping SEO company, water damage restoration SEO, fire damage restoration SEO, mold remediation SEO, mold testing SEO, fence company SEO, handyman SEO, tree service SEO company, pool service SEO & pool company SEO, pressure washing SEO & power washing SEO, carpet cleaning SEO & carpet cleaning marketing agency, locksmith SEO & locksmith marketing agency, window replacement SEO, insulation contractor SEO, solar panel marketing, gutter cleaning SEO, gutter guard SEO, stucco contractor SEO, appliance repair SEO, duct cleaning SEO, exterior painting SEO & painting contractor leads, emergency roofing SEO, roof coating SEO, flat roof SEO, TPO roofing SEO, drain cleaning SEO, septic system SEO, well pump SEO, sewer line SEO, pool builder SEO, soft washing SEO, tile contractor SEO, radon mitigation SEO, asbestos removal SEO, home warranty SEO, local service ads management, LSA management for contractors, AI automation for contractors, contractor CRM automation, website design for home services, contractor lead generation company, PPC for contractors, Google Ads for roofing companies, Google Ads for plumbers, Google Ads for HVAC, contractor Google Ads management, home services PPC agency, contractor social media marketing, contractor content marketing, multi-location SEO for contractors, Google Business Profile management & AI automation. Local SEO Miami, SEO company Miami Florida, contractor SEO near me, contractor SEO Orlando, contractor SEO Tampa, contractor SEO Jacksonville, contractor SEO Houston, contractor SEO Dallas, contractor SEO Atlanta, contractor SEO Phoenix. Get more contractor leads today — free strategy call.',
+    'JZ Smart Media — #1 contractor SEO agency & home services SEO agency & home services lead generation agency in Miami, FL. Expert roofing SEO agency & roofing company SEO & roofing company marketing, shingle roofing SEO, roof inspection SEO, re-roofing SEO, HVAC SEO agency & HVAC SEO services, HVAC SEO company & HVAC digital marketing agency, HVAC contractor SEO, mini split installation SEO, heat pump SEO, commercial HVAC SEO, plumber SEO agency, plumbing SEO services & plumbing company SEO, hydro jetting SEO, trenchless sewer SEO, water softener SEO, electrician SEO agency, commercial electrician SEO, painter SEO & painting company marketing, remodeling contractor SEO, bathroom remodeling SEO agency, kitchen remodeling SEO agency, basement remodeling SEO, general contractor SEO, concrete contractor SEO, demolition contractor SEO, foundation repair SEO, pest control SEO agency, junk removal SEO, moving company SEO services, garage door SEO, landscaping SEO company, hardscaping SEO, irrigation contractor SEO, masonry contractor SEO, water damage restoration SEO, fire damage restoration SEO, mold remediation SEO, mold testing SEO, fence company SEO, handyman SEO, tree service SEO company, pool service SEO & pool company SEO, pressure washing SEO & power washing SEO, carpet cleaning SEO & carpet cleaning marketing agency, commercial cleaning SEO, locksmith SEO & locksmith marketing agency, window replacement SEO, window tinting SEO, insulation contractor SEO, solar panel marketing, gutter cleaning SEO, gutter guard SEO, stucco contractor SEO, appliance repair SEO, duct cleaning SEO, exterior painting SEO & painting contractor leads, emergency roofing SEO, roof coating SEO, flat roof SEO, TPO roofing SEO, drain cleaning SEO, septic system SEO, well pump SEO, sewer line SEO, pool builder SEO, soft washing SEO, tile contractor SEO, epoxy flooring SEO, flooring contractor SEO agency, radon mitigation SEO, asbestos removal SEO, home warranty SEO, home inspection SEO, waterproofing contractor SEO, generator installation SEO, AI SEO for contractors, local service ads management, LSA management for contractors, AI automation for contractors, contractor CRM automation, website design for home services, contractor lead generation company, PPC for contractors, Google Ads for roofing companies, Google Ads for plumbers, Google Ads for HVAC, contractor Google Ads management, home services PPC agency, contractor social media marketing, contractor content marketing, multi-location SEO for contractors, Google Business Profile management & AI automation. Local SEO Miami, SEO company Miami Florida, contractor SEO near me, contractor SEO Orlando, contractor SEO Tampa, contractor SEO Jacksonville, contractor SEO Houston, contractor SEO Dallas, contractor SEO Atlanta, contractor SEO Phoenix. Get more contractor leads today — free strategy call.',
   keywords: [
     'contractor SEO agency',
     'contractor SEO services',
@@ -56,6 +56,7 @@ export const metadata = {
     'home service marketing agency',
     'home services seo',
     'seo for home services',
+    'home services seo agency',
     'home service company marketing',
     'home improvement marketing agency',
     'home improvement SEO agency',
@@ -167,6 +168,7 @@ export const metadata = {
     'panel upgrade seo',
     'electrical panel seo',
     'ev charger installation seo',
+    'commercial electrician seo',
     'painter SEO agency',
     'painting contractor SEO',
     'painting contractor marketing',
@@ -187,6 +189,8 @@ export const metadata = {
     'bathroom remodeling SEO',
     'bathroom remodeling SEO agency',
     'kitchen remodeling SEO agency',
+    'basement remodeling seo',
+    'basement remodeling marketing agency',
     'garage door marketing agency',
     'garage door seo',
     'seo for garage door companies',
@@ -219,6 +223,12 @@ export const metadata = {
     'seo for landscaping company',
     'lawn care seo',
     'lawn care marketing agency',
+    'hardscaping seo',
+    'hardscaping contractor seo',
+    'irrigation contractor seo',
+    'irrigation company seo',
+    'masonry contractor seo',
+    'masonry company seo',
     'tree service marketing agency',
     'tree service seo',
     'tree service seo company',
@@ -239,6 +249,8 @@ export const metadata = {
     'cleaning company marketing agency',
     'carpet cleaning seo',
     'carpet cleaning marketing agency',
+    'commercial cleaning seo',
+    'commercial cleaning marketing agency',
     'pressure washing marketing',
     'pressure washing seo',
     'power washing seo',
@@ -268,6 +280,7 @@ export const metadata = {
     'window replacement marketing',
     'window replacement seo',
     'window company seo',
+    'window tinting seo',
     'insulation contractor marketing',
     'insulation contractor seo',
     'insulation company seo',
@@ -285,11 +298,14 @@ export const metadata = {
     'flooring contractor marketing',
     'flooring contractor digital marketing agency',
     'flooring SEO agency',
+    'flooring contractor seo agency',
     'flooring company seo',
     'flooring company seo services',
     'tile contractor seo',
     'flooring installation seo',
     'hardwood flooring seo',
+    'epoxy flooring seo',
+    'epoxy flooring marketing',
     'siding contractor marketing',
     'siding company SEO',
     'window and door company marketing',
@@ -325,6 +341,15 @@ export const metadata = {
     'asbestos removal seo',
     'asbestos abatement seo',
     'home warranty seo',
+    'home inspection seo',
+    'home inspector seo',
+    'waterproofing contractor seo',
+    'waterproofing company seo',
+    'basement waterproofing seo',
+    'generator installation seo',
+    'standby generator seo',
+    'AI seo for contractors',
+    'ai seo agency for contractors',
     'ppc for contractors',
     'contractor google ads management',
     'Google Ads for contractors',
@@ -390,14 +415,14 @@ export const metadata = {
     siteName: 'JZ Smart Media',
     title: 'Contractor SEO Agency & Home Services Lead Generation | JZ Smart Media — Miami, FL',
     description:
-      "Miami's #1 contractor SEO & contractor lead generation agency. Roofing SEO agency, roofing company SEO & roofing company marketing, shingle roofing SEO, roof inspection SEO, emergency roofing SEO, roof coating SEO, flat roof SEO, TPO roofing SEO, HVAC SEO services, HVAC SEO company, HVAC digital marketing agency & HVAC contractor SEO, mini split installation SEO, heat pump SEO, commercial HVAC SEO, duct cleaning SEO, furnace repair SEO, plumber SEO agency, plumbing SEO services & plumbing company SEO, drain cleaning SEO, hydro jetting SEO, trenchless sewer SEO, water softener SEO, sewer line SEO, septic system SEO, well pump SEO, electrician SEO agency, panel upgrade SEO, painter SEO & painting company marketing, exterior painting SEO, painting contractor leads, remodeling contractor SEO, bathroom remodeling SEO agency, kitchen remodeling SEO agency, general contractor SEO, concrete contractor SEO, demolition contractor SEO, foundation repair SEO, pest control SEO agency, junk removal SEO, moving company SEO services, garage door SEO, landscaping SEO company, gutter cleaning SEO, gutter guard SEO, water damage restoration SEO, fire damage restoration SEO, mold remediation SEO, mold testing SEO, fence company SEO, handyman SEO, tree service SEO company, pool service SEO, pool builder SEO, pressure washing SEO & soft washing SEO, carpet cleaning SEO, locksmith SEO, stucco contractor SEO, tile contractor SEO, appliance repair SEO, window replacement SEO, insulation contractor SEO, solar panel marketing, radon mitigation SEO, asbestos removal SEO, home warranty SEO, local service ads management, LSA management, AI automation for contractors, contractor CRM automation, website design for home services, PPC for contractors, Google Ads for roofing companies, Google Ads for plumbers, Google Ads for HVAC, contractor Google Ads management, home services PPC agency, multi-location SEO for contractors, Google Business Profile management & AI automation — built for contractors nationwide in Miami, Orlando, Tampa, Houston, Dallas, Atlanta, Phoenix, Las Vegas & more. Free strategy call.",
+      "Miami's #1 contractor SEO & home services SEO agency & contractor lead generation agency. Roofing SEO agency, roofing company SEO & roofing company marketing, shingle roofing SEO, roof inspection SEO, emergency roofing SEO, roof coating SEO, flat roof SEO, TPO roofing SEO, HVAC SEO agency, HVAC SEO services, HVAC SEO company, HVAC digital marketing agency & HVAC contractor SEO, mini split installation SEO, heat pump SEO, commercial HVAC SEO, duct cleaning SEO, furnace repair SEO, plumber SEO agency, plumbing SEO services & plumbing company SEO, drain cleaning SEO, hydro jetting SEO, trenchless sewer SEO, water softener SEO, sewer line SEO, septic system SEO, well pump SEO, electrician SEO agency, commercial electrician SEO, panel upgrade SEO, painter SEO & painting company marketing, exterior painting SEO, painting contractor leads, remodeling contractor SEO, bathroom remodeling SEO agency, kitchen remodeling SEO agency, basement remodeling SEO, general contractor SEO, concrete contractor SEO, demolition contractor SEO, foundation repair SEO, waterproofing contractor SEO, pest control SEO agency, junk removal SEO, moving company SEO services, garage door SEO, landscaping SEO company, hardscaping SEO, irrigation contractor SEO, masonry contractor SEO, gutter cleaning SEO, gutter guard SEO, water damage restoration SEO, fire damage restoration SEO, mold remediation SEO, mold testing SEO, fence company SEO, handyman SEO, tree service SEO company, pool service SEO, pool builder SEO, pressure washing SEO & soft washing SEO, carpet cleaning SEO, commercial cleaning SEO, locksmith SEO, stucco contractor SEO, tile contractor SEO, epoxy flooring SEO, flooring contractor SEO agency, appliance repair SEO, window replacement SEO, window tinting SEO, insulation contractor SEO, solar panel marketing, radon mitigation SEO, asbestos removal SEO, home warranty SEO, home inspection SEO, generator installation SEO, AI SEO for contractors, local service ads management, LSA management, AI automation for contractors, contractor CRM automation, website design for home services, PPC for contractors, Google Ads for roofing companies, Google Ads for plumbers, Google Ads for HVAC, contractor Google Ads management, home services PPC agency, multi-location SEO for contractors, Google Business Profile management & AI automation — built for contractors nationwide in Miami, Orlando, Tampa, Houston, Dallas, Atlanta, Phoenix, Las Vegas & more. Free strategy call.",
     images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'JZ Smart Media — Contractor SEO & Home Services Marketing Agency in Miami' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Contractor SEO Agency & Home Services Lead Generation | JZ Smart Media — Miami, FL',
     description:
-      '#1 contractor SEO & contractor lead generation agency in Miami: roofing SEO agency, shingle roofing SEO, roof inspection SEO & emergency roofing SEO, roof coating SEO, TPO roofing SEO, HVAC SEO services, mini split installation SEO, heat pump SEO, commercial HVAC SEO & duct cleaning SEO, plumbing SEO services, hydro jetting SEO, trenchless sewer SEO, water softener SEO & drain cleaning SEO, septic system SEO, well pump SEO, electrician SEO & panel upgrade SEO, exterior painting SEO & painting company marketing, painting contractor leads, bathroom remodeling SEO agency, kitchen remodeling SEO agency, concrete contractor SEO, demolition contractor SEO, gutter cleaning SEO, gutter guard SEO, pool builder SEO, soft washing SEO, stucco contractor SEO, tile contractor SEO, appliance repair SEO, fire damage restoration SEO, mold testing SEO, radon mitigation SEO, asbestos removal SEO, home warranty SEO, general contractor SEO, pest control SEO agency, junk removal SEO, moving company SEO, garage door SEO, landscaping SEO company, tree service SEO, pool service SEO, carpet cleaning SEO, locksmith SEO, local service ads management, AI automation for contractors, contractor CRM automation, website design for home services, PPC for contractors, multi-location contractor SEO, Google Ads management & AI automation. Serving Miami, Orlando, Tampa, Houston, Dallas, Atlanta, Phoenix & nationwide. Get more leads — free call.',
+      '#1 contractor SEO & home services SEO agency & contractor lead generation agency in Miami: roofing SEO agency, shingle roofing SEO, roof inspection SEO & emergency roofing SEO, roof coating SEO, TPO roofing SEO, HVAC SEO agency, HVAC SEO services, mini split installation SEO, heat pump SEO, commercial HVAC SEO & duct cleaning SEO, plumbing SEO services, hydro jetting SEO, trenchless sewer SEO, water softener SEO & drain cleaning SEO, septic system SEO, well pump SEO, electrician SEO & commercial electrician SEO & panel upgrade SEO, exterior painting SEO & painting company marketing, painting contractor leads, bathroom remodeling SEO agency, kitchen remodeling SEO agency, basement remodeling SEO, concrete contractor SEO, demolition contractor SEO, gutter cleaning SEO, gutter guard SEO, pool builder SEO, soft washing SEO, stucco contractor SEO, tile contractor SEO, epoxy flooring SEO, flooring contractor SEO agency, appliance repair SEO, fire damage restoration SEO, mold testing SEO, radon mitigation SEO, asbestos removal SEO, home warranty SEO, home inspection SEO, waterproofing contractor SEO, hardscaping SEO, irrigation contractor SEO, masonry contractor SEO, commercial cleaning SEO, generator installation SEO, window tinting SEO, AI SEO for contractors, general contractor SEO, pest control SEO agency, junk removal SEO, moving company SEO, garage door SEO, landscaping SEO company, tree service SEO, pool service SEO, carpet cleaning SEO, locksmith SEO, local service ads management, AI automation for contractors, contractor CRM automation, website design for home services, PPC for contractors, multi-location contractor SEO, Google Ads management & AI automation. Serving Miami, Orlando, Tampa, Houston, Dallas, Atlanta, Phoenix & nationwide. Get more leads — free call.',
     images: ['/og-image.jpg'],
     creator: '@jzsmartmedia',
   },
@@ -434,7 +459,7 @@ const jsonLd = [
     image: 'https://jzsmartmedia.com/og-image.jpg',
     foundingDate: '2023',
     description:
-      'JZ Smart Media is a top-rated contractor SEO agency, best contractor SEO company, and home services marketing agency in Miami, FL. We specialize in roofing SEO agency services, roofing company SEO, roofing company marketing, roofer marketing agency, roofer digital marketing, seo for roofing company, roofing seo expert, roof repair seo, roof replacement seo, storm damage roofing seo, emergency roofing SEO, roof leak repair SEO, best seo agency for roofing companies, Google Ads for roofing companies, HVAC SEO services, HVAC SEO agency, HVAC SEO company, HVAC digital marketing agency, HVAC contractor SEO, HVAC contractor marketing, Google Ads for HVAC, air conditioning seo, furnace repair seo, hvac tune up seo, duct cleaning seo, indoor air quality seo, plumber SEO agency, plumbing SEO services, plumbing company SEO, plumbing marketing agency, plumber lead generation, Google Ads for plumbers, emergency plumber SEO, drain cleaning SEO, sewer line SEO, water heater seo, electrician SEO agency, electrical contractor SEO, electrician digital marketing, electrical contractor marketing, panel upgrade seo, ev charger installation seo, painter SEO agency, painting contractor SEO, exterior painting seo, interior painting seo, commercial painting contractor seo, remodeling contractor SEO, general contractor SEO, seo for general contractors, digital marketing for remodeling contractors, foundation repair SEO, dumpster rental marketing, deck builder marketing agency, window replacement marketing, window replacement SEO, window company SEO, solar panel marketing, kitchen remodeling SEO, bathroom remodeling SEO, fence contractor marketing, fence company seo, flooring SEO, flooring contractor digital marketing, flooring company seo services, tile contractor seo, hardwood flooring seo, siding contractor marketing, garage door marketing, garage door seo, seo for garage door companies, locksmith SEO, locksmith SEO agency, locksmith marketing agency, locksmith digital marketing, chimney sweep marketing, chimney sweep seo, chimney cleaning seo, fireplace seo, water damage restoration marketing, water damage seo, water damage restoration seo, mold remediation marketing, mold remediation seo, home remodeling marketing, landscaping SEO, landscaping seo company, landscaping company seo services, lawn care seo, tree service marketing, tree service seo, tree service seo company, arborist marketing agency, tree removal seo, pool service marketing, pool service seo, pool company seo, pool cleaning seo, pool builder seo, swimming pool builder seo, pool renovation seo, pest control SEO agency, pest control marketing, cleaning company marketing, carpet cleaning SEO, carpet cleaning marketing agency, pressure washing marketing, pressure washing SEO, power washing SEO, soft washing SEO, pressure washing marketing agency, gutter cleaning seo, gutter guard seo, gutter installation seo, stucco contractor seo, stucco repair seo, appliance repair seo, appliance repair marketing, holiday lighting contractor marketing, christmas light installation seo, biohazard cleanup seo, concrete contractor marketing agency, junk removal SEO, junk removal marketing agency, moving company SEO agency, moving company seo services, moving company local seo services, seo for moving company, handyman marketing agency, handyman seo agency, seo for handyman services, insulation contractor marketing, insulation contractor SEO, insulation company SEO, spray foam insulation marketing, drywall contractor marketing, asphalt paving SEO, PPC for contractors, contractor Google Ads management, home services PPC agency, contractor social media marketing, contractor content marketing, multi-location SEO for contractors, top contractor seo agency, Google Ads, Google Business Profile management, GBP management for contractors, review management, AI marketing automation, web design for contractors, local SEO Miami, SEO company Miami Florida, roofing SEO Miami, and contractor SEO agency Florida.',
+      'JZ Smart Media is a top-rated contractor SEO agency, best contractor SEO company, and home services SEO agency and home services marketing agency in Miami, FL. We specialize in roofing SEO agency services, roofing company SEO, roofing company marketing, roofer marketing agency, roofer digital marketing, seo for roofing company, roofing seo expert, roof repair seo, roof replacement seo, storm damage roofing seo, emergency roofing SEO, roof leak repair SEO, best seo agency for roofing companies, Google Ads for roofing companies, HVAC SEO services, HVAC SEO agency, HVAC SEO company, HVAC digital marketing agency, HVAC contractor SEO, HVAC contractor marketing, Google Ads for HVAC, air conditioning seo, furnace repair seo, hvac tune up seo, duct cleaning seo, indoor air quality seo, plumber SEO agency, plumbing SEO services, plumbing company SEO, plumbing marketing agency, plumber lead generation, Google Ads for plumbers, emergency plumber SEO, drain cleaning SEO, sewer line SEO, water heater seo, electrician SEO agency, electrical contractor SEO, electrician digital marketing, electrical contractor marketing, panel upgrade seo, ev charger installation seo, painter SEO agency, painting contractor SEO, exterior painting seo, interior painting seo, commercial painting contractor seo, remodeling contractor SEO, general contractor SEO, seo for general contractors, digital marketing for remodeling contractors, foundation repair SEO, dumpster rental marketing, deck builder marketing agency, window replacement marketing, window replacement SEO, window company SEO, solar panel marketing, kitchen remodeling SEO, bathroom remodeling SEO, fence contractor marketing, fence company seo, flooring SEO, flooring contractor digital marketing, flooring company seo services, tile contractor seo, hardwood flooring seo, siding contractor marketing, garage door marketing, garage door seo, seo for garage door companies, locksmith SEO, locksmith SEO agency, locksmith marketing agency, locksmith digital marketing, chimney sweep marketing, chimney sweep seo, chimney cleaning seo, fireplace seo, water damage restoration marketing, water damage seo, water damage restoration seo, mold remediation marketing, mold remediation seo, home remodeling marketing, landscaping SEO, landscaping seo company, landscaping company seo services, lawn care seo, tree service marketing, tree service seo, tree service seo company, arborist marketing agency, tree removal seo, pool service marketing, pool service seo, pool company seo, pool cleaning seo, pool builder seo, swimming pool builder seo, pool renovation seo, pest control SEO agency, pest control marketing, cleaning company marketing, carpet cleaning SEO, carpet cleaning marketing agency, pressure washing marketing, pressure washing SEO, power washing SEO, soft washing SEO, pressure washing marketing agency, gutter cleaning seo, gutter guard seo, gutter installation seo, stucco contractor seo, stucco repair seo, appliance repair seo, appliance repair marketing, holiday lighting contractor marketing, christmas light installation seo, biohazard cleanup seo, concrete contractor marketing agency, junk removal SEO, junk removal marketing agency, moving company SEO agency, moving company seo services, moving company local seo services, seo for moving company, handyman marketing agency, handyman seo agency, seo for handyman services, insulation contractor marketing, insulation contractor SEO, insulation company SEO, spray foam insulation marketing, drywall contractor marketing, asphalt paving SEO, PPC for contractors, contractor Google Ads management, home services PPC agency, contractor social media marketing, contractor content marketing, multi-location SEO for contractors, top contractor seo agency, Google Ads, Google Business Profile management, GBP management for contractors, review management, AI marketing automation, web design for contractors, local SEO Miami, SEO company Miami Florida, roofing SEO Miami, and contractor SEO agency Florida.',
     telephone: '+135****6501',
     email: 'info@jzsmartmedia.com',
     address: { '@type': 'PostalAddress', streetAddress: 'Miami', addressLocality: 'Miami', addressRegion: 'FL', postalCode: '33101', addressCountry: 'US' },
@@ -473,6 +498,7 @@ const jsonLd = [
       'Multi-Location SEO for Contractors',
       'Home Services SEO',
       'SEO for Home Services',
+      'Home Services SEO Agency',
       'Home Services Marketing Agency',
       'Home Service Company Marketing',
       'Home Improvement Marketing Agency',
@@ -515,6 +541,7 @@ const jsonLd = [
       'Electrical Contractor Marketing Agency',
       'Electrical Contractor SEO',
       'Electrician Digital Marketing',
+      'Commercial Electrician SEO',
       'Panel Upgrade SEO',
       'EV Charger Installation SEO',
       'Painter SEO Agency',
@@ -523,7 +550,9 @@ const jsonLd = [
       'Commercial Painting Contractor SEO',
       'Remodeling Contractor SEO',
       'Digital Marketing for Remodeling Contractors',
+      'Basement Remodeling SEO',
       'Foundation Repair SEO',
+      'Waterproofing Contractor SEO',
       'Garage Door Marketing Agency',
       'Garage Door SEO',
       'Locksmith SEO Agency',
@@ -537,6 +566,9 @@ const jsonLd = [
       'Landscaping Marketing Agency',
       'Landscaping SEO Company',
       'Lawn Care SEO',
+      'Hardscaping SEO',
+      'Irrigation Contractor SEO',
+      'Masonry Contractor SEO',
       'Tree Service Marketing Agency',
       'Tree Service SEO Company',
       'Tree Removal SEO',
@@ -549,6 +581,7 @@ const jsonLd = [
       'Pest Control SEO Agency',
       'Carpet Cleaning SEO',
       'Carpet Cleaning Marketing Agency',
+      'Commercial Cleaning SEO',
       'Pressure Washing SEO',
       'Power Washing SEO',
       'Soft Washing SEO',
@@ -565,6 +598,8 @@ const jsonLd = [
       'Tile Contractor SEO',
       'Flooring Installation SEO',
       'Hardwood Flooring SEO',
+      'Epoxy Flooring SEO',
+      'Flooring Contractor SEO Agency',
       'Solar Panel Marketing Agency',
       'Solar SEO Agency',
       'Fence Company SEO',
@@ -577,6 +612,10 @@ const jsonLd = [
       'Junk Removal SEO',
       'Moving Company SEO Agency',
       'Handyman SEO Agency',
+      'Window Tinting SEO',
+      'Generator Installation SEO',
+      'Home Inspection SEO',
+      'AI SEO for Contractors',
       'Web Design for Contractors',
       'PPC for Contractors',
       'Contractor Google Ads Management',
@@ -637,6 +676,20 @@ const jsonLd = [
       'Google Business Profile Management',
       'Local SEO Miami',
       'AI Marketing Automation',
+      'Home Services SEO Agency',
+      'AI SEO for Contractors',
+      'Commercial Electrician SEO',
+      'Basement Remodeling SEO',
+      'Hardscaping SEO',
+      'Irrigation Contractor SEO',
+      'Masonry Contractor SEO',
+      'Commercial Cleaning SEO',
+      'Epoxy Flooring SEO',
+      'Flooring Contractor SEO Agency',
+      'Waterproofing Contractor SEO',
+      'Home Inspection SEO',
+      'Generator Installation SEO',
+      'Window Tinting SEO',
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
@@ -729,7 +782,7 @@ const jsonLd = [
         name: 'What home service verticals does JZ Smart Media serve?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'JZ Smart Media provides SEO and digital marketing for a wide range of home service verticals including: roofing (including emergency roofing SEO), plumbing (including drain cleaning SEO and sewer line SEO), HVAC (including furnace repair SEO, HVAC tune up SEO, and duct cleaning SEO), electrical (including panel upgrade SEO and EV charger installation SEO), garage door, locksmith, chimney sweep, water damage restoration, mold remediation, home remodeling, painting contractors (including exterior painting SEO), landscaping and lawn care, tree service and tree removal, pool service and pool builder SEO, pest control, cleaning companies, carpet cleaning, pressure washing and soft washing, gutter cleaning and gutter guard SEO, stucco contractor SEO, tile contractor SEO, appliance repair SEO, holiday lighting contractor marketing, concrete contractors, foundation repair, dumpster rental, deck builders, window replacement, solar panel installation, fence contractors, flooring contractors, kitchen remodeling, bathroom remodeling, siding, insulation, drywall, moving companies, junk removal, handyman services, and general contractors and construction companies nationwide.',
+          text: 'JZ Smart Media provides SEO and digital marketing for a wide range of home service verticals including: roofing (including emergency roofing SEO), plumbing (including drain cleaning SEO and sewer line SEO), HVAC (including furnace repair SEO, HVAC tune up SEO, and duct cleaning SEO), electrical (including panel upgrade SEO and EV charger installation SEO), garage door, locksmith, chimney sweep, water damage restoration, mold remediation, home remodeling, painting contractors (including exterior painting SEO), landscaping and lawn care, tree service and tree removal, pool service and pool builder SEO, pest control, cleaning companies, carpet cleaning, commercial cleaning SEO, pressure washing and soft washing, gutter cleaning and gutter guard SEO, stucco contractor SEO, tile contractor SEO, epoxy flooring SEO, flooring contractor SEO agency, appliance repair SEO, holiday lighting contractor marketing, concrete contractors, foundation repair, waterproofing contractor SEO, dumpster rental, deck builders, window replacement, window tinting SEO, solar panel installation, fence contractors, flooring contractors, kitchen remodeling, bathroom remodeling, basement remodeling SEO, siding, insulation, drywall, moving companies, junk removal, handyman services, home inspection SEO, generator installation SEO, AI SEO for contractors, and general contractors and construction companies nationwide.',
         },
       },
       {
@@ -745,7 +798,7 @@ const jsonLd = [
         name: 'Does JZ Smart Media offer electrician SEO agency and electrical contractor SEO services?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media is a specialized electrician SEO agency and electrical contractor marketing agency offering full-service SEO for electricians, electrical contractor SEO, panel upgrade SEO, EV charger installation SEO, local SEO for electrical contractors, Google Ads, Google Business Profile management, electrician lead generation, and electrician digital marketing. We help electrical contractors rank on page 1 for high-intent searches like "electrician near me," "panel upgrade near me," and "EV charger installation" and generate consistent leads in their service area.',
+          text: 'Yes. JZ Smart Media is a specialized electrician SEO agency and electrical contractor marketing agency offering full-service SEO for electricians, commercial electrician SEO, electrical contractor SEO, panel upgrade SEO, EV charger installation SEO, local SEO for electrical contractors, Google Ads, Google Business Profile management, electrician lead generation, and electrician digital marketing. We help electrical contractors rank on page 1 for high-intent searches like "electrician near me," "commercial electrician near me," "panel upgrade near me," and "EV charger installation" and generate consistent leads in their service area.',
         },
       },
       {
@@ -849,7 +902,7 @@ const jsonLd = [
         name: 'Does JZ Smart Media offer window replacement SEO and insulation contractor SEO?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media provides window replacement SEO, window company SEO, insulation contractor SEO, insulation company SEO, and spray foam insulation marketing to help these specialty contractors rank higher on Google and generate qualified leads. Our niche expertise in window and insulation contractor marketing ensures businesses in these verticals capture high-intent local search traffic that converts into projects.',
+          text: 'Yes. JZ Smart Media provides window replacement SEO, window company SEO, window tinting SEO, insulation contractor SEO, insulation company SEO, and spray foam insulation marketing to help these specialty contractors rank higher on Google and generate qualified leads. Our niche expertise in window, tinting, and insulation contractor marketing ensures businesses in these verticals capture high-intent local search traffic that converts into projects.',
         },
       },
       {
@@ -857,7 +910,7 @@ const jsonLd = [
         name: 'Does JZ Smart Media offer tile contractor SEO and flooring installation SEO?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media provides tile contractor SEO, flooring installation SEO, hardwood flooring SEO, and comprehensive flooring contractor digital marketing to help tile and flooring businesses rank higher on Google and generate more project leads. Our flooring company SEO strategies include local SEO, Google Ads, Google Business Profile optimization, and review management targeting high-intent searches for tile installation, hardwood flooring, laminate flooring, and specialty flooring services in your area.',
+          text: 'Yes. JZ Smart Media provides tile contractor SEO, flooring installation SEO, hardwood flooring SEO, epoxy flooring SEO, and comprehensive flooring contractor SEO agency and digital marketing to help tile and flooring businesses rank higher on Google and generate more project leads. Our flooring company SEO strategies include local SEO, Google Ads, Google Business Profile optimization, and review management targeting high-intent searches for tile installation, hardwood flooring, epoxy flooring, laminate flooring, and specialty flooring services in your area.',
         },
       },
       {
@@ -905,7 +958,7 @@ const jsonLd = [
         name: 'Can JZ Smart Media help with AI marketing and automation for home services?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media offers AI marketing for contractors including CRM automation, marketing automation for home services, automated follow-up sequences, reputation management, and AI-powered business intelligence — helping home service companies grow faster with less manual effort.',
+          text: 'Yes. JZ Smart Media offers AI marketing for contractors including AI SEO for contractors, CRM automation, marketing automation for home services, automated follow-up sequences, reputation management, and AI-powered business intelligence — helping home service companies grow faster with less manual effort.',
         },
       },
       {
@@ -913,7 +966,7 @@ const jsonLd = [
         name: 'Does JZ Smart Media offer kitchen remodeling and bathroom remodeling marketing?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media provides specialized kitchen remodeling marketing agency services and bathroom remodeling marketing to help remodeling contractors rank on Google, generate qualified leads, and grow their pipeline. We use local SEO, Google Ads, and Google Business Profile optimization tailored for remodeling companies in Miami, Florida, and nationwide.',
+          text: 'Yes. JZ Smart Media provides specialized kitchen remodeling marketing agency services, bathroom remodeling marketing, and basement remodeling SEO to help remodeling contractors rank on Google, generate qualified leads, and grow their pipeline. We use local SEO, Google Ads, and Google Business Profile optimization tailored for remodeling companies in Miami, Florida, and nationwide.',
         },
       },
       {
@@ -929,7 +982,7 @@ const jsonLd = [
         name: 'Does JZ Smart Media offer tree service marketing and cleaning company marketing?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media provides tree service marketing agency services, tree service SEO, and cleaning company marketing to help tree removal, arborist, and cleaning businesses generate more local leads. Our services include local SEO, Google Ads, Google Business Profile optimization, and review management tailored for these competitive home service markets.',
+          text: 'Yes. JZ Smart Media provides tree service marketing agency services, tree service SEO, commercial cleaning SEO, and cleaning company marketing to help tree removal, arborist, and cleaning businesses generate more local leads. Our services include local SEO, Google Ads, Google Business Profile optimization, and review management tailored for these competitive home service markets.',
         },
       },
       {
@@ -969,7 +1022,7 @@ const jsonLd = [
         name: 'Does JZ Smart Media offer landscaping SEO company and landscaping company SEO services?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media is a specialized landscaping SEO company offering landscaping company SEO services, lawn care SEO, local SEO for landscaping businesses, Google Ads, Google Business Profile optimization, and lead generation for landscaping, lawn care, and outdoor services companies. Our SEO for landscaping company strategies help landscaping businesses rank higher in local search results and generate a consistent flow of qualified leads.',
+          text: 'Yes. JZ Smart Media is a specialized landscaping SEO company offering landscaping company SEO services, lawn care SEO, hardscaping SEO, irrigation contractor SEO, masonry contractor SEO, local SEO for landscaping businesses, Google Ads, Google Business Profile optimization, and lead generation for landscaping, lawn care, hardscaping, and outdoor services companies. Our SEO for landscaping company strategies help landscaping businesses rank higher in local search results and generate a consistent flow of qualified leads.',
         },
       },
       {
@@ -1001,7 +1054,7 @@ const jsonLd = [
         name: 'Does JZ Smart Media offer HVAC mini split installation SEO and heat pump SEO?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. JZ Smart Media provides mini split installation SEO and heat pump SEO as part of our comprehensive HVAC SEO services. As heat pump and mini split systems grow in popularity, these keywords represent high-opportunity, high-intent search terms. Our HVAC SEO strategies target these emerging service lines alongside traditional air conditioning SEO and furnace repair SEO to help HVAC contractors capture the full spectrum of HVAC service searches in their market.',
+          text: 'Yes. JZ Smart Media provides mini split installation SEO and heat pump SEO as part of our comprehensive HVAC SEO agency services. As heat pump and mini split systems grow in popularity, these keywords represent high-opportunity, high-intent search terms. Our HVAC SEO strategies target these emerging service lines alongside traditional air conditioning SEO and furnace repair SEO to help HVAC contractors capture the full spectrum of HVAC service searches in their market.',
         },
       },
       {
@@ -1034,6 +1087,78 @@ const jsonLd = [
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Yes. JZ Smart Media offers handyman SEO agency services and SEO for handyman services to help handyman businesses rank on Google and get more local service calls. Our handyman marketing agency solutions include local SEO, Google Business Profile optimization, Google Ads, and review management tailored for independent handymen and handyman service companies.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer home services SEO agency services?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media is a dedicated home services SEO agency serving all major home service and trade contractor verticals. As a home services SEO agency, we combine local SEO, Google Business Profile optimization, Google Ads, and AI-powered marketing automation to help home service companies generate consistent, high-quality leads. Our home services SEO agency approach is tailored to each trade — from roofing and HVAC to plumbing, electrical, landscaping, and specialty contractors — ensuring maximum ROI across your entire digital marketing investment.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer hardscaping SEO, irrigation contractor SEO, and masonry contractor SEO?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media provides hardscaping SEO, irrigation contractor SEO, and masonry contractor SEO to help outdoor and landscape specialty contractors rank higher on Google and generate consistent local leads. Our hardscaping and masonry marketing strategies include local SEO, Google Business Profile optimization, Google Ads, and review management targeting high-intent searches for hardscaping, patios, retaining walls, irrigation systems, and masonry work in your service area.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer epoxy flooring SEO and flooring contractor SEO agency services?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media provides epoxy flooring SEO and comprehensive flooring contractor SEO agency services to help flooring contractors rank higher on Google and generate more project leads. Epoxy flooring is a high-growth, high-ticket service line with strong local search demand. Our flooring contractor SEO agency strategies include local SEO, Google Ads, Google Business Profile optimization, and targeted content for epoxy flooring, hardwood, tile, laminate, and specialty flooring services.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer waterproofing contractor SEO and basement waterproofing SEO?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media provides waterproofing contractor SEO and basement waterproofing SEO to help waterproofing companies rank higher on Google and capture high-intent local leads. Our waterproofing company SEO strategies include local SEO, Google Ads, Google Business Profile optimization, and content marketing targeting searches like "basement waterproofing near me," "foundation waterproofing," and "crawl space encapsulation" in your service area.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer home inspection SEO and home inspector marketing?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media provides home inspection SEO and home inspector marketing to help home inspection companies rank higher on Google and generate more inspection requests. Our home inspection digital marketing strategies include local SEO, Google Business Profile optimization, Google Ads, and review management targeting buyers, real estate agents, and property managers searching for home inspection services in your area.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer generator installation SEO and standby generator marketing?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media provides generator installation SEO and standby generator marketing to help electrical contractors and generator installers rank higher on Google and capture the growing demand for home and commercial backup power. Our generator SEO strategies target high-intent searches like "generator installation near me," "standby generator installation," and "whole house generator" to generate qualified leads for generator installation and service businesses.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer window tinting SEO and window tinting marketing?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media provides window tinting SEO and window tinting marketing for residential, commercial, and automotive window tinting companies. Our window tinting SEO strategies include local SEO, Google Business Profile optimization, and Google Ads targeting high-intent searches like "window tinting near me," "residential window tinting," and "commercial window film" to generate consistent leads for window tinting businesses in their service area.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer commercial cleaning SEO and commercial cleaning marketing?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media provides commercial cleaning SEO and commercial cleaning marketing agency services to help commercial cleaning companies rank higher on Google and generate more B2B cleaning contracts. Our commercial cleaning digital marketing includes local SEO, Google Business Profile optimization, Google Ads, and targeted content marketing for janitorial services, office cleaning, post-construction cleaning, and specialty commercial cleaning services.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does JZ Smart Media offer AI SEO for contractors?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. JZ Smart Media offers AI SEO for contractors — leveraging artificial intelligence to accelerate keyword research, content creation, competitive analysis, and local SEO optimization for home service businesses. Our AI SEO agency approach for contractors combines proven local SEO fundamentals with AI-powered automation, enabling faster ranking results, smarter content strategies, and more efficient lead generation than traditional SEO methods alone.',
         },
       },
       {
@@ -1093,5 +1218,6 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
 
 
